@@ -48,6 +48,8 @@
       </div>
     </section>
 
+    <DummyClimatePlot />
+
     <section
       class="mx-auto mb-12 max-w-2xl space-y-3 rounded-2xl border border-gray-200 bg-white p-5 text-sm leading-relaxed text-gray-600 shadow-sm"
     >
@@ -78,6 +80,8 @@
 </template>
 
 <script setup lang="ts">
+import DummyClimatePlot from "./DummyClimatePlot.vue";
+
 const statusCards = [
   { label: "App", value: "Vue 3 + Vite" },
   { label: "Maps", value: "MapLibre-ready" },
