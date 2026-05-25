@@ -29,6 +29,9 @@ app.component("v-icon", OhVueIcon);
 app.use(PrimeVue, {
   theme: {
     preset: Aura,
+    options: {
+      darkModeSelector: 'system',
+    },
   },
 });
 app.use(ToastService);
