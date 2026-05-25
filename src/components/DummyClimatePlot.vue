@@ -1,29 +1,37 @@
 <template>
   <section
-    class="mx-auto mb-12 max-w-2xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"
+    class="mx-auto mb-12 max-w-2xl rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
   >
     <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
-        <p class="text-xs font-semibold uppercase text-blue-700">
+        <p
+          class="text-xs font-semibold uppercase text-blue-700 dark:text-blue-400"
+        >
           Prototype plot
         </p>
-        <h2 class="mt-1 text-base font-semibold text-gray-800">
+        <h2
+          class="mt-1 text-base font-semibold text-gray-800 dark:text-gray-100"
+        >
           CMIP7 readiness signal
         </h2>
       </div>
-      <div class="rounded-lg bg-blue-50 px-3 py-2 text-right">
-        <p class="text-xs text-gray-500">{{ sourceStatusLabel }}</p>
-        <p class="text-sm font-semibold text-blue-700">
+      <div
+        class="rounded-lg bg-blue-50 px-3 py-2 text-right dark:bg-blue-950/40"
+      >
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          {{ sourceStatusLabel }}
+        </p>
+        <p class="text-sm font-semibold text-blue-700 dark:text-blue-400">
           {{ primaryLatest }} tas
         </p>
       </div>
     </div>
 
-    <div class="relative min-h-72">
+    <div class="relative min-h-72 dark:rounded-xl dark:bg-white dark:p-3">
       <Line :data="chartData" :options="chartOptions" />
     </div>
 
-    <p class="mt-4 text-xs leading-relaxed text-gray-500">
+    <p class="mt-4 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
       {{ sourceCopy }}
       {{ primaryDeltaCopy }}
     </p>
