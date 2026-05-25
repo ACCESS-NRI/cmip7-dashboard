@@ -4,7 +4,9 @@
     aria-label="Payu experiment runs"
   >
     <div class="border-b border-gray-100 px-5 py-4 dark:border-gray-700">
-      <h2 class="text-sm font-semibold uppercase text-gray-700 dark:text-gray-200">
+      <h2
+        class="text-sm font-semibold uppercase text-gray-700 dark:text-gray-200"
+      >
         Experiment runs
       </h2>
     </div>
@@ -74,10 +76,14 @@
               :key="key"
             >
               <div class="min-w-0">
-                <dt class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">
+                <dt
+                  class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+                >
                   {{ formatKey(key) }}
                 </dt>
-                <dd class="mt-0.5 break-all text-sm text-gray-700 dark:text-gray-300">
+                <dd
+                  class="mt-0.5 break-all text-sm text-gray-700 dark:text-gray-300"
+                >
                   {{ formatValue(value) }}
                 </dd>
               </div>

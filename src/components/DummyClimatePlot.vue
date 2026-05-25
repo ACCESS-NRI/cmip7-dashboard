@@ -4,15 +4,23 @@
   >
     <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
-        <p class="text-xs font-semibold uppercase text-blue-700 dark:text-blue-400">
+        <p
+          class="text-xs font-semibold uppercase text-blue-700 dark:text-blue-400"
+        >
           Prototype plot
         </p>
-        <h2 class="mt-1 text-base font-semibold text-gray-800 dark:text-gray-100">
+        <h2
+          class="mt-1 text-base font-semibold text-gray-800 dark:text-gray-100"
+        >
           CMIP7 readiness signal
         </h2>
       </div>
-      <div class="rounded-lg bg-blue-50 px-3 py-2 text-right dark:bg-blue-950/40">
-        <p class="text-xs text-gray-500 dark:text-gray-400">{{ sourceStatusLabel }}</p>
+      <div
+        class="rounded-lg bg-blue-50 px-3 py-2 text-right dark:bg-blue-950/40"
+      >
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          {{ sourceStatusLabel }}
+        </p>
         <p class="text-sm font-semibold text-blue-700 dark:text-blue-400">
           {{ primaryLatest }} tas
         </p>
