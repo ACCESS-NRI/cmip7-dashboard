@@ -39,12 +39,13 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:coverage -- --run
 
-      - name: Upload code coverage
-        uses: codecov/codecov-action@v6
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/cobertura-coverage.xml
-          fail_ci_if_error: false
+      # Temporary disable code coverage while running on a forked repository
+      # - name: Upload code coverage
+      #   uses: codecov/codecov-action@v6
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     files: ./coverage/cobertura-coverage.xml
+      #     fail_ci_if_error: false
 
       - name: Determine version tag
         id: version
