@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import {
   formatServiceUnits,
   loadPayuExperiments,
@@ -73,20 +73,35 @@ describe("normalizePayuExperiment", () => {
 });
 
 describe("loadPayuExperiments", () => {
-  it("returns a non-empty array of normalised experiments", async () => {
-    const experiments = await loadPayuExperiments();
+  const API_URL = "http://test-api/experiments/";
+  const mockResults: PayuExperimentRaw[] = [BASE_RAW];
 
-    expect(experiments.length).toBeGreaterThan(0);
+  beforeEach(() => {
+    vi.stubEnv("VITE_PAYU_CMIP7_API_URL", API_URL);
+  });
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
   });
 
-  it("returns experiments with the expected normalised shape", async () => {
-    const [first] = await loadPayuExperiments();
+  it("fetches from VITE_PAYU_CMIP7_API_URL and returns normalised experiments", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ count: mockResults.length, results: mockResults }),
+    }));
+    const result = await loadPayuExperiments();
+    expect(fetch).toHaveBeenCalledWith(API_URL);
+    expect(result).toHaveLength(mockResults.length);
+    expect(result[0]).toHaveProperty("name");
+  });
 
-    expect(first).toHaveProperty("name");
-    expect(first).toHaveProperty("uuid");
-    expect(first).toHaveProperty("modelStartTime");
-    expect(first).toHaveProperty("modelCurrentTime");
-    expect(first).toHaveProperty("serviceUnitsDisplay");
-    expect(first).toHaveProperty("details");
+  it("throws when the response is not ok", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 500 }));
+    await expect(loadPayuExperiments()).rejects.toThrow("500");
+  });
+
+  it("throws when VITE_PAYU_CMIP7_API_URL is not set", async () => {
+    vi.unstubAllEnvs();
+    await expect(loadPayuExperiments()).rejects.toThrow("VITE_PAYU_CMIP7_API_URL");
   });
 });

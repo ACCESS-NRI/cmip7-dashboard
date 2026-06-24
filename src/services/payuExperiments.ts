@@ -33,8 +33,8 @@ export interface PayuExperiment {
  * component.
  */
 export function formatServiceUnits(raw: PayuExperimentRaw): string {
-  if (raw.experiment_service_units_used != null) {
-    return String(raw.experiment_service_units_used);
+  if (raw.experiment_service_units != null) {
+    return String(raw.experiment_service_units);
   }
   if (raw.experiment_resources_used_cput != null) {
     return `${raw.experiment_resources_used_cput} (CPU-T)`;
@@ -55,39 +55,21 @@ export function normalizePayuExperiment(
   };
 }
 
-// ---------------------------------------------------------------------------
-// Static mock data (first iteration; replace with real fetch when ready)
-// ---------------------------------------------------------------------------
-
-const MOCK_PAYU_EXPERIMENTS: PayuExperimentRaw[] = [
-  {
-    experiment_name: "Ndep2-PI-CNP-concentrations",
-    experiment_uuid: "e523e199-80f6-4ca6-b84a-e513a16f2029",
-    experiment_model_start_time: "0101-01-01T00:00:00",
-    experiment_model_current_time: "0275-01-01T00:00:00",
-    experiment_service_units_used: 1,
-  },
-  {
-    experiment_name: "historical-1pctCO2-nudged",
-    experiment_uuid: "a1b2c3d4-1234-5678-abcd-ef0123456789",
-    experiment_model_start_time: "1850-01-01T00:00:00",
-    experiment_model_current_time: "1920-06-01T00:00:00",
-    experiment_service_units_used: null,
-    experiment_resources_used_cput: 342.5,
-  },
-  {
-    experiment_name: "piControl-spun-up",
-    experiment_uuid: "f9e8d7c6-fedc-ba98-7654-321012345678",
-    experiment_model_start_time: "0001-01-01T00:00:00",
-    experiment_model_current_time: "0050-01-01T00:00:00",
-    experiment_service_units_used: 0,
-  },
-];
 
 // ---------------------------------------------------------------------------
-// Loader (async interface preserved for future API migration)
+// Loader
 // ---------------------------------------------------------------------------
+
 
 export async function loadPayuExperiments(): Promise<PayuExperiment[]> {
-  return MOCK_PAYU_EXPERIMENTS.map(normalizePayuExperiment);
+  const url = import.meta.env.VITE_PAYU_CMIP7_API_URL;
+  if (!url) {
+    throw new Error("VITE_PAYU_CMIP7_API_URL is not configured");
+  }
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch experiments: ${response.status}`);
+  }
+  const data: PayuExperimentRaw[] = await response.json();
+  return data.map(normalizePayuExperiment);
 }

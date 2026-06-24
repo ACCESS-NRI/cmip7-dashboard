@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_CMIP7_PARQUET_SOURCE?: string;
   readonly VITE_PUBLIC_POSTHOG_HOST?: string;
   readonly VITE_PUBLIC_POSTHOG_KEY?: string;
+  readonly VITE_PAYU_CMIP7_API_URL?: string;
 }
 
 interface ImportMeta {
