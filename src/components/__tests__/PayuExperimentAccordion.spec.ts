@@ -40,6 +40,7 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     modelStartTime: "0101-01-01T00:00:00",
     modelCurrentTime: "0275-01-01T00:00:00",
     serviceUnitsDisplay: "1",
+    yearsRun: 174,
     details: {
       experiment_name: "Ndep2-PI-CNP-concentrations",
       experiment_uuid: "e523e199-80f6-4ca6-b84a-e513a16f2029",
@@ -54,6 +55,7 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     modelStartTime: "0001-01-01T00:00:00",
     modelCurrentTime: "0050-01-01T00:00:00",
     serviceUnitsDisplay: "0",
+    yearsRun: 49,
     details: {
       experiment_name: "piControl-spun-up",
       experiment_uuid: "f9e8d7c6-fedc-ba98-7654-321012345678",
