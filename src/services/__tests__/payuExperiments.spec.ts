@@ -3,6 +3,7 @@ import {
   formatServiceUnits,
   loadPayuExperiments,
   normalizePayuExperiment,
+  calculateYearsRun
 } from "../payuExperiments";
 import type { PayuExperimentRaw } from "../payuExperiments";
 
@@ -11,13 +12,13 @@ const BASE_RAW: PayuExperimentRaw = {
   experiment_uuid: "abc-123",
   experiment_model_start_time: "0101-01-01T00:00:00",
   experiment_model_current_time: "0275-01-01T00:00:00",
-  experiment_service_units_used: 42,
+  experiment_service_units: 42,
 };
 
 describe("formatServiceUnits", () => {
   it("uses experiment_service_units_used when present", () => {
     expect(
-      formatServiceUnits({ ...BASE_RAW, experiment_service_units_used: 7 }),
+      formatServiceUnits({ ...BASE_RAW, experiment_service_units: 7 }),
     ).toBe("7");
   });
 
@@ -25,7 +26,7 @@ describe("formatServiceUnits", () => {
     expect(
       formatServiceUnits({
         ...BASE_RAW,
-        experiment_service_units_used: null,
+        experiment_service_units: null,
         experiment_resources_used_cput: 99.5,
       }),
     ).toBe("99.5 (CPU-T)");
@@ -42,6 +43,20 @@ describe("formatServiceUnits", () => {
   });
 });
 
+describe("calculateYearsRun", () => {
+  it("returns the difference in years between start and current time", () => {
+    // BASE_RAW: 0101 → 0275 = 174 years
+    expect(calculateYearsRun(BASE_RAW)).toBe(174);
+  });
+
+  it("returns 0 when start and current year are the same", () => {
+    expect(calculateYearsRun({
+      ...BASE_RAW,
+      experiment_model_current_time: "0101-06-01T00:00:00",
+    })).toBe(0);
+  });
+});
+
 describe("normalizePayuExperiment", () => {
   it("maps raw fields to the normalised view model", () => {
     const result = normalizePayuExperiment(BASE_RAW);
@@ -51,6 +66,7 @@ describe("normalizePayuExperiment", () => {
     expect(result.modelStartTime).toBe("0101-01-01T00:00:00");
     expect(result.modelCurrentTime).toBe("0275-01-01T00:00:00");
     expect(result.serviceUnitsDisplay).toBe("42");
+    expect(result.yearsRun).toBe(174);
   });
 
   it("includes all raw fields in details for forward compatibility", () => {
@@ -87,7 +103,7 @@ describe("loadPayuExperiments", () => {
   it("fetches from VITE_PAYU_CMIP7_API_URL and returns normalised experiments", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({ count: mockResults.length, results: mockResults }),
+      json: async () => mockResults,
     }));
     const result = await loadPayuExperiments();
     expect(fetch).toHaveBeenCalledWith(API_URL);
@@ -101,7 +117,7 @@ describe("loadPayuExperiments", () => {
   });
 
   it("throws when VITE_PAYU_CMIP7_API_URL is not set", async () => {
-    vi.unstubAllEnvs();
+    vi.stubEnv("VITE_PAYU_CMIP7_API_URL", "");
     await expect(loadPayuExperiments()).rejects.toThrow("VITE_PAYU_CMIP7_API_URL");
   });
 });

@@ -19,6 +19,7 @@ export interface PayuExperiment {
   modelStartTime: string;
   modelCurrentTime: string;
   serviceUnitsDisplay: string;
+  yearsRun: number;
   /** All original key/value pairs for the expanded details panel. */
   details: Record<string, unknown>;
 }
@@ -42,6 +43,12 @@ export function formatServiceUnits(raw: PayuExperimentRaw): string {
   return "—";
 }
 
+export function calculateYearsRun(raw: PayuExperimentRaw): number {
+  const startYear = parseInt(raw.experiment_model_start_time.slice(0, 4), 10);
+  const currentYear = parseInt(raw.experiment_model_current_time.slice(0, 4), 10);
+  return currentYear - startYear;
+}
+
 export function normalizePayuExperiment(
   raw: PayuExperimentRaw,
 ): PayuExperiment {
@@ -51,6 +58,7 @@ export function normalizePayuExperiment(
     modelStartTime: raw.experiment_model_start_time,
     modelCurrentTime: raw.experiment_model_current_time,
     serviceUnitsDisplay: formatServiceUnits(raw),
+    yearsRun: calculateYearsRun(raw),
     details: { ...raw },
   };
 }
