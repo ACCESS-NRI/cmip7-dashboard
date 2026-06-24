@@ -56,7 +56,29 @@
       </div>
     </section>
 
-    <DummyClimatePlot />
+    <!-- Payu summary cards -->
+    <section
+      v-if="payuExperiments.length > 0"
+      class="mx-auto mb-12 grid max-w-2xl gap-4 sm:grid-cols-2"
+      aria-label="Payu experiment summary"
+    >
+      <div class="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+        <p class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">
+          Total years run
+        </p>
+        <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
+          {{ totalYearsRun }}
+        </p>
+      </div>
+      <div class="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+        <p class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">
+          Service units used
+        </p>
+        <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
+          {{ totalServiceUnits }}
+        </p>
+      </div>
+    </section>
 
     <PayuExperimentAccordion
       :experiments="payuExperiments"
@@ -64,6 +86,8 @@
       :error="payuError"
     />
 
+    <DummyClimatePlot />
+  
     <section
       class="mx-auto mb-12 max-w-2xl space-y-3 rounded-2xl border border-gray-200 bg-white p-5 text-sm leading-relaxed text-gray-600 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
     >
@@ -101,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import DummyClimatePlot from "./DummyClimatePlot.vue";
 import PayuExperimentAccordion from "./PayuExperimentAccordion.vue";
 import { loadPayuExperiments } from "@/services/payuExperiments";
@@ -126,5 +150,17 @@ onMounted(async () => {
   } finally {
     payuLoading.value = false;
   }
+});
+
+const totalYearsRun = computed(() =>
+  payuExperiments.value.reduce((sum, e) => sum + e.yearsRun, 0)
+);
+
+const totalServiceUnits = computed(() => {
+  const total = payuExperiments.value.reduce((sum, e) => {
+    const su = e.details["experiment_service_units"];
+    return typeof su === "number" ? sum + su : sum;
+  }, 0);
+  return total.toLocaleString(undefined, { maximumFractionDigits: 2 });
 });
 </script>
