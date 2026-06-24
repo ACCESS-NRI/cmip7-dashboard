@@ -36,26 +36,6 @@
       </p>
     </section>
 
-    <section
-      class="mx-auto mb-12 grid max-w-2xl gap-4 sm:grid-cols-3"
-      aria-label="Dashboard status"
-    >
-      <div
-        v-for="item in statusCards"
-        :key="item.label"
-        class="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
-      >
-        <p
-          class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
-        >
-          {{ item.label }}
-        </p>
-        <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
-          {{ item.value }}
-        </p>
-      </div>
-    </section>
-
     <!-- Payu summary cards -->
     <section
       v-if="payuExperiments.length > 0"
@@ -138,12 +118,6 @@ import DummyClimatePlot from "./DummyClimatePlot.vue";
 import PayuExperimentAccordion from "./PayuExperimentAccordion.vue";
 import { loadPayuExperiments } from "@/services/payuExperiments";
 import type { PayuExperiment } from "@/services/payuExperiments";
-
-const statusCards = [
-  { label: "App", value: "Vue 3 + Vite" },
-  { label: "Metrics", value: "TCRE-ready" },
-  { label: "Charts", value: "Chart.js-ready" },
-];
 
 const payuExperiments = ref<PayuExperiment[]>([]);
 const payuLoading = ref(true);
