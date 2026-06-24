@@ -45,7 +45,10 @@ export function formatServiceUnits(raw: PayuExperimentRaw): string {
 
 export function calculateYearsRun(raw: PayuExperimentRaw): number {
   const startYear = parseInt(raw.experiment_model_start_time.slice(0, 4), 10);
-  const currentYear = parseInt(raw.experiment_model_current_time.slice(0, 4), 10);
+  const currentYear = parseInt(
+    raw.experiment_model_current_time.slice(0, 4),
+    10,
+  );
   return currentYear - startYear;
 }
 
@@ -63,11 +66,9 @@ export function normalizePayuExperiment(
   };
 }
 
-
 // ---------------------------------------------------------------------------
 // Loader
 // ---------------------------------------------------------------------------
-
 
 export async function loadPayuExperiments(): Promise<PayuExperiment[]> {
   const url = import.meta.env.VITE_PAYU_CMIP7_API_URL;

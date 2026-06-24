@@ -3,7 +3,7 @@ import {
   formatServiceUnits,
   loadPayuExperiments,
   normalizePayuExperiment,
-  calculateYearsRun
+  calculateYearsRun,
 } from "../payuExperiments";
 import type { PayuExperimentRaw } from "../payuExperiments";
 
@@ -50,10 +50,12 @@ describe("calculateYearsRun", () => {
   });
 
   it("returns 0 when start and current year are the same", () => {
-    expect(calculateYearsRun({
-      ...BASE_RAW,
-      experiment_model_current_time: "0101-06-01T00:00:00",
-    })).toBe(0);
+    expect(
+      calculateYearsRun({
+        ...BASE_RAW,
+        experiment_model_current_time: "0101-06-01T00:00:00",
+      }),
+    ).toBe(0);
   });
 });
 
@@ -101,10 +103,13 @@ describe("loadPayuExperiments", () => {
   });
 
   it("fetches from VITE_PAYU_CMIP7_API_URL and returns normalised experiments", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => mockResults,
-    }));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => mockResults,
+      }),
+    );
     const result = await loadPayuExperiments();
     expect(fetch).toHaveBeenCalledWith(API_URL);
     expect(result).toHaveLength(mockResults.length);
@@ -112,12 +117,17 @@ describe("loadPayuExperiments", () => {
   });
 
   it("throws when the response is not ok", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, status: 500 }));
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: false, status: 500 }),
+    );
     await expect(loadPayuExperiments()).rejects.toThrow("500");
   });
 
   it("throws when VITE_PAYU_CMIP7_API_URL is not set", async () => {
     vi.stubEnv("VITE_PAYU_CMIP7_API_URL", "");
-    await expect(loadPayuExperiments()).rejects.toThrow("VITE_PAYU_CMIP7_API_URL");
+    await expect(loadPayuExperiments()).rejects.toThrow(
+      "VITE_PAYU_CMIP7_API_URL",
+    );
   });
 });
