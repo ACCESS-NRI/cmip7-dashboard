@@ -13,17 +13,3 @@ export async function loadExperimentConfig(): Promise<ExperimentConfig[]> {
   }
   return response.json() as Promise<ExperimentConfig[]>;
 }
-
-export function getExpectedYearsRun(
-  config: ExperimentConfig[],
-  uuid: string,
-): number | null {
-  return config.find((c) => c.uuid === uuid)?.expected_years_run ?? null;
-}
-
-export function getEsgfPublished(
-  config: ExperimentConfig[],
-  uuid: string,
-): boolean | null {
-  return config.find((c) => c.uuid == uuid)?.esgf_published ?? null;
-}

@@ -1,8 +1,4 @@
-import {
-  loadExperimentConfig,
-  getExpectedYearsRun,
-  getEsgfPublished,
-} from "./experimentConfig";
+import { loadExperimentConfig } from "./experimentConfig";
 import type { ExperimentConfig } from "./experimentConfig";
 
 /** Raw shape produced by the Payu experiment API / CLI output. */
@@ -62,19 +58,19 @@ export function calculateYearsRun(raw: PayuExperimentRaw): number {
 }
 
 export function normalizePayuExperiment(
-  raw: PayuExperimentRaw,
-  config: ExperimentConfig[] = [],
+  configEntry: ExperimentConfig,
+  payuData: PayuExperimentRaw | undefined,
 ): PayuExperiment {
   return {
-    name: raw.experiment_name,
-    uuid: raw.experiment_uuid,
-    modelStartTime: raw.experiment_model_start_time,
-    modelCurrentTime: raw.experiment_model_current_time,
-    serviceUnitsDisplay: formatServiceUnits(raw),
-    yearsRun: calculateYearsRun(raw),
-    expectedYearsRun: getExpectedYearsRun(config, raw.experiment_uuid),
-    esgfPublished: getEsgfPublished(config, raw.experiment_uuid),
-    details: { ...raw },
+    name: configEntry.name,
+    uuid: configEntry.uuid,
+    modelStartTime: payuData?.experiment_model_start_time ?? "—",
+    modelCurrentTime: payuData?.experiment_model_current_time ?? "—",
+    serviceUnitsDisplay: payuData ? formatServiceUnits(payuData) : "—",
+    yearsRun: payuData ? calculateYearsRun(payuData) : 0,
+    expectedYearsRun: configEntry.expected_years_run,
+    esgfPublished: configEntry.esgf_published ?? null,
+    details: payuData ? { ...payuData } : {},
   };
 }
 
@@ -96,6 +92,13 @@ export async function loadPayuExperiments(): Promise<PayuExperiment[]> {
   if (!response.ok) {
     throw new Error(`Failed to fetch experiments: ${response.status}`);
   }
-  const data: PayuExperimentRaw[] = await response.json();
-  return data.map((raw) => normalizePayuExperiment(raw, config));
+  const payuData: PayuExperimentRaw[] = await response.json();
+
+  // Iterate over config (source of truth), look up Payu telemetry by UUID
+  return config.map((configEntry) => {
+    const telemetry = payuData.find(
+      (p) => p.experiment_uuid === configEntry.uuid,
+    );
+    return normalizePayuExperiment(configEntry, telemetry);
+  });
 }
