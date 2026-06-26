@@ -70,8 +70,8 @@
       >
         <AccordionPanel
           v-for="experiment in experiments"
-          :key="experiment.uuid"
-          :value="experiment.uuid"
+          :key="experiment.uuid || experiment.name"
+          :value="experiment.uuid || experiment.name"
           data-test="accordion-item"
         >
           <AccordionHeader data-test="accordion-trigger">
@@ -130,7 +130,16 @@
           </AccordionHeader>
 
           <AccordionContent data-test="accordion-content">
-            <dl class="grid grid-cols-1 gap-y-2 px-1 py-2 sm:grid-cols-2">
+            <div
+              v-if="Object.keys(experiment.details).length === 0"
+              class="px-1 py-2 text-center text-sm text-gray-400 dark:text-gray-500"
+            >
+              No model runs found
+            </div>
+            <dl
+              v-else
+              class="grid grid-cols-1 gap-y-2 px-1 py-2 sm:grid-cols-2"
+            >
               <template
                 v-for="[key, value] in Object.entries(experiment.details)"
                 :key="key"

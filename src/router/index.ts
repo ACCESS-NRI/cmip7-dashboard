@@ -20,6 +20,15 @@ const routes = [
       embed: true,
     },
   },
+  {
+    path: "/embed/experiments-summary",
+    name: "ExperimentsSummaryEmbed",
+    component: () => import("../components/ExperimentsSummaryEmbed.vue"),
+    meta: {
+      title: "CMIP7 Experiments Summary",
+      embed: true,
+    },
+  },
 ];
 
 const router = createRouter({

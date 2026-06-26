@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch, nextTick } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import PayuExperimentAccordion from "./PayuExperimentAccordion.vue";
 import { loadPayuExperiments } from "@/services/payuExperiments";
 import type { PayuExperiment } from "@/services/payuExperiments";
