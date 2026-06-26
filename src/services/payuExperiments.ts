@@ -1,3 +1,10 @@
+import {
+  loadExperimentConfig,
+  getExpectedYearsRun,
+  getEsgfPublished,
+} from "./experimentConfig";
+import type { ExperimentConfig } from "./experimentConfig";
+
 /** Raw shape produced by the Payu experiment API / CLI output. */
 export interface PayuExperimentRaw {
   experiment_name: string;
@@ -20,6 +27,8 @@ export interface PayuExperiment {
   modelCurrentTime: string;
   serviceUnitsDisplay: string;
   yearsRun: number;
+  expectedYearsRun: number | null;
+  esgfPublished: boolean | null;
   /** All original key/value pairs for the expanded details panel. */
   details: Record<string, unknown>;
 }
@@ -54,6 +63,7 @@ export function calculateYearsRun(raw: PayuExperimentRaw): number {
 
 export function normalizePayuExperiment(
   raw: PayuExperimentRaw,
+  config: ExperimentConfig[] = [],
 ): PayuExperiment {
   return {
     name: raw.experiment_name,
@@ -62,6 +72,8 @@ export function normalizePayuExperiment(
     modelCurrentTime: raw.experiment_model_current_time,
     serviceUnitsDisplay: formatServiceUnits(raw),
     yearsRun: calculateYearsRun(raw),
+    expectedYearsRun: getExpectedYearsRun(config, raw.experiment_uuid),
+    esgfPublished: getEsgfPublished(config, raw.experiment_uuid),
     details: { ...raw },
   };
 }
@@ -75,10 +87,15 @@ export async function loadPayuExperiments(): Promise<PayuExperiment[]> {
   if (!url) {
     throw new Error("VITE_PAYU_CMIP7_API_URL is not configured");
   }
-  const response = await fetch(url);
+
+  const [response, config] = await Promise.all([
+    fetch(url),
+    loadExperimentConfig().catch(() => [] as ExperimentConfig[]),
+  ]);
+
   if (!response.ok) {
     throw new Error(`Failed to fetch experiments: ${response.status}`);
   }
   const data: PayuExperimentRaw[] = await response.json();
-  return data.map(normalizePayuExperiment);
+  return data.map((raw) => normalizePayuExperiment(raw, config));
 }

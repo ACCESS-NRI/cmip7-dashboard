@@ -41,6 +41,8 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     modelCurrentTime: "0275-01-01T00:00:00",
     serviceUnitsDisplay: "1",
     yearsRun: 174,
+    expectedYearsRun: 500,
+    esgfPublished: false,
     details: {
       experiment_name: "Ndep2-PI-CNP-concentrations",
       experiment_uuid: "e523e199-80f6-4ca6-b84a-e513a16f2029",
@@ -56,6 +58,8 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     modelCurrentTime: "0050-01-01T00:00:00",
     serviceUnitsDisplay: "0",
     yearsRun: 49,
+    expectedYearsRun: 500,
+    esgfPublished: true,
     details: {
       experiment_name: "piControl-spun-up",
       experiment_uuid: "f9e8d7c6-fedc-ba98-7654-321012345678",
@@ -77,13 +81,59 @@ describe("PayuExperimentAccordion", () => {
     expect(wrapper.text()).toContain("piControl-spun-up");
   });
 
-  it("shows the model current time and service units in the summary", () => {
+  it("shows the progress bar when expectedYearsRun is set", () => {
     const wrapper = mount(PayuExperimentAccordion, {
       props: { experiments: [MOCK_EXPERIMENTS[0]!] },
     });
+    expect(wrapper.find('[data-test="progress-bar"]').exists()).toBe(true);
+    expect(wrapper.text()).toContain("174 / 500 years");
+  });
 
-    expect(wrapper.text()).toContain("0275-01-01T00:00:00");
-    expect(wrapper.text()).toContain("1 SU");
+  it("shows the years-run badge when expectedYearsRun is null", () => {
+    const wrapper = mount(PayuExperimentAccordion, {
+      props: {
+        experiments: [{ ...MOCK_EXPERIMENTS[0]!, expectedYearsRun: null }],
+      },
+    });
+    expect(wrapper.find('[data-test="years-run-badge"]').exists()).toBe(true);
+    expect(wrapper.find('[data-test="progress-bar"]').exists()).toBe(false);
+  });
+
+  it("renders the ESGF checkbox in the header", () => {
+    const wrapper = mount(PayuExperimentAccordion, {
+      props: { experiments: [MOCK_EXPERIMENTS[0]!] },
+    });
+    expect(wrapper.find('[data-test="esgf-status"]').exists()).toBe(true);
+  });
+
+  it("shows checked ESGF checkbox when esgfPublished is true", () => {
+    const wrapper = mount(PayuExperimentAccordion, {
+      props: {
+        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: true }],
+      },
+    });
+    const checkbox = wrapper.find('[data-test="esgf-status"] input');
+    expect((checkbox.element as HTMLInputElement).checked).toBe(true);
+  });
+
+  it("shows unchecked ESGF checkbox when esgfPublished is false", () => {
+    const wrapper = mount(PayuExperimentAccordion, {
+      props: {
+        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: false }],
+      },
+    });
+    const checkbox = wrapper.find('[data-test="esgf-status"] input');
+    expect((checkbox.element as HTMLInputElement).checked).toBe(false);
+  });
+
+  it("shows unchecked ESGF checkbox when esgfPublished is null", () => {
+    const wrapper = mount(PayuExperimentAccordion, {
+      props: {
+        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: null }],
+      },
+    });
+    const checkbox = wrapper.find('[data-test="esgf-status"] input');
+    expect((checkbox.element as HTMLInputElement).checked).toBe(false);
   });
 
   it("renders all detail fields in the expanded panel", () => {

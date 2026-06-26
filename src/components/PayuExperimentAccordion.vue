@@ -38,66 +38,121 @@
       {{ emptyMessage }}
     </div>
 
-    <!-- Accordion list -->
-    <Accordion
-      v-else
-      v-model:value="openPanels"
-      multiple
-      class="payu-accordion"
-      data-test="payu-accordion"
-    >
-      <AccordionPanel
-        v-for="experiment in experiments"
-        :key="experiment.uuid"
-        :value="experiment.uuid"
-        data-test="accordion-item"
+    <!-- Column headers + Accordion — shown when there's data -->
+    <template v-else>
+      <div
+        class="grid items-center border-b border-gray-100 px-5 py-2 dark:border-gray-700"
+        style="grid-template-columns: 1fr 11rem 4rem"
       >
-        <AccordionHeader data-test="accordion-trigger">
-          <div class="flex min-w-0 flex-1 items-center gap-4">
-            <span
-              class="min-w-0 flex-1 truncate text-sm font-medium text-gray-800 dark:!text-gray-100"
-            >
-              {{ experiment.name }}
-            </span>
-            <span class="shrink-0 text-xs text-gray-400 dark:text-gray-400">
-              {{ experiment.modelCurrentTime }}
-            </span>
-            <span
-              class="shrink-0 rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-            >
-              {{ experiment.yearsRun }} yrs
-            </span>
-            <span
-              class="shrink-0 rounded bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300"
-            >
-              {{ experiment.serviceUnitsDisplay }} SU
-            </span>
-          </div>
-        </AccordionHeader>
+        <span
+          class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+        >
+          Experiment
+        </span>
+        <span
+          class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+        >
+          Simulations
+        </span>
+        <span
+          class="text-center text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+        >
+          ESGF
+        </span>
+      </div>
 
-        <AccordionContent data-test="accordion-content">
-          <dl class="grid grid-cols-1 gap-y-2 px-1 py-2 sm:grid-cols-2">
-            <template
-              v-for="[key, value] in Object.entries(experiment.details)"
-              :key="key"
+      <!-- Accordion list -->
+      <Accordion
+        v-model:value="openPanels"
+        multiple
+        class="payu-accordion"
+        data-test="payu-accordion"
+      >
+        <AccordionPanel
+          v-for="experiment in experiments"
+          :key="experiment.uuid"
+          :value="experiment.uuid"
+          data-test="accordion-item"
+        >
+          <AccordionHeader data-test="accordion-trigger">
+            <div
+              class="grid w-full items-center"
+              style="grid-template-columns: 1fr 11rem 4rem"
             >
-              <div class="min-w-0">
-                <dt
-                  class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+              <!-- Experiment column -->
+              <span
+                class="min-w-0 truncate text-sm font-medium text-gray-800 dark:!text-gray-100"
+              >
+                {{ experiment.name }}
+              </span>
+
+              <!-- Simulations column: progress bar or fallback badge -->
+              <div
+                v-if="experiment.expectedYearsRun !== null"
+                class="flex flex-col gap-1"
+                data-test="progress-bar"
+              >
+                <span class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ experiment.yearsRun }} /
+                  {{ experiment.expectedYearsRun }} years
+                </span>
+                <div
+                  class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"
                 >
-                  {{ formatKey(key) }}
-                </dt>
-                <dd
-                  class="mt-0.5 break-all text-sm text-gray-700 dark:text-gray-300"
-                >
-                  {{ formatValue(value) }}
-                </dd>
+                  <div
+                    class="h-full rounded-full bg-blue-500 transition-all dark:bg-blue-400"
+                    data-test="progress-fill"
+                    :style="{
+                      width: `${Math.min(100, Math.round((experiment.yearsRun / experiment.expectedYearsRun) * 100))}%`,
+                    }"
+                  ></div>
+                </div>
               </div>
-            </template>
-          </dl>
-        </AccordionContent>
-      </AccordionPanel>
-    </Accordion>
+              <span
+                v-else
+                class="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
+                data-test="years-run-badge"
+              >
+                {{ experiment.yearsRun }} years
+              </span>
+
+              <!-- ESGF column -->
+              <div class="flex justify-center" data-test="esgf-status">
+                <input
+                  type="checkbox"
+                  :checked="experiment.esgfPublished ?? false"
+                  disabled
+                  class="h-4 w-4 rounded accent-blue-600"
+                  :aria-label="`ESGF published: ${experiment.esgfPublished ? 'yes' : 'no'}`"
+                />
+              </div>
+            </div>
+          </AccordionHeader>
+
+          <AccordionContent data-test="accordion-content">
+            <dl class="grid grid-cols-1 gap-y-2 px-1 py-2 sm:grid-cols-2">
+              <template
+                v-for="[key, value] in Object.entries(experiment.details)"
+                :key="key"
+              >
+                <div class="min-w-0">
+                  <dt
+                    class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+                  >
+                    {{ formatKey(key) }}
+                  </dt>
+                  <dd
+                    class="mt-0.5 break-all text-sm text-gray-700 dark:text-gray-300"
+                  >
+                    {{ formatValue(value) }}
+                  </dd>
+                </div>
+              </template>
+            </dl>
+          </AccordionContent>
+        </AccordionPanel>
+      </Accordion>
+    </template>
   </section>
 </template>
 

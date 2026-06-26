@@ -39,7 +39,7 @@
     <!-- Payu summary cards -->
     <section
       v-if="payuExperiments.length > 0"
-      class="mx-auto mb-12 grid max-w-2xl gap-4 sm:grid-cols-2"
+      class="mx-auto mb-12 grid max-w-2xl gap-4 sm:grid-cols-3"
       aria-label="Payu experiment summary"
     >
       <div
@@ -48,7 +48,7 @@
         <p
           class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
         >
-          Total years run
+          Total years simulated
         </p>
         <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
           {{ totalYearsRun }}
@@ -64,6 +64,18 @@
         </p>
         <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
           {{ totalServiceUnits }}
+        </p>
+      </div>
+      <div
+        class="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+      >
+        <p
+          class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
+        >
+          Data volumes
+        </p>
+        <p class="mt-2 text-sm font-semibold text-gray-800 dark:text-gray-100">
+          -
         </p>
       </div>
     </section>

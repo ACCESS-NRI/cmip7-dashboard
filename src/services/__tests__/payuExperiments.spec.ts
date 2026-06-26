@@ -6,6 +6,7 @@ import {
   calculateYearsRun,
 } from "../payuExperiments";
 import type { PayuExperimentRaw } from "../payuExperiments";
+import type { ExperimentConfig } from "../experimentConfig";
 
 const BASE_RAW: PayuExperimentRaw = {
   experiment_name: "test-run",
@@ -60,6 +61,19 @@ describe("calculateYearsRun", () => {
 });
 
 describe("normalizePayuExperiment", () => {
+  it("sets expectedYearsRun to null when no config is provided", () => {
+    const result = normalizePayuExperiment(BASE_RAW);
+    expect(result.expectedYearsRun).toBeNull();
+  });
+
+  it("sets expectedYearsRun from config when a matching entry exists", () => {
+    const config: ExperimentConfig[] = [
+      { uuid: "abc-123", name: "test-run", expected_years_run: 300 },
+    ];
+    const result = normalizePayuExperiment(BASE_RAW, config);
+    expect(result.expectedYearsRun).toBe(300);
+  });
+
   it("maps raw fields to the normalised view model", () => {
     const result = normalizePayuExperiment(BASE_RAW);
 
