@@ -1,6 +1,6 @@
 <template>
   <section
-    class="mx-auto mb-12 max-w-2xl rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"
+    class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"
     aria-label="Payu experiment runs"
   >
     <div class="border-b border-gray-100 px-5 py-4 dark:border-gray-700">
@@ -199,6 +199,12 @@ function formatValue(value: unknown): string {
 </script>
 
 <style scoped>
+/* Ensure last accordion panel matches section's rounded corners */
+:deep(.payu-accordion) {
+  overflow: hidden;
+  border-radius: 0 0 1rem 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
   /* Override PrimeVue Aura CSS variables for the accordion in dark mode */
   :deep(.payu-accordion) {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import AppHeader from "./components/AppHeader.vue";
 import { isNavigating } from "./router";
+import { useRoute } from "vue-router";
+const route = useRoute();
 </script>
 
 <template>
@@ -25,7 +27,7 @@ import { isNavigating } from "./router";
       </div>
     </Transition>
 
-    <AppHeader />
+    <AppHeader v-if="!route.meta.embed" />
     <RouterView />
   </div>
 </template>

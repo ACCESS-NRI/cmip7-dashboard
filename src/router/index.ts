@@ -11,6 +11,15 @@ const routes = [
       title: "CMIP7 Dashboard",
     },
   },
+  {
+    path: "/embed/experiments",
+    name: "ExperimentsEmbed",
+    component: () => import("../components/ExperimentsEmbed.vue"),
+    meta: {
+      title: "CMIP7 Experiments",
+      embed: true,
+    },
+  },
 ];
 
 const router = createRouter({
