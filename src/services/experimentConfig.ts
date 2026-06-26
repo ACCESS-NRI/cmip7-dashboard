@@ -7,9 +7,10 @@ export interface ExperimentConfig {
 }
 
 export async function loadExperimentConfig(): Promise<ExperimentConfig[]> {
-  const response = await fetch("/experiment-config.json");
-  if (!response.ok) {
-    throw new Error(`Failed to load experiment config: ${response.status}`);
-  }
-  return response.json() as Promise<ExperimentConfig[]>;
+    const basePath = import.meta.env.BASE_URL;
+    const response = await fetch(`${basePath}experiment-config.json`);
+    if (!response.ok) {
+        throw new Error(`Failed to load experiment config: ${response.status}`);
+    }
+    return response.json() as Promise<ExperimentConfig[]>;
 }
