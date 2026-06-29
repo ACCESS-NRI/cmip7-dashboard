@@ -1,3 +1,6 @@
+import { loadExperimentConfig } from "./experimentConfig";
+import type { ExperimentConfig } from "./experimentConfig";
+
 /** Raw shape produced by the Payu experiment API / CLI output. */
 export interface PayuExperimentRaw {
   experiment_name: string;
@@ -20,6 +23,8 @@ export interface PayuExperiment {
   modelCurrentTime: string;
   serviceUnitsDisplay: string;
   yearsRun: number;
+  expectedYearsRun: number | null;
+  esgfPublished: boolean | null;
   /** All original key/value pairs for the expanded details panel. */
   details: Record<string, unknown>;
 }
@@ -54,16 +59,19 @@ export function calculateYearsRun(raw: PayuExperimentRaw): number {
 }
 
 export function normalizePayuExperiment(
-  raw: PayuExperimentRaw,
+  configEntry: ExperimentConfig,
+  payuData: PayuExperimentRaw | undefined,
 ): PayuExperiment {
   return {
-    name: raw.experiment_name,
-    uuid: raw.experiment_uuid,
-    modelStartTime: raw.experiment_model_start_time,
-    modelCurrentTime: raw.experiment_model_current_time,
-    serviceUnitsDisplay: formatServiceUnits(raw),
-    yearsRun: calculateYearsRun(raw),
-    details: { ...raw },
+    name: configEntry.name,
+    uuid: configEntry.uuid,
+    modelStartTime: payuData?.experiment_model_start_time ?? "—",
+    modelCurrentTime: payuData?.experiment_model_current_time ?? "—",
+    serviceUnitsDisplay: payuData ? formatServiceUnits(payuData) : "—",
+    yearsRun: payuData ? calculateYearsRun(payuData) : 0,
+    expectedYearsRun: configEntry.expected_years_run,
+    esgfPublished: configEntry.esgf_published ?? null,
+    details: payuData ? { ...payuData } : {},
   };
 }
 
@@ -72,9 +80,12 @@ export function normalizePayuExperiment(
 // ---------------------------------------------------------------------------
 
 /**
- * Fetch CMIP7 payu telemetry from the tracking-services API. The endpoint is
- * supplied by the caller (from `useRuntimeConfig().public.payuCmip7ApiUrl`) so
- * the loader stays pure and unit-testable.
+ * Build the dashboard experiment list. The experiment-config.json is the source
+ * of truth for which experiments to show (including ones that have not run yet);
+ * live payu telemetry from the tracking-services API is matched in by UUID.
+ *
+ * The API endpoint is supplied by the caller (from
+ * `useRuntimeConfig().public.payuCmip7ApiUrl`) so the loader stays unit-testable.
  */
 export async function loadPayuExperiments(
   apiUrl: string,
@@ -82,10 +93,22 @@ export async function loadPayuExperiments(
   if (!apiUrl) {
     throw new Error("payuCmip7ApiUrl is not configured");
   }
-  const response = await fetch(apiUrl);
+
+  const [response, config] = await Promise.all([
+    fetch(apiUrl),
+    loadExperimentConfig().catch(() => [] as ExperimentConfig[]),
+  ]);
+
   if (!response.ok) {
     throw new Error(`Failed to fetch experiments: ${response.status}`);
   }
-  const data: PayuExperimentRaw[] = await response.json();
-  return data.map(normalizePayuExperiment);
+  const payuData: PayuExperimentRaw[] = await response.json();
+
+  // Iterate over config (source of truth), look up payu telemetry by UUID.
+  return config.map((configEntry) => {
+    const telemetry = payuData.find(
+      (p) => p.experiment_uuid === configEntry.uuid,
+    );
+    return normalizePayuExperiment(configEntry, telemetry);
+  });
 }
