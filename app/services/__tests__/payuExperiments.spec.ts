@@ -1,5 +1,6 @@
-import { describe, expect, it, vi, afterEach } from "vitest";
 import { mockNuxtImport } from "@nuxt/test-utils/runtime";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import * as experimentConfigModule from "../experimentConfig";
 import {
   formatServiceUnits,
   loadPayuExperiments,
@@ -139,17 +140,20 @@ describe("loadPayuExperiments", () => {
     },
   ];
 
+  beforeEach(() => {
+    vi.spyOn(experimentConfigModule, "loadExperimentConfig").mockResolvedValue(CONFIG);
+  });
+
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   const stubFetch = (payuResponse: unknown) =>
     vi.stubGlobal(
       "fetch",
       vi.fn((url: string) =>
-        url === "/experiment-config.json"
-          ? Promise.resolve({ ok: true, json: async () => CONFIG })
-          : Promise.resolve(payuResponse),
+        Promise.resolve(payuResponse),
       ),
     );
 
