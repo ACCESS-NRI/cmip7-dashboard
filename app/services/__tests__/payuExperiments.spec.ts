@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, afterEach } from "vitest";
+import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import {
   formatServiceUnits,
   loadPayuExperiments,
@@ -7,6 +8,8 @@ import {
 } from "../payuExperiments";
 import type { PayuExperimentRaw } from "../payuExperiments";
 import type { ExperimentConfig } from "../experimentConfig";
+
+mockNuxtImport("useRuntimeConfig", () => () => ({ app: { baseURL: "/" } }));
 
 const BASE_RAW: PayuExperimentRaw = {
   experiment_name: "test-run",
