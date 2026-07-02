@@ -1,4 +1,4 @@
-name: Test Build
+name: Validate Nuxt Build
 
 on:
   push:
@@ -10,6 +10,13 @@ jobs:
   test-build:
     runs-on: ubuntu-latest
 
+    env:
+      NITRO_PRESET: github_pages
+      NUXT_APP_BASE_URL: /cmip7-dashboard/
+      NUXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
+      NUXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
+      NUXT_PUBLIC_PAYU_CMIP7_API_URL: ${{ secrets.NUXT_PUBLIC_PAYU_CMIP7_API_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -17,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "23"
+          node-version: "26"
           cache: "npm"
 
       - name: Install dependencies
@@ -29,26 +36,25 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:coverage -- --run
 
-      # Temporary disable code coverage while running on a forked repository
-      # - name: Upload code coverage
-      #   uses: codecov/codecov-action@v6
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./coverage/cobertura-coverage.xml
-      #     fail_ci_if_error: false
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v6
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/cobertura-coverage.xml
+          fail_ci_if_error: false
 
-      - name: Build project (includes type checking)
-        run: NODE_ENV=production npm run build
+      - name: Generate static site
+        run: NODE_ENV=production npm run generate
 
       - name: Check build artifacts
         run: |
-          if [ ! -d "dist" ]; then
-            echo "Build failed: dist directory not created"
+          if [ ! -d ".output/public" ]; then
+            echo "Build failed: .output/public directory not created"
             exit 1
           fi
-          if [ ! -f "dist/index.html" ]; then
-            echo "Build failed: index.html not found in dist"
+          if [ ! -f ".output/public/index.html" ]; then
+            echo "Build failed: index.html not found in .output/public"
             exit 1
           fi
           echo "Build successful! Generated files:"
-          ls -la dist/
+          ls -la .output/public/

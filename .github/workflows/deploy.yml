@@ -21,6 +21,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
+    env:
+      NITRO_PRESET: github_pages
+      NUXT_APP_BASE_URL: /cmip7-dashboard/
+      NUXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
+      NUXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
+      NUXT_PUBLIC_PAYU_CMIP7_API_URL: ${{ secrets.NUXT_PUBLIC_PAYU_CMIP7_API_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,7 +37,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "23"
+          node-version: "26"
           cache: "npm"
 
       - name: Install dependencies
@@ -39,13 +46,12 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:coverage -- --run
 
-      # Temporary disable code coverage while running on a forked repository
-      # - name: Upload code coverage
-      #   uses: codecov/codecov-action@v6
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     files: ./coverage/cobertura-coverage.xml
-      #     fail_ci_if_error: false
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v6
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/cobertura-coverage.xml
+          fail_ci_if_error: false
 
       - name: Determine version tag
         id: version
@@ -59,15 +65,8 @@ jobs:
           done
           echo "version=$TAG" >> "$GITHUB_OUTPUT"
 
-      - name: Build
-        run: NODE_ENV=production npm run build
-        env:
-          APP_VERSION: ${{ steps.version.outputs.version }}
-          VITE_PAYU_CMIP7_API_URL: ${{ secrets.VITE_PAYU_CMIP7_API_URL }}
-          # PostHog is not configured for this app yet. Uncomment when the
-          # repository secrets have been added.
-          # VITE_PUBLIC_POSTHOG_KEY: ${{ secrets.VITE_PUBLIC_POSTHOG_KEY }}
-          # VITE_PUBLIC_POSTHOG_HOST: ${{ secrets.VITE_PUBLIC_POSTHOG_HOST }}
+      - name: Generate static site
+        run: NODE_ENV=production npm run generate
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -75,7 +74,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist"
+          path: "./.output/public"
 
       - name: Deploy to GitHub Pages
         id: deployment

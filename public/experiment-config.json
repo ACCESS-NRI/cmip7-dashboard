@@ -86,14 +86,12 @@
     "esgf_published": false
   },
   {
-    "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
     "name": "esm-flat10-cdr",
     "description": "-",
     "expected_years_run": 300,
     "esgf_published": false
   },
   {
-    "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
     "name": "esm-flat10-zec",
     "description": "-",
     "expected_years_run": 300,

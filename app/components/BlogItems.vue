@@ -1,0 +1,82 @@
+<script setup lang="ts">
+type BlogPage = {
+  path?: string;
+  title?: string;
+  description?: string;
+  date?: string;
+  author?: string;
+  meta?: {
+    title?: string;
+    description?: string;
+    date?: string;
+    author?: string;
+  };
+};
+
+const { data: posts } = await useAsyncData("blog-posts", async () => {
+  const pages = (await queryCollection("content").all()) as BlogPage[];
+
+  return pages
+    .filter((page) => page.path?.startsWith("/blog/") && page.path !== "/blog")
+    .sort((a, b) => {
+      const aDate = a.date ?? a.meta?.date;
+      const bDate = b.date ?? b.meta?.date;
+      const aTime = aDate ? new Date(aDate).getTime() : 0;
+      const bTime = bDate ? new Date(bDate).getTime() : 0;
+
+      return bTime - aTime;
+    })
+    .map((page) => ({
+      href: page.path ?? "/blog",
+      title: page.title ?? page.meta?.title ?? "Untitled update",
+      description: page.description ?? page.meta?.description ?? "",
+      date: page.date ?? page.meta?.date,
+      author: page.author ?? page.meta?.author,
+    }));
+});
+
+const formatPostDate = (value?: string) => {
+  if (!value) {
+    return "Draft";
+  }
+
+  return new Date(value).toLocaleDateString("en-AU", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+</script>
+
+<template>
+  <div class="flex flex-col gap-4">
+    <NuxtLink
+      v-for="post in posts ?? []"
+      :key="post.href"
+      :to="post.href"
+      class="flex flex-col gap-2 px-6 py-5 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group"
+    >
+      <div
+        class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium"
+      >
+        {{ formatPostDate(post.date) }}
+        <span v-if="post.author"> · {{ post.author }}</span>
+      </div>
+      <div
+        class="text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug"
+      >
+        {{ post.title }}
+      </div>
+      <div class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+        {{ post.description }}
+      </div>
+    </NuxtLink>
+
+    <p
+      v-if="(posts ?? []).length === 0"
+      class="text-sm text-gray-500 dark:text-gray-400"
+    >
+      No updates published yet.
+    </p>
+  </div>
+</template>
