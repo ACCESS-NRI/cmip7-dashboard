@@ -41,8 +41,8 @@
     <!-- Column headers + accordion — shown when there's data -->
     <template v-else>
       <div
-        class="grid items-center border-b border-gray-100 px-5 py-2 dark:border-gray-700"
-        style="grid-template-columns: 1fr 11rem 4rem"
+        class="grid items-center gap-x-4 border-b border-gray-100 px-5 py-2 dark:border-gray-700"
+        style="grid-template-columns: 1fr 11rem 4rem 1.25rem"
       >
         <span
           class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
@@ -59,6 +59,7 @@
         >
           ESGF
         </span>
+        <span aria-hidden="true"></span>
       </div>
 
       <!-- Accordion list -->
@@ -67,12 +68,20 @@
         type="multiple"
         :items="items"
         :unmount-on-hide="false"
-        class="px-2 py-1"
+        class="w-full"
+        :ui="{
+          header: 'block',
+          trigger:
+            'grid w-full min-w-0 items-center gap-x-4 rounded-none border-b border-gray-100 px-5 py-2 text-left [grid-template-columns:1fr_11rem_4rem_1.25rem] dark:border-gray-700',
+          label: 'contents',
+          trailingIcon:
+            'size-5 justify-self-end shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180'
+        }"
         data-test="payu-accordion"
       >
         <template #default="{ item }">
           <div
-            class="grid w-full items-center"
+            class="col-span-3 grid w-full items-center gap-x-4"
             style="grid-template-columns: 1fr 11rem 4rem"
             data-test="accordion-trigger"
           >
@@ -129,14 +138,14 @@
         <template #content="{ item }">
           <div
             v-if="Object.keys(item.experiment.details).length === 0"
-            class="px-1 py-2 text-center text-sm text-gray-400 dark:text-gray-500"
+            class="px-5 py-2 text-center text-sm text-gray-400 dark:text-gray-500"
             data-test="accordion-content"
           >
             No model runs found
           </div>
           <dl
             v-else
-            class="grid grid-cols-1 gap-y-2 px-1 py-2 sm:grid-cols-2"
+            class="grid grid-cols-1 gap-y-2 px-5 py-2 sm:grid-cols-2"
             data-test="accordion-content"
           >
             <template
