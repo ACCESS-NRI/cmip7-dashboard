@@ -1,7 +1,7 @@
 ---
 title: "What is the piControl experiment?"
 description: "A long, stable simulation of a pre-industrial world that acts as the quiet baseline for every other run."
-author: "ACCESS-NRI"
+author: "Charles Turner, ACCESS-NRI"
 date: "2026-07-02"
 experiment: piControl
 furtherReading:

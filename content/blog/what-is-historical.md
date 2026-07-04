@@ -1,7 +1,7 @@
 ---
 title: "What is the historical experiment?"
 description: "The historical run recreates the climate of 1850 to the present using our best estimate of what actually drove it."
-author: "ACCESS-NRI"
+author: "Charles Turner, ACCESS-NRI"
 date: "2026-07-03"
 experiment: historical
 furtherReading:

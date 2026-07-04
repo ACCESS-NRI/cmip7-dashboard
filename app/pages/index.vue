@@ -146,6 +146,14 @@ onMounted(async () => {
       </div>
 
       <template v-if="!payuLoading && !payuError && payuExperiments.length > 0">
+        <!-- Taxonomy explainer: keeps idealised/diagnostic runs from being read
+             as projections (issue #14). Shown where non-specialists browse. -->
+        <ExperimentClassLegend
+          v-if="level < 2"
+          :experiment-names="payuExperiments.map((e) => e.name)"
+          class="mb-12"
+        />
+
         <!-- Big picture/Progress: one card per experiment, reframed by the picker. -->
         <div
           v-if="level < 2"

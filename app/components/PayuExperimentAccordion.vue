@@ -86,10 +86,17 @@
             data-test="accordion-trigger"
           >
             <!-- Experiment column -->
-            <span
-              class="min-w-0 truncate text-sm font-medium text-gray-800 dark:text-gray-100"
-            >
-              {{ item.experiment.name }}
+            <span class="flex min-w-0 items-center gap-2">
+              <span
+                class="min-w-0 truncate text-sm font-medium text-gray-800 dark:text-gray-100"
+              >
+                {{ item.experiment.name }}
+              </span>
+              <ExperimentClassBadge
+                :name="item.experiment.name"
+                size="sm"
+                class="hidden shrink-0 sm:inline-flex"
+              />
             </span>
 
             <!-- Simulations column: progress bar or fallback badge -->

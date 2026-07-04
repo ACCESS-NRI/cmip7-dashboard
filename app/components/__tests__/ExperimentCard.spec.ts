@@ -107,6 +107,35 @@ describe("ExperimentCard", () => {
     );
   });
 
+  it("labels the experiment class and warns that idealised runs are not projections", async () => {
+    const wrapper = await mountCard({
+      experiment: makeExperiment({ name: "abrupt-4xCO2" }),
+      post: null,
+    });
+
+    const badge = wrapper.find('[data-test="experiment-class-badge"]');
+    expect(badge.attributes("data-class")).toBe("idealised");
+    expect(
+      wrapper.find('[data-test="not-a-projection-note"]').text(),
+    ).toContain("not a real-world climate projection");
+  });
+
+  it("does not warn for a historical run, which is not idealised", async () => {
+    const wrapper = await mountCard({
+      experiment: makeExperiment({ name: "historical" }),
+      post: makePost(),
+    });
+
+    expect(
+      wrapper
+        .find('[data-test="experiment-class-badge"]')
+        .attributes("data-class"),
+    ).toBe("historical");
+    expect(wrapper.find('[data-test="not-a-projection-note"]').exists()).toBe(
+      false,
+    );
+  });
+
   it("shows progress and ESGF at Status level, without the overview", async () => {
     levelState.ref = ref(1);
     const wrapper = await mountCard({

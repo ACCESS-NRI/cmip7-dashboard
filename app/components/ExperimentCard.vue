@@ -3,6 +3,7 @@ import { computed } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";
 import { useDetailLevel } from "~/composables/useDetailLevel";
 import type { PayuExperiment } from "~/services/payuExperiments";
+import { classifyExperiment } from "~/services/experimentClass";
 
 const props = defineProps<{
   experiment: PayuExperiment;
@@ -13,6 +14,13 @@ const props = defineProps<{
 const level = useDetailLevel();
 
 const furtherReading = computed(() => props.post?.furtherReading ?? []);
+
+// Experiment taxonomy (issue #14): idealised runs (e.g. abrupt-4xCO2) are the
+// ones most easily misread as projections, so flag them explicitly.
+const experimentClass = computed(() =>
+  classifyExperiment(props.experiment.name),
+);
+const isIdealised = computed(() => experimentClass.value.id === "idealised");
 </script>
 
 <!-- Per-experiment card for the Overview and Status detail levels; the Detail
@@ -23,16 +31,26 @@ const furtherReading = computed(() => props.post?.furtherReading ?? []);
     :aria-label="`Experiment ${experiment.name}`"
     data-test="experiment-card"
   >
-    <header class="mb-4 flex items-baseline justify-between gap-3">
+    <header class="mb-4 flex items-start justify-between gap-3">
       <h3
         class="truncate text-base font-semibold text-gray-800 dark:text-gray-100"
       >
         {{ experiment.name }}
       </h3>
+      <ExperimentClassBadge :name="experiment.name" class="shrink-0" />
     </header>
 
     <!-- Overview: the explainer's one-liner, expandable to the full article. -->
     <div v-if="level === 0" data-test="card-overview">
+      <!-- Idealised runs are laboratory tests, not forecasts — say so plainly. -->
+      <p
+        v-if="isIdealised"
+        class="mb-2 flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-500"
+        data-test="not-a-projection-note"
+      >
+        <UIcon name="i-lucide-flask-conical" class="size-3.5 shrink-0" />
+        Controlled experiment — not a real-world climate projection.
+      </p>
       <template v-if="post">
         <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
           {{ post.description }}

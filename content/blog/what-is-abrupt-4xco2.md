@@ -1,7 +1,7 @@
 ---
 title: "What is the abrupt-4xCO2 experiment?"
 description: "A deliberately extreme idealised run: quadruple the CO2 instantly and watch how the climate responds."
-author: "ACCESS-NRI"
+author: "Charles Turner, ACCESS-NRI"
 date: "2026-07-04"
 experiment: abrupt-4xCO2
 furtherReading:
