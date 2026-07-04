@@ -1,0 +1,11 @@
+term: ESGF
+expansion: Earth System Grid Federation
+short: The distributed data archive where CMIP model output is published and downloaded.
+long: >-
+  ESGF is a federation of data servers around the world that together host climate
+  model output, including all CMIP data. When an experiment on this dashboard is
+  marked "ESGF published", its data has been uploaded to that archive and is
+  available for anyone to download and analyse.
+links:
+  - title: "Earth System Grid Federation"
+    url: "https://esgf.llnl.gov/"

@@ -1,0 +1,11 @@
+term: CMIP7
+expansion: Coupled Model Intercomparison Project — Phase 7
+short: The current phase of CMIP, and the set of experiments this dashboard tracks.
+long: >-
+  CMIP7 is the seventh phase of CMIP. It defines the current generation of shared
+  experiments that modelling groups — including ACCESS at ACCESS-NRI — are running
+  and publishing. This dashboard reports the progress and results of ACCESS's
+  CMIP7 contribution.
+links:
+  - title: "WCRP CMIP7"
+    url: "https://wcrp-cmip.org/cmip7/"

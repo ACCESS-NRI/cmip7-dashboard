@@ -32,3 +32,7 @@ dashboard:
 - It tells us how much a climate can wobble on its own, which is how we judge
   whether a change in another run is a real signal or just noise.
 - A stable piControl with little drift is a basic sign the model is behaving.
+
+It is one of the core :jargon[DECK]{term="DECK"} experiments that every
+:jargon[CMIP]{term="CMIP"} model runs, which is what lets results be compared
+across models and across CMIP generations.

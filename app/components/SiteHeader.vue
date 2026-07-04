@@ -9,6 +9,11 @@ const items = computed<NavigationMenuItem[]>(() => [
   // startsWith so the tab stays active on nested entries (/blog/:slug),
   // which are separate route records from /blog and wouldn't match otherwise.
   { label: "Blog", to: "/blog", active: route.path.startsWith("/blog") },
+  {
+    label: "Glossary",
+    to: "/glossary",
+    active: route.path.startsWith("/glossary"),
+  },
 ]);
 </script>
 
