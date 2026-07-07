@@ -36,8 +36,8 @@ jobs:
           OWNER="${{ github.repository_owner }}"
           OWNER="${OWNER,,}"
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
-          echo "base=/cmip7-dashboard/branches/$SLUG/" >> "$GITHUB_OUTPUT"
-          echo "url=https://$OWNER.github.io/cmip7-dashboard/branches/$SLUG/" >> "$GITHUB_OUTPUT"
+          echo "base=/cmip7-dashboard-previews/branches/$SLUG/" >> "$GITHUB_OUTPUT"
+          echo "url=https://$OWNER.github.io/cmip7-dashboard-previews/branches/$SLUG/" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
