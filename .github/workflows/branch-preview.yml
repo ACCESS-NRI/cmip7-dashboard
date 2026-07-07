@@ -1,0 +1,83 @@
+# TEMP (branch previews): builds each open PR and publishes it to
+# gh-pages under /branches/<slug>/. Delete this file to revert.
+name: PR preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write # push to gh-pages
+  pull-requests: write # PR comment
+
+jobs:
+  build-and-preview:
+    runs-on: ubuntu-latest
+
+    env:
+      NITRO_PRESET: github_pages
+      NUXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
+      NUXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
+      NUXT_PUBLIC_PAYU_CMIP7_API_URL: ${{ secrets.NUXT_PUBLIC_PAYU_CMIP7_API_URL }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute preview slug and URL
+        id: preview
+        run: |
+          SLUG="${{ github.head_ref }}"
+          SLUG="${SLUG//\//-}"
+          OWNER="${{ github.repository_owner }}"
+          OWNER="${OWNER,,}"
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "base=/cmip7-dashboard-previews/branches/$SLUG/" >> "$GITHUB_OUTPUT"
+          echo "url=https://$OWNER.github.io/cmip7-dashboard-previews/branches/$SLUG/" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "26"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate static site
+        run: NODE_ENV=production npm run generate
+        env:
+          NUXT_APP_BASE_URL: ${{ steps.preview.outputs.base }}
+
+      - name: Publish preview to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./.output/public
+          destination_dir: branches/${{ steps.preview.outputs.slug }}
+          keep_files: true # don't clobber main or other previews
+
+      - name: Find existing preview comment
+        id: fc
+        uses: peter-evans/find-comment@v3
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: github-actions[bot]
+          body-includes: "<!-- branch-preview -->"
+
+      - name: Comment preview URL on PR
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            <!-- branch-preview -->
+            🔎 **Preview deployment** for this PR:
+            ${{ steps.preview.outputs.url }}
+
+            _Rebuilt on every push. Removed automatically when the PR is closed._
