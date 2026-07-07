@@ -17,7 +17,7 @@ jobs:
 
     env:
       NITRO_PRESET: github_pages
-      NUXT_APP_BASE_URL: /cmip7-dashboard/
+      NUXT_APP_BASE_URL: /cmip7-dashboard-previews/
       NUXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
       NUXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
       NUXT_PUBLIC_PAYU_CMIP7_API_URL: ${{ secrets.NUXT_PUBLIC_PAYU_CMIP7_API_URL }}
