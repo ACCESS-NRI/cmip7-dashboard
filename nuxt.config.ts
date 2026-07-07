@@ -13,10 +13,17 @@ const getGitCommitSha = () => {
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
+  // TEMP (branch previews): branch builds are SPA-only + hash-routed (see
+  // app/router.options.ts), so skip SSR/prerender for them. Main/local unaffected.
+  ssr: !process.env.NUXT_APP_BASE_URL?.includes("/branches/"),
   modules: ["@nuxt/ui", "@nuxt/content", "@posthog/nuxt"],
   css: ["~/assets/css/main.css"],
   app: {
-    baseURL: process.env.NODE_ENV === "production" ? "/cmip7-dashboard/" : "/",
+    // NUXT_APP_BASE_URL wins so branch-preview builds can serve from a
+    // per-branch sub-path (see .github/workflows/branch-preview.yml).
+    baseURL:
+      process.env.NUXT_APP_BASE_URL ??
+      (process.env.NODE_ENV === "production" ? "/cmip7-dashboard/" : "/"),
   },
   runtimeConfig: {
     public: {

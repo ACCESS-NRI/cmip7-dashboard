@@ -14,12 +14,6 @@ jobs:
 
     permissions:
       contents: write
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     env:
       NITRO_PRESET: github_pages
@@ -68,18 +62,14 @@ jobs:
       - name: Generate static site
         run: NODE_ENV=production npm run generate
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./.output/public"
-
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - name: Deploy to gh-pages (root)
         if: github.ref == 'refs/heads/main'
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./.output/public
+          destination_dir: .
+          keep_files: true # preserve /branches/* previews
 
       - name: Create version tag
         run: |
