@@ -65,7 +65,9 @@ export default defineNuxtConfig({
       cmip7ParquetFileName:
         process.env.NUXT_PUBLIC_CMIP7_PARQUET_FILE_NAME ?? "gm_tas.pq",
       // Payu telemetry endpoint (tracking-services API).
-      payuCmip7ApiUrl: process.env.NUXT_PUBLIC_PAYU_CMIP7_API_URL ?? "",
+      payuCmip7ApiUrl:
+        process.env.NUXT_PUBLIC_PAYU_CMIP7_API_URL ??
+        "https://reporting.access-nri-store.cloud.edu.au/api/payu/cmip7_summary/",
     },
   },
   posthogConfig: {
