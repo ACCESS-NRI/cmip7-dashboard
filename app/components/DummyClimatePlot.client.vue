@@ -28,7 +28,13 @@
     </div>
 
     <div class="relative min-h-72 dark:rounded-xl dark:bg-white dark:p-3">
-      <Line :data="chartData" :options="chartOptions" />
+      <Line v-if="sourceState !== 'error'" :data="chartData" :options="chartOptions" />
+      <p
+        v-else
+        class="flex h-72 items-center justify-center text-center text-sm text-gray-500 dark:text-gray-400"
+      >
+        Plot unavailable — the data source could not be loaded.
+      </p>
     </div>
 
     <p class="mt-4 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
@@ -194,7 +200,7 @@ const primaryDeltaCopy = computed(() => {
 
 const sourceStatusLabel = computed(() => {
   if (sourceState.value === "ready") return "Parquet ready";
-  if (sourceState.value === "error") return "Stub fallback";
+  if (sourceState.value === "error") return "Unavailable";
   return "Loading source";
 });
 
