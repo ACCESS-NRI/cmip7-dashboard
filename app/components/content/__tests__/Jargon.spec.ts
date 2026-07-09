@@ -29,7 +29,10 @@ vi.mock("~/composables/useGlossary", () => ({
 // Render the popover slots inline so their bindings are assertable without
 // depending on reka-ui's teleport + floating-ui behaviour in happy-dom.
 const stubs = {
-  UPopover: { template: `<span><slot /><slot name="content" /></span>` },
+  UPopover: {
+    props: ["mode"],
+    template: `<span data-test="jargon-popover" :data-mode="mode"><slot /><slot name="content" /></span>`,
+  },
 };
 
 function mountJargon(term: string) {
@@ -46,6 +49,9 @@ describe("Jargon", () => {
     expect(trigger.attributes("data-term")).toBe("deck");
     // The acronym expansion is echoed in the aria-label for screen readers.
     expect(trigger.attributes("aria-label")).toContain("Diagnosis, Evaluation");
+    expect(
+      wrapper.find('[data-test="jargon-popover"]').attributes("data-mode"),
+    ).toBe("click");
   });
 
   it("reveals the full definition, further reading and a glossary deep link", async () => {

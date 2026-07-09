@@ -2,11 +2,9 @@
 import { computed } from "vue";
 import { useGlossary } from "~/composables/useGlossary";
 
-// Inline jargon/acronym term (issue #12). A single hover popover (reka's
-// HoverCard under the hood) surfaces the definition on hover *and* keyboard
-// focus, and its panel is itself hoverable so the further-reading and glossary
-// links stay clickable. The trigger is visibly highlighted so it's obvious the
-// term is explained. On touch, tapping focuses the trigger and opens the card.
+// Inline jargon/acronym term (issue #12). A click/tap popover surfaces the
+// definition for mouse, touch and keyboard users without relying on hover. The
+// trigger is visibly highlighted so it's obvious the term is explained.
 //
 // Lives in components/content/ so it also works inside markdown via MDC
 // (`:jargon[DECK]{term="DECK"}`). Unknown terms degrade to plain text, so a
@@ -34,13 +32,7 @@ const ariaLabel = computed(() => {
     ><slot>{{ term }}</slot></span
   >
 
-  <UPopover
-    v-else
-    mode="hover"
-    :open-delay="120"
-    :close-delay="120"
-    :data-test="'jargon-popover'"
-  >
+  <UPopover v-else mode="click" :data-test="'jargon-popover'">
     <button
       type="button"
       data-test="jargon"
