@@ -14,10 +14,16 @@ jobs:
 
     permissions:
       contents: write
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     env:
       NITRO_PRESET: github_pages
-      NUXT_APP_BASE_URL: /cmip7-dashboard-previews/
+      NUXT_APP_BASE_URL: /cmip7-dashboard/
       NUXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NUXT_PUBLIC_POSTHOG_KEY }}
       NUXT_PUBLIC_POSTHOG_HOST: ${{ secrets.NUXT_PUBLIC_POSTHOG_HOST }}
       NUXT_PUBLIC_PAYU_CMIP7_API_URL: ${{ secrets.NUXT_PUBLIC_PAYU_CMIP7_API_URL }}
@@ -62,14 +68,18 @@ jobs:
       - name: Generate static site
         run: NODE_ENV=production npm run generate
 
-      - name: Deploy to gh-pages (root)
-        if: github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./.output/public
-          destination_dir: .
-          keep_files: true # preserve /branches/* previews
+          path: "./.output/public"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        if: github.ref == 'refs/heads/main'
+        uses: actions/deploy-pages@v4
 
       - name: Create version tag
         run: |
