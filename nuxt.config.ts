@@ -9,6 +9,20 @@ const getGitCommitSha = () => {
   }
 };
 
+// Get the build's release tag: workflow-provided version > exact tag on HEAD > "".
+// An empty string means "no tag" and lets the UI fall back to the short SHA.
+const getAppVersion = () => {
+  if (process.env.APP_VERSION) {
+    return process.env.APP_VERSION;
+  }
+
+  try {
+    return execSync("git describe --tags --exact-match HEAD").toString().trim();
+  } catch {
+    return "";
+  }
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -21,6 +35,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gitCommitSha: getGitCommitSha(),
+      appVersion: getAppVersion(),
+      githubRepositoryUrl: "https://github.com/ACCESS-NRI/cmip7-dashboard",
       buildTime: new Date().toISOString(),
       // CMIP7 parquet data source (previously the VITE_CMIP7_* env vars).
       cmip7ParquetSource:

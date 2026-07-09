@@ -67,6 +67,8 @@ jobs:
 
       - name: Generate static site
         run: NODE_ENV=production npm run generate
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
