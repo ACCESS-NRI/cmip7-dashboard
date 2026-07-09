@@ -15,15 +15,15 @@ definePageMeta({ layout: "dashboard" });
 const level = useDetailLevel();
 
 // Explainer posts are tagged with an `experiment` name in their frontmatter;
-// map them by that name so each card can surface its Overview-level content.
+// map them by that name so grouped experiment rows can open the explainer.
 const { data: explainers } = await useAsyncData("experiment-explainers", () =>
   queryCollection("content").where("experiment", "IS NOT NULL").all(),
 );
 
-const postByExperiment = computed(() => {
-  const map = new Map<string, ContentCollectionItem>();
+const postByExperiment = computed<Record<string, ContentCollectionItem>>(() => {
+  const map: Record<string, ContentCollectionItem> = {};
   for (const post of explainers.value ?? []) {
-    if (post.experiment) map.set(post.experiment, post);
+    if (post.experiment) map[post.experiment] = post;
   }
   return map;
 });
@@ -158,19 +158,13 @@ onMounted(async () => {
           />
         </div>
 
-        <!-- Big picture/Progress: one card per experiment, reframed by the picker. -->
-        <div
+        <!-- Big picture/Progress: programme layers carry the main structure. -->
+        <ExperimentProgrammeGroups
           v-if="level < 2"
-          class="mb-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          data-test="experiment-grid"
-        >
-          <ExperimentCard
-            v-for="experiment in payuExperiments"
-            :key="experiment.uuid || experiment.name"
-            :experiment="experiment"
-            :post="postByExperiment.get(experiment.name) ?? null"
-          />
-        </div>
+          :experiments="payuExperiments"
+          :post-by-experiment="postByExperiment"
+          class="mb-12"
+        />
 
         <!-- Under the hood: the classic dashboard view — full per-run telemetry. -->
         <div v-else class="mb-12">
