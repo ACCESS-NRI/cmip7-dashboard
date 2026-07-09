@@ -6,8 +6,8 @@ long: >-
   set of core experiments — a pre-industrial control, a historical run, and a couple
   of idealised CO₂ experiments — that every model contributes in each phase of CMIP. 
   Keeping this entry set constant across models and across CMIP generations is what 
-  makes results comparable over time. ("Klima" is simply the Greek-rooted word for 
-  climate.)
+  makes results comparable over time. ("Klima"
+  is just the Greek word for climate.)
 links:
   - title: "Eyring et al. (2016): CMIP6 experimental design and organisation (defines the DECK)"
     url: "https://doi.org/10.5194/gmd-9-1937-2016"
