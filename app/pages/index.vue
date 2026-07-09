@@ -6,6 +6,7 @@ import type { PayuExperiment } from "~/services/payuExperiments";
 import { SECTIONS } from "~/composables/sections";
 import type { SectionId } from "~/composables/sections";
 import { useActiveSection } from "~/composables/useActiveSection";
+import accessLogo from "~/assets/ACCESS-logo.svg";
 
 useSeoMeta({
   title: "CMIP7 Dashboard",
@@ -104,7 +105,7 @@ watch(payuExperiments, () => refresh());
               aria-label="ACCESS-NRI"
             >
               <img
-                src="/ACCESS-logo.svg"
+                :src="accessLogo"
                 alt="ACCESS-NRI"
                 class="h-16 object-contain"
               />
@@ -296,7 +297,7 @@ watch(payuExperiments, () => refresh());
             rel="noopener noreferrer"
           >
             <img
-              src="/ACCESS-logo.svg"
+              :src="accessLogo"
               alt="ACCESS-NRI"
               class="h-9 object-contain opacity-80"
             />
