@@ -28,7 +28,11 @@
     </div>
 
     <div class="relative min-h-72 dark:rounded-xl dark:bg-white dark:p-3">
-      <Line v-if="sourceState !== 'error'" :data="chartData" :options="chartOptions" />
+      <Line
+        v-if="sourceState !== 'error'"
+        :data="chartData"
+        :options="chartOptions"
+      />
       <p
         v-else
         class="flex h-72 items-center justify-center text-center text-sm text-gray-500 dark:text-gray-400"

@@ -55,7 +55,9 @@ describe("DummyClimatePlot", () => {
 
   it("shows an honest failure state instead of an empty chart when loading fails", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => {});
-    loadRemoteParquetDataSourceMock.mockRejectedValue(new Error("network down"));
+    loadRemoteParquetDataSourceMock.mockRejectedValue(
+      new Error("network down"),
+    );
 
     const wrapper = await mountSuspended(DummyClimatePlot);
 
