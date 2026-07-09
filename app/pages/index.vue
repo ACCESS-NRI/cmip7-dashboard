@@ -167,18 +167,6 @@ watch(payuExperiments, () => refresh());
       </div>
 
       <template v-if="!payuLoading && !payuError && payuExperiments.length > 0">
-        <!-- Explainers for the two orthogonal axes, side by side: the scientific
-             taxonomy (issue #14) and the CMIP7 participation layers (issue #21).
-             They explain the encodings used across Big picture and Progress. -->
-        <div class="mb-12 grid gap-6 lg:grid-cols-2">
-          <ExperimentClassLegend
-            :class-ids="payuExperiments.map((e) => e.experimentClass.id)"
-          />
-          <ExperimentTierLegend
-            :experiment-tiers="payuExperiments.map((e) => e.tiers)"
-          />
-        </div>
-
         <!-- Big picture: the always-visible primary view — programme layers
              carry the high-level overview. -->
         <section id="big-picture" class="mb-12 scroll-mt-6">
@@ -253,6 +241,19 @@ watch(payuExperiments, () => refresh());
               </ClientOnly>
             </div>
           </DetailSection>
+        </div>
+
+        <!-- Explainers for the two orthogonal axes, side by side: the scientific
+             taxonomy (issue #14) and the CMIP7 participation layers (issue #21).
+             Per Kelsey's feedback these sit at the end of the page rather than
+             leading it. They explain the encodings used across the page. -->
+        <div class="mb-12 grid gap-6 lg:grid-cols-2">
+          <ExperimentClassLegend
+            :class-ids="payuExperiments.map((e) => e.experimentClass.id)"
+          />
+          <ExperimentTierLegend
+            :experiment-tiers="payuExperiments.map((e) => e.tiers)"
+          />
         </div>
       </template>
 
