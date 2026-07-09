@@ -83,8 +83,8 @@ function statusClass(status: ExperimentRunStatus): string {
       :key="group.id"
       class="overflow-hidden rounded-2xl border bg-white shadow-sm dark:bg-gray-900"
       :class="{
-        'border-green-200 dark:border-green-800': group.id === 'deck',
-        'border-blue-200 dark:border-blue-800': group.id === 'aft',
+        'border-blue-200 dark:border-blue-800': group.id === 'deck',
+        'border-green-200 dark:border-green-800': group.id === 'aft',
         'border-gray-200 dark:border-gray-700': group.id === 'other',
       }"
       :data-test="`experiment-group-${group.id}`"
@@ -101,8 +101,8 @@ function statusClass(status: ExperimentRunStatus): string {
           :name="group.icon"
           class="size-5 shrink-0"
           :class="{
-            'text-green-600 dark:text-green-400': group.id === 'deck',
-            'text-blue-600 dark:text-blue-400': group.id === 'aft',
+            'text-blue-600 dark:text-blue-400': group.id === 'deck',
+            'text-green-600 dark:text-green-400': group.id === 'aft',
             'text-gray-500 dark:text-gray-400': group.id === 'other',
           }"
         />
