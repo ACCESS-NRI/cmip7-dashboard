@@ -23,6 +23,12 @@ const getAppVersion = () => {
   }
 };
 
+// Base path for the deploy: GitHub Pages serves under /cmip7-dashboard/.
+// Nuxt does not rewrite head-link hrefs with app.baseURL, so the favicon href
+// is prefixed manually below to avoid a 404 on the subpath deploy.
+const baseURL =
+  process.env.NODE_ENV === "production" ? "/cmip7-dashboard/" : "/";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -30,7 +36,16 @@ export default defineNuxtConfig({
   modules: ["@nuxt/ui", "@nuxt/content", "@posthog/nuxt"],
   css: ["~/assets/css/main.css"],
   app: {
-    baseURL: process.env.NODE_ENV === "production" ? "/cmip7-dashboard/" : "/",
+    baseURL,
+    head: {
+      link: [
+        {
+          rel: "icon",
+          type: "image/svg+xml",
+          href: `${baseURL}ACCESS-logo.svg`,
+        },
+      ],
+    },
   },
   runtimeConfig: {
     public: {
