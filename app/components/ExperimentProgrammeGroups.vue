@@ -16,8 +16,6 @@ const props = defineProps<{
 
 const groups = computed(() => groupExperimentsByProgramme(props.experiments));
 const openGroups = ref<string[]>([]);
-const selectedPost = ref<ContentCollectionItem | null>(null);
-const explainerOpen = ref(false);
 
 watch(
   groups,
@@ -41,11 +39,6 @@ function explainerFor(
   experiment: PayuExperiment,
 ): ContentCollectionItem | null {
   return props.postByExperiment?.[experiment.name] ?? null;
-}
-
-function openExplainer(post: ContentCollectionItem) {
-  selectedPost.value = post;
-  explainerOpen.value = true;
 }
 
 function formatNumber(value: number): string {
@@ -219,16 +212,12 @@ function statusClass(status: ExperimentRunStatus): string {
                 class="grid gap-3 px-5 py-3 md:grid-cols-[1fr_7rem_8rem_12rem] md:items-center md:gap-4"
                 :data-test="`experiment-group-row-${group.id}`"
               >
-                <div class="min-w-0">
-                  <button
+                <div class="min-w-0 text-sm">
+                  <ExperimentExplainer
                     v-if="explainerFor(experiment)"
-                    type="button"
-                    class="truncate text-left text-sm font-medium text-blue-700 hover:underline dark:text-blue-400"
-                    :data-test="`experiment-explainer-link-${experiment.name}`"
-                    @click="openExplainer(explainerFor(experiment)!)"
-                  >
-                    {{ experiment.name }}
-                  </button>
+                    :post="explainerFor(experiment)!"
+                    :label="experiment.name"
+                  />
                   <p
                     v-else
                     class="truncate text-sm font-medium text-gray-800 dark:text-gray-100"
@@ -303,32 +292,5 @@ function statusClass(status: ExperimentRunStatus): string {
         </div>
       </div>
     </article>
-
-    <UModal
-      v-model:open="explainerOpen"
-      :title="selectedPost?.title"
-      :description="selectedPost?.description"
-      scrollable
-      :ui="{
-        content: 'max-w-3xl',
-        body: 'max-h-[75vh] overflow-y-auto',
-      }"
-      data-test="experiment-explainer-modal"
-    >
-      <template #body>
-        <template v-if="selectedPost">
-          <ContentRenderer
-            :value="selectedPost"
-            class="prose dark:prose-invert max-w-none"
-            data-test="experiment-explainer-content"
-          />
-          <FurtherReading
-            v-if="selectedPost.furtherReading?.length"
-            :links="selectedPost.furtherReading"
-            class="mt-8 border-t border-gray-200 pt-6 dark:border-gray-700"
-          />
-        </template>
-      </template>
-    </UModal>
   </section>
 </template>
