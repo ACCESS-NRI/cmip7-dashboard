@@ -9,6 +9,33 @@ const getGitCommitSha = () => {
   }
 };
 
+const getGitHubRepositoryUrl = () => {
+  const configuredUrl = process.env.NUXT_PUBLIC_GITHUB_REPOSITORY_URL;
+  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
+
+  for (const remoteName of ["access-nri", "origin"]) {
+    try {
+      const remoteUrl = execSync(`git remote get-url ${remoteName}`)
+        .toString()
+        .trim();
+
+      if (remoteUrl.startsWith("git@github.com:")) {
+        return `https://github.com/${remoteUrl
+          .replace("git@github.com:", "")
+          .replace(/\.git$/, "")}`;
+      }
+
+      if (remoteUrl.startsWith("https://github.com/")) {
+        return remoteUrl.replace(/\.git$/, "").replace(/\/$/, "");
+      }
+    } catch {
+      // Try the next remote.
+    }
+  }
+
+  return "https://github.com/ACCESS-NRI/cmip7-dashboard-previews";
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
@@ -30,6 +57,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gitCommitSha: getGitCommitSha(),
+      githubRepositoryUrl: getGitHubRepositoryUrl(),
       buildTime: new Date().toISOString(),
       // CMIP7 parquet data source (previously the VITE_CMIP7_* env vars).
       cmip7ParquetSource:
