@@ -14,6 +14,7 @@ function makeExperiment(
     modelStartTime: "1850-01-01",
     modelCurrentTime: "1900-01-01",
     serviceUnitsDisplay: "100",
+    serviceUnits: 100,
     yearsRun: 50,
     expectedYearsRun: 100,
     esgfPublished: false,
@@ -45,6 +46,36 @@ describe("ExperimentTotals", () => {
     expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
       "20% complete across 2 experiments",
     );
+  });
+
+  it("sums service units used and counts completed experiments", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          // completed: yearsRun >= expectedYearsRun
+          makeExperiment({
+            serviceUnits: 1200,
+            yearsRun: 100,
+            expectedYearsRun: 100,
+          }),
+          // running, and one experiment with no telemetry service units
+          makeExperiment({
+            name: "piControl",
+            serviceUnits: null,
+            yearsRun: 30,
+            expectedYearsRun: 300,
+          }),
+        ],
+      },
+    });
+
+    const extra = wrapper.find('[data-test="totals-extra"]');
+    expect(extra.text()).toContain("1,200");
+    expect(extra.text()).toContain("Service units used");
+    expect(extra.text()).toContain("Experiments completed");
+    // 1 of 2 experiments completed
+    expect(extra.text()).toContain("1");
+    expect(extra.text()).toContain("2");
   });
 
   it("ignores experiments with no expected years when computing progress", async () => {

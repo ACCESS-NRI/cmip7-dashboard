@@ -26,6 +26,8 @@ export interface PayuExperiment {
   modelStartTime: string;
   modelCurrentTime: string;
   serviceUnitsDisplay: string;
+  /** True service-units figure for aggregation; null when not yet calculated. */
+  serviceUnits: number | null;
   yearsRun: number;
   expectedYearsRun: number | null;
   esgfPublished: boolean | null;
@@ -79,6 +81,7 @@ export function normalizePayuExperiment(
     modelStartTime: payuData?.experiment_model_start_time ?? "—",
     modelCurrentTime: payuData?.experiment_model_current_time ?? "—",
     serviceUnitsDisplay: payuData ? formatServiceUnits(payuData) : "—",
+    serviceUnits: payuData?.experiment_service_units ?? null,
     yearsRun: payuData ? calculateYearsRun(payuData) : 0,
     expectedYearsRun: configEntry.expected_years_run,
     esgfPublished: configEntry.esgf_published ?? null,

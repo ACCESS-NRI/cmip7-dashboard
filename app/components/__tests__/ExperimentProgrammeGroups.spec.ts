@@ -16,6 +16,7 @@ function makeExperiment(
     modelStartTime: "1850-01-01",
     modelCurrentTime: "1900-01-01",
     serviceUnitsDisplay: "100",
+    serviceUnits: 100,
     yearsRun: 50,
     expectedYearsRun: 100,
     esgfPublished: false,

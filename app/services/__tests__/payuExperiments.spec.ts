@@ -93,6 +93,7 @@ describe("normalizePayuExperiment", () => {
     expect(result.modelCurrentTime).toBe("0275-01-01T00:00:00");
     expect(result.yearsRun).toBe(174);
     expect(result.serviceUnitsDisplay).toBe("42");
+    expect(result.serviceUnits).toBe(42);
   });
 
   it("uses fallback values when payu data is undefined", () => {
@@ -101,6 +102,7 @@ describe("normalizePayuExperiment", () => {
     expect(result.modelCurrentTime).toBe("—");
     expect(result.yearsRun).toBe(0);
     expect(result.serviceUnitsDisplay).toBe("—");
+    expect(result.serviceUnits).toBe(null);
     expect(result.details).toEqual({});
   });
 
