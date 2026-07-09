@@ -1,0 +1,15 @@
+term: Fast Track
+short: A prioritised subset of CMIP7 experiments that groups aim to deliver first.
+long: >-
+  The Fast Track is the set of highest-priority CMIP7 experiments that modelling
+  groups focus on completing first, so the most important science and assessment
+  needs are met early rather than waiting for the full experiment catalogue. It is
+  a scheduling and prioritisation concept, not a different kind of experiment.
+aliases:
+  - Fast-Track
+  - FastTrack
+  - AFT
+  - Assessment Fast Track
+links:
+  - title: "WCRP CMIP7 — experiments and Fast Track"
+    url: "https://wcrp-cmip.org/cmip7/"

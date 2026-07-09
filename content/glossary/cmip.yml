@@ -1,0 +1,14 @@
+term: CMIP
+expansion: Coupled Model Intercomparison Project
+short: The international effort where climate-modelling groups run a shared set of experiments so their results can be compared.
+long: >-
+  CMIP is a long-running, community-wide project that agrees on a common set of
+  climate-model experiments and output formats. Because every participating group
+  runs the same experiments in the same way, their models can be compared
+  like-for-like, and the results feed into major assessments such as the IPCC
+  reports. It runs in numbered phases — CMIP5, CMIP6, and now CMIP7.
+aliases:
+  - CMIPs
+links:
+  - title: "WCRP CMIP — the Coupled Model Intercomparison Project"
+    url: "https://wcrp-cmip.org/"

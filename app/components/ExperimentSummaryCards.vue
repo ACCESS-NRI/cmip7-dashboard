@@ -1,6 +1,7 @@
 <template>
   <section
-    class="mx-auto grid max-w-2xl gap-4 sm:grid-cols-3"
+    class="grid gap-4"
+    :class="vertical ? '' : 'mx-auto max-w-2xl sm:grid-cols-3'"
     aria-label="Payu experiment summary"
   >
     <div
@@ -51,10 +52,13 @@ const props = withDefaults(
     experiments: PayuExperiment[];
     loading?: boolean;
     error?: string | null;
+    /** Stack the stat cards in one column (e.g. beside the dashboard hero). */
+    vertical?: boolean;
   }>(),
   {
     loading: false,
     error: null,
+    vertical: false,
   },
 );
 

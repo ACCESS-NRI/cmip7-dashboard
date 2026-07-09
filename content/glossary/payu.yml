@@ -1,0 +1,12 @@
+term: payu
+short: The workflow tool ACCESS-NRI develops to configure, run and track model experiments.
+long: >-
+  payu is a workflow-management tool for running climate-model experiments
+  reproducibly on supercomputers, developed and maintained by ACCESS-NRI. It lays
+  out each experiment, submits its runs and records metadata — which is where much
+  of the run telemetry on this dashboard comes from.
+aliases:
+  - Payu
+links:
+  - title: "payu documentation"
+    url: "https://payu.readthedocs.io/"

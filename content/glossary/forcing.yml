@@ -1,0 +1,12 @@
+term: forcing
+expansion: Radiative forcing
+short: An imposed change to Earth's energy balance — for example from CO₂ — that drives climate change.
+long: >-
+  A radiative forcing is an externally imposed change to the planet's energy
+  budget, measured in watts per square metre, such as the extra heat trapped by
+  added CO₂. Experiments differ mainly in how their forcings are set — held fixed
+  (controls), following the historical record, or changed in an idealised way
+  (like abruptly quadrupling CO₂).
+aliases:
+  - Radiative forcing
+  - forcings

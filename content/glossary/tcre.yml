@@ -1,0 +1,12 @@
+term: TCRE
+expansion: Transient Climate Response to cumulative CO₂ Emissions
+short: How much the planet warms per tonne of CO₂ emitted — the basis of carbon budgets.
+long: >-
+  TCRE is the amount of global warming produced per unit of cumulative CO₂
+  emitted, and it turns out to be roughly constant. That near-linear relationship
+  is what lets scientists translate a temperature target (say 1.5 °C) into a
+  remaining "carbon budget" of how much more CO₂ can be emitted. Several
+  experiments on this dashboard are designed to pin down this value.
+links:
+  - title: "IPCC AR6 WG1 — the near-linear relationship between cumulative CO₂ and warming"
+    url: "https://www.ipcc.ch/report/ar6/wg1/"

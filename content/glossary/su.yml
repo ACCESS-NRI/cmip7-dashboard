@@ -1,0 +1,12 @@
+term: SU
+expansion: Service Unit
+short: The unit of supercomputer time an experiment consumes — a measure of compute cost.
+long: >-
+  A Service Unit is the accounting unit for time on a shared supercomputer
+  (roughly one core-hour, adjusted for the resources a job requests). The
+  dashboard reports the SUs used per experiment as a measure of how much compute
+  a run has cost.
+aliases:
+  - Service Unit
+  - Service Units
+  - SUs

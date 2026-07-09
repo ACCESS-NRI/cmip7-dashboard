@@ -1,0 +1,14 @@
+term: REF
+expansion: Rapid Evaluation Framework
+short: Tooling that checks how well model output performs, separate from how far a run has progressed.
+long: >-
+  The Rapid Evaluation Framework (REF) is the evaluation layer of CMIP7:
+  automated tooling that assesses how well a model's output reproduces the
+  observed climate. It is a distinct dimension from run progress — an experiment
+  can be finished yet not yet evaluated — which is why this dashboard shows
+  evaluation status apart from the years-run telemetry.
+aliases:
+  - Rapid Evaluation Framework
+links:
+  - title: "WCRP CMIP7 — Rapid Evaluation Framework"
+    url: "https://wcrp-cmip.org/cmip7/"

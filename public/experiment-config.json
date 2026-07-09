@@ -3,6 +3,8 @@
     "uuid": "e523e199-80f6-4ca6-b84a-e513a16f2029",
     "name": "piControl",
     "description": "-",
+    "class": "baseline",
+    "deck": true,
     "expected_years_run": 1000,
     "esgf_published": false
   },
@@ -10,6 +12,8 @@
     "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b",
     "name": "esm-piControl",
     "description": "-",
+    "class": "baseline",
+    "deck": true,
     "expected_years_run": 1000,
     "esgf_published": false
   },
@@ -17,18 +21,25 @@
     "uuid": "bc4ae139-0c1d-4c05-aa75-7be4eb2e660f",
     "name": "abrupt-4xCO2",
     "description": "-",
+    "class": "idealised",
+    "deck": true,
     "expected_years_run": 300,
     "esgf_published": false
   },
   {
     "name": "amip",
     "description": "-",
+    "class": "historical",
+    "deck": true,
     "expected_years_run": 44,
     "esgf_published": false
   },
   {
     "name": "historical",
     "description": "-",
+    "class": "historical",
+    "deck": true,
+    "aft": true,
     "expected_years_run": 172,
     "esgf_published": false
   },
@@ -36,24 +47,29 @@
     "uuid": "38c867bd-e40c-48b0-ad44-e9ee42a57086",
     "name": "esm-historical",
     "description": "-",
+    "class": "historical",
+    "deck": true,
     "expected_years_run": 172,
     "esgf_published": false
   },
   {
     "name": "piClim-Control",
     "description": "-",
+    "class": "idealised",
     "expected_years_run": 30,
     "esgf_published": false
   },
   {
     "name": "piClim-anthro",
     "description": "-",
+    "class": "idealised",
     "expected_years_run": 30,
     "esgf_published": false
   },
   {
     "name": "piClim-4xCO2",
     "description": "-",
+    "class": "idealised",
     "expected_years_run": 30,
     "esgf_published": false
   },
@@ -61,6 +77,8 @@
     "uuid": "7be18101-ad62-45db-9be7-e3703753b103",
     "name": "1pctCO2",
     "description": "-",
+    "class": "idealised",
+    "deck": true,
     "expected_years_run": 150,
     "esgf_published": false
   },
@@ -68,6 +86,7 @@
     "uuid": "f4cc0eee-412a-4f83-8495-819f4dd8dc5d",
     "name": "1pctCO2-bgc",
     "description": "-",
+    "class": "idealised",
     "expected_years_run": 150,
     "esgf_published": false
   },
@@ -75,6 +94,7 @@
     "uuid": "104718fd-8ebe-456a-8035-344d1c183d90",
     "name": "1pctCO2-rad",
     "description": "-",
+    "class": "idealised",
     "expected_years_run": 150,
     "esgf_published": false
   },
@@ -82,6 +102,8 @@
     "uuid": "4d052f54-ddc0-4cb6-9fbb-c89054462d72",
     "name": "esm-flat10",
     "description": "-",
+    "class": "idealised",
+    "aft": true,
     "expected_years_run": 300,
     "esgf_published": false
   },
@@ -89,6 +111,8 @@
     "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
     "name": "esm-flat10-cdr",
     "description": "-",
+    "class": "idealised",
+    "aft": true,
     "expected_years_run": 300,
     "esgf_published": false
   },
@@ -96,6 +120,8 @@
     "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
     "name": "esm-flat10-zec",
     "description": "-",
+    "class": "idealised",
+    "aft": true,
     "expected_years_run": 300,
     "esgf_published": false
   }

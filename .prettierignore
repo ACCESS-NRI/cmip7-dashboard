@@ -3,3 +3,4 @@ python/
 .github/
 src/assets/
 *.md
+.claude/

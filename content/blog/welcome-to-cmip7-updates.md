@@ -5,8 +5,6 @@ date: "2026-06-29"
 author: "ACCESS-NRI"
 ---
 
-# Welcome to CMIP7 updates
-
 This is the CMIP7 updates blog. It is a lightweight, file-based CMS: there is **no
 admin interface and no database to edit**. To publish an update, you just add a
 markdown file.

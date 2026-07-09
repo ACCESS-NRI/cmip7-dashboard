@@ -1,0 +1,12 @@
+term: tas
+expansion: Near-surface air temperature
+short: Air temperature about 2 m above the surface — the basis of "global temperature".
+long: >-
+  "tas" is the CMIP variable name for near-surface (about 2 metres) air
+  temperature. Its global mean is the number most people mean by "global
+  warming", and several derived indicators on this dashboard — such as
+  global-mean temperature — are built from it.
+aliases:
+  - TAS
+  - near-surface air temperature
+  - gm_tas

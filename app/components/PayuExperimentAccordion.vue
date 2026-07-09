@@ -57,7 +57,7 @@
         <span
           class="text-center text-xs font-semibold uppercase text-gray-400 dark:text-gray-500"
         >
-          ESGF
+          <Jargon term="ESGF">ESGF</Jargon>
         </span>
         <span aria-hidden="true"></span>
       </div>
@@ -86,52 +86,30 @@
             data-test="accordion-trigger"
           >
             <!-- Experiment column -->
-            <span
-              class="min-w-0 truncate text-sm font-medium text-gray-800 dark:text-gray-100"
-            >
-              {{ item.experiment.name }}
+            <span class="flex min-w-0 items-center gap-2">
+              <span
+                class="min-w-0 truncate text-sm font-medium text-gray-800 dark:text-gray-100"
+              >
+                {{ item.experiment.name }}
+              </span>
+              <ExperimentClassBadge
+                :experiment-class="item.experiment.experimentClass"
+                size="sm"
+                class="hidden shrink-0 sm:inline-flex"
+              />
             </span>
 
             <!-- Simulations column: progress bar or fallback badge -->
-            <div
-              v-if="item.experiment.expectedYearsRun !== null"
-              class="flex flex-col gap-1"
-              data-test="progress-bar"
-            >
-              <span class="text-xs text-gray-500 dark:text-gray-400">
-                {{ item.experiment.yearsRun }} /
-                {{ item.experiment.expectedYearsRun }} years
-              </span>
-              <div
-                class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"
-              >
-                <div
-                  class="h-full rounded-full bg-blue-500 transition-all dark:bg-blue-400"
-                  data-test="progress-fill"
-                  :style="{
-                    width: `${Math.min(100, Math.round((item.experiment.yearsRun / item.experiment.expectedYearsRun) * 100))}%`,
-                  }"
-                ></div>
-              </div>
-            </div>
-            <span
-              v-else
-              class="rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300"
-              data-test="years-run-badge"
-            >
-              {{ item.experiment.yearsRun }} years
-            </span>
+            <ExperimentProgress
+              :years-run="item.experiment.yearsRun"
+              :expected-years-run="item.experiment.expectedYearsRun"
+            />
 
             <!-- ESGF column -->
-            <div class="flex justify-center" data-test="esgf-status">
-              <input
-                type="checkbox"
-                :checked="item.experiment.esgfPublished ?? false"
-                disabled
-                class="h-4 w-4 rounded accent-blue-600"
-                :aria-label="`ESGF published: ${item.experiment.esgfPublished ? 'yes' : 'no'}`"
-              />
-            </div>
+            <EsgfStatus
+              :published="item.experiment.esgfPublished"
+              class="justify-center"
+            />
           </div>
         </template>
 

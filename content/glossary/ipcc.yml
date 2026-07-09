@@ -1,0 +1,10 @@
+term: IPCC
+expansion: Intergovernmental Panel on Climate Change
+short: The UN body that assesses climate science, and a major consumer of CMIP results.
+long: >-
+  The IPCC periodically assesses the state of climate science for policymakers.
+  Its assessment reports draw heavily on CMIP model experiments, which is much of
+  the reason those experiments are standardised and comparable across models.
+links:
+  - title: "IPCC"
+    url: "https://www.ipcc.ch/"

@@ -5,8 +5,6 @@ date: "2026-06-20"
 author: "ACCESS-NRI"
 ---
 
-# First look at global mean surface temperature
-
 The dashboard now pulls global mean surface temperature (`tas`) from the latest
 parquet output. This is an early, prototype signal — expect the source and
 processing to change as runs progress.

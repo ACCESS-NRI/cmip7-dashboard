@@ -1,0 +1,12 @@
+term: ensemble
+short: A set of runs of the same experiment that differ only in tiny initial tweaks.
+long: >-
+  Because the climate varies naturally from year to year, a single run can be
+  misleading. An ensemble runs the same experiment several times from slightly
+  different starting conditions; comparing the members separates the forced
+  climate signal from random internal variability.
+aliases:
+  - ensemble member
+  - ensemble members
+  - realisation
+  - realization

@@ -1,0 +1,14 @@
+term: ACCESS
+expansion: Australian Community Climate and Earth System Simulator
+short: Australia's national climate and earth-system model, developed and run jointly by ACCESS-NRI and CSIRO.
+long: >-
+  ACCESS is Australia's flagship coupled climate and earth-system model,
+  developed and run as a partnership: ACCESS-NRI (the National Research
+  Infrastructure) leads the software, model development and computational
+  infrastructure, while CSIRO leads the underlying science. Together they produce
+  ACCESS's contribution to CMIP7 — the experiments this dashboard tracks.
+links:
+  - title: "ACCESS-NRI"
+    url: "https://www.access-nri.org.au"
+  - title: "CSIRO"
+    url: "https://www.csiro.au"

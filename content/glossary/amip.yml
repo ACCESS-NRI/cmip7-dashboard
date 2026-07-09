@@ -1,0 +1,10 @@
+term: AMIP
+expansion: Atmospheric Model Intercomparison Project
+short: Experiments where the ocean is prescribed from observations, testing just the atmosphere.
+long: >-
+  In AMIP-style experiments the sea-surface temperatures and sea ice are fixed to
+  observed values, so only the atmospheric part of the model is exercised. This
+  isolates atmospheric behaviour from ocean feedbacks, which is why AMIP runs are
+  treated as model-evaluation experiments rather than projections of the future.
+aliases:
+  - amip
