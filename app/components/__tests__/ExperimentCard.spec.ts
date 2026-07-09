@@ -155,15 +155,4 @@ describe("ExperimentCard", () => {
     expect(wrapper.find('[data-test="esgf-status"]').exists()).toBe(true);
     expect(wrapper.find('[data-test="card-overview"]').exists()).toBe(false);
   });
-
-  it("does not render programme tier badges on experiment cards", async () => {
-    const wrapper = await mountCard({
-      experiment: makeExperiment({ tiers: [EXPERIMENT_TIERS.deck] }),
-      post: makePost(),
-    });
-
-    expect(wrapper.find('[data-test="experiment-tier-badge"]').exists()).toBe(
-      false,
-    );
-  });
 });

@@ -34,10 +34,16 @@ const isIdealised = computed(() => experimentClass.value.id === "idealised");
       >
         {{ experiment.name }}
       </h3>
-      <!-- Scientific class stays on the card; CMIP7 programme layers are shown
-           structurally by ExperimentProgrammeGroups instead of as badges. -->
+      <!-- Two orthogonal axes: scientific class (issue #14) and CMIP7
+           participation tier(s) (issue #21). Distinct badge styles keep them
+           legible as separate things. -->
       <div class="flex shrink-0 flex-wrap justify-end gap-1.5">
         <ExperimentClassBadge :experiment-class="experiment.experimentClass" />
+        <ExperimentTierBadge
+          v-for="tier in experiment.tiers"
+          :key="tier.id"
+          :tier="tier"
+        />
       </div>
     </header>
 

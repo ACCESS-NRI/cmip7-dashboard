@@ -158,13 +158,27 @@ onMounted(async () => {
           />
         </div>
 
-        <!-- Big picture/Progress: programme layers carry the main structure. -->
+        <!-- Big picture: programme layers carry the high-level overview. -->
         <ExperimentProgrammeGroups
-          v-if="level < 2"
+          v-if="level === 0"
           :experiments="payuExperiments"
           :post-by-experiment="postByExperiment"
           class="mb-12"
         />
+
+        <!-- Progress: one status card per experiment (progress + publication state). -->
+        <div
+          v-else-if="level === 1"
+          class="mb-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          data-test="experiment-grid"
+        >
+          <ExperimentCard
+            v-for="experiment in payuExperiments"
+            :key="experiment.uuid || experiment.name"
+            :experiment="experiment"
+            :post="postByExperiment[experiment.name] ?? null"
+          />
+        </div>
 
         <!-- Under the hood: the classic dashboard view — full per-run telemetry. -->
         <div v-else class="mb-12">
