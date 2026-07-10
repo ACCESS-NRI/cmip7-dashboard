@@ -15,6 +15,7 @@ const totals = computed(() => {
   let planned = 0;
   let serviceUnits = 0;
   let completed = 0;
+  let esgfPublished = 0;
   for (const experiment of props.experiments) {
     done += experiment.yearsRun;
     if (experiment.expectedYearsRun !== null) {
@@ -23,6 +24,9 @@ const totals = computed(() => {
     serviceUnits += experiment.serviceUnits ?? 0;
     if (experimentRunStatus(experiment) === "completed") {
       completed += 1;
+    }
+    if (experiment.esgfPublished) {
+      esgfPublished += 1;
     }
   }
   const percent =
@@ -33,6 +37,7 @@ const totals = computed(() => {
     percent,
     serviceUnits,
     completed,
+    esgfPublished,
     count: props.experiments.length,
   };
 });
@@ -81,7 +86,7 @@ const formatNumber = (value: number) => value.toLocaleString();
     </p>
 
     <div
-      class="mt-6 grid grid-cols-2 gap-4 border-t border-gray-200 pt-5 dark:border-gray-700"
+      class="mt-6 grid grid-cols-3 gap-4 border-t border-gray-200 pt-5 dark:border-gray-700"
       data-test="totals-extra"
     >
       <div>
@@ -102,6 +107,19 @@ const formatNumber = (value: number) => value.toLocaleString();
         </p>
         <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
           {{ totals.completed }}
+          <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
+            / {{ totals.count }}
+          </span>
+        </p>
+      </div>
+      <div>
+        <p
+          class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500"
+        >
+          Published to ESGF
+        </p>
+        <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+          {{ totals.esgfPublished }}
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
             / {{ totals.count }}
           </span>
