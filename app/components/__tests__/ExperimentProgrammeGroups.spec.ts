@@ -118,7 +118,41 @@ describe("ExperimentProgrammeGroups", () => {
     expect(deck.text()).toContain("Running");
     expect(deck.text()).toContain("Completed");
     expect(deck.text()).toContain("Not started");
+    expect(deck.text()).toContain("Published");
     expect(deck.findAll('[data-test="group-progress-bar"]')).toHaveLength(3);
+  });
+
+  it("shows ESGF publication status per row instead of run status", async () => {
+    const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "published",
+            esgfPublished: true,
+            tiers: [EXPERIMENT_TIERS.deck],
+          }),
+          makeExperiment({
+            name: "unpublished",
+            esgfPublished: false,
+            tiers: [EXPERIMENT_TIERS.deck],
+          }),
+        ],
+      },
+    });
+
+    const deck = wrapper.find('[data-test="experiment-group-deck"]');
+    // The run-status column is gone; ESGF publication takes its place.
+    expect(deck.find('[data-test="experiment-status-running"]').exists()).toBe(
+      false,
+    );
+
+    const checkboxes = deck
+      .findAll('[data-test="esgf-status"] input[type="checkbox"]')
+      .map((input) => (input.element as HTMLInputElement).checked);
+    expect(checkboxes).toEqual([true, false]);
+
+    // One of the two DECK experiments is published.
+    expect(deck.text()).toContain("Published");
   });
 
   it("renders experiment type badges in their own column", async () => {
