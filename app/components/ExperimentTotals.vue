@@ -41,11 +41,7 @@ const formatNumber = (value: number) => value.toLocaleString();
 </script>
 
 <template>
-  <section
-    class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900"
-    aria-label="Total model years"
-    data-test="experiment-totals"
-  >
+  <section aria-label="Total model years" data-test="experiment-totals">
     <p
       class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500"
     >
