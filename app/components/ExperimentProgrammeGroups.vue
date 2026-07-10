@@ -72,7 +72,6 @@ function statusClass(status: ExperimentRunStatus): string {
     aria-label="Simulation groups"
     data-test="experiment-programme-groups"
   >
-
     <article
       v-for="group in groups"
       :key="group.id"
