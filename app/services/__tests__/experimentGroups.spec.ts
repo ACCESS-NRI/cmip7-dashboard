@@ -76,7 +76,11 @@ describe("experimentProgressPercent", () => {
 describe("summarizeExperimentGroup", () => {
   it("summarizes counts, years, and percent complete", () => {
     const summary = summarizeExperimentGroup([
-      makeExperiment({ yearsRun: 100, expectedYearsRun: 100 }),
+      makeExperiment({
+        yearsRun: 100,
+        expectedYearsRun: 100,
+        esgfPublished: true,
+      }),
       makeExperiment({ yearsRun: 25, expectedYearsRun: 100 }),
       makeExperiment({ yearsRun: 0, expectedYearsRun: 100 }),
     ]);
@@ -86,6 +90,7 @@ describe("summarizeExperimentGroup", () => {
       completed: 1,
       running: 1,
       notStarted: 1,
+      published: 1,
       yearsRun: 125,
       plannedYears: 300,
       percent: 42,

@@ -10,6 +10,7 @@ export interface ExperimentGroupSummary {
   completed: number;
   running: number;
   notStarted: number;
+  published: number;
   yearsRun: number;
   plannedYears: number;
   percent: number | null;
@@ -53,6 +54,7 @@ export function summarizeExperimentGroup(
   let completed = 0;
   let running = 0;
   let notStarted = 0;
+  let published = 0;
   let yearsRun = 0;
   let plannedYears = 0;
 
@@ -61,6 +63,7 @@ export function summarizeExperimentGroup(
     if (experiment.expectedYearsRun !== null) {
       plannedYears += experiment.expectedYearsRun;
     }
+    if (experiment.esgfPublished === true) published += 1;
 
     const status = experimentRunStatus(experiment);
     if (status === "completed") completed += 1;
@@ -73,6 +76,7 @@ export function summarizeExperimentGroup(
     completed,
     running,
     notStarted,
+    published,
     yearsRun,
     plannedYears,
     percent:

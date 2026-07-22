@@ -7,7 +7,6 @@ import {
   experimentRunStatus,
   groupExperimentsByProgramme,
 } from "~/services/experimentGroups";
-import type { ExperimentRunStatus } from "~/services/experimentGroups";
 
 const props = defineProps<{
   experiments: PayuExperiment[];
@@ -47,23 +46,6 @@ function explainerFor(
 function formatNumber(value: number): string {
   return value.toLocaleString();
 }
-
-function statusLabel(status: ExperimentRunStatus): string {
-  if (status === "not-started") return "Not started";
-  return status === "completed" ? "Completed" : "Running";
-}
-
-function statusIcon(status: ExperimentRunStatus): string {
-  if (status === "completed") return "i-lucide-check";
-  if (status === "running") return "i-lucide-circle";
-  return "i-lucide-circle";
-}
-
-function statusClass(status: ExperimentRunStatus): string {
-  if (status === "completed") return "text-green-600 dark:text-green-400";
-  if (status === "running") return "text-blue-600 dark:text-blue-400";
-  return "text-gray-400 dark:text-gray-500";
-}
 </script>
 
 <template>
@@ -72,15 +54,6 @@ function statusClass(status: ExperimentRunStatus): string {
     aria-label="Simulation groups"
     data-test="experiment-programme-groups"
   >
-    <div>
-      <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
-        Simulation groups
-      </h2>
-      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        High-level status by CMIP7 programme layer.
-      </p>
-    </div>
-
     <article
       v-for="group in groups"
       :key="group.id"
@@ -144,11 +117,11 @@ function statusClass(status: ExperimentRunStatus): string {
         class="border-t border-gray-100 dark:border-gray-800"
         :data-test="`experiment-group-panel-${group.id}`"
       >
-        <div class="grid gap-0 lg:grid-cols-[16rem_1fr]">
+        <div class="grid gap-0 xl:grid-cols-[16rem_1fr]">
           <aside
-            class="space-y-4 border-b border-gray-100 p-5 dark:border-gray-800 lg:border-r lg:border-b-0"
+            class="space-y-4 border-b border-gray-100 p-5 dark:border-gray-800 xl:border-r xl:border-b-0"
           >
-            <dl class="grid grid-cols-2 gap-3 text-sm lg:grid-cols-1">
+            <dl class="grid grid-cols-2 gap-3 text-sm xl:grid-cols-1">
               <div>
                 <dt class="text-gray-500 dark:text-gray-400">Experiments</dt>
                 <dd
@@ -181,6 +154,14 @@ function statusClass(status: ExperimentRunStatus): string {
                   {{ group.summary.notStarted }}
                 </dd>
               </div>
+              <div>
+                <dt class="text-gray-500 dark:text-gray-400">Published</dt>
+                <dd
+                  class="mt-1 text-lg font-semibold text-gray-800 dark:text-gray-100"
+                >
+                  {{ group.summary.published }}
+                </dd>
+              </div>
             </dl>
 
             <div class="border-t border-gray-100 pt-4 dark:border-gray-800">
@@ -200,11 +181,11 @@ function statusClass(status: ExperimentRunStatus): string {
 
           <div class="min-w-0">
             <div
-              class="hidden grid-cols-[1fr_7rem_8rem_12rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
+              class="hidden grid-cols-[minmax(0,1fr)_7rem_8rem_12rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
             >
               <span>Experiment status</span>
               <span>Type</span>
-              <span>Status</span>
+              <span><Jargon term="ESGF">ESGF Published</Jargon></span>
               <span>Progress</span>
             </div>
 
@@ -212,7 +193,7 @@ function statusClass(status: ExperimentRunStatus): string {
               <li
                 v-for="experiment in group.experiments"
                 :key="`${group.id}-${experiment.uuid || experiment.name}`"
-                class="grid gap-3 px-5 py-3 md:grid-cols-[1fr_7rem_8rem_12rem] md:items-center md:gap-4"
+                class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_8rem_12rem] md:items-center md:gap-4"
                 :data-test="`experiment-group-row-${group.id}`"
               >
                 <div class="min-w-0 text-sm">
@@ -236,22 +217,16 @@ function statusClass(status: ExperimentRunStatus): string {
                   />
                 </div>
 
-                <div
-                  class="flex items-center gap-2 text-sm"
-                  :class="statusClass(experimentRunStatus(experiment))"
-                  :data-test="`experiment-status-${experimentRunStatus(experiment)}`"
-                >
-                  <UIcon
-                    :name="statusIcon(experimentRunStatus(experiment))"
-                    class="size-3.5 shrink-0"
-                    :class="{
-                      'fill-current':
-                        experimentRunStatus(experiment) === 'running',
-                    }"
-                  />
-                  <span>{{
-                    statusLabel(experimentRunStatus(experiment))
-                  }}</span>
+                <div>
+                  <EsgfStatus :published="experiment.esgfPublished">
+                    <!-- The column header labels this on md+; on stacked
+                         mobile rows there is no header, so caption inline. -->
+                    <span
+                      class="text-xs text-gray-500 md:hidden dark:text-gray-400"
+                    >
+                      <Jargon term="ESGF">ESGF</Jargon> published
+                    </span>
+                  </EsgfStatus>
                 </div>
 
                 <div class="min-w-0">
