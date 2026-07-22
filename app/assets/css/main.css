@@ -1,2 +1,84 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+/*
+ * View transitions for the experiment programme group cards
+ * (app/components/ExperimentProgrammeGroups.vue).
+ *
+ * Opening a group reflows the whole row: the card grows and widens, its
+ * neighbours change column span and slide. Grid spans are not animatable, so the
+ * component runs the state change inside document.startViewTransition() and the
+ * browser morphs each named card between its old and new rectangles. These rules
+ * only tune that — without them the defaults still animate, just badly.
+ *
+ * The pseudo-elements live on the document root, so this cannot be scoped to the
+ * component.
+ */
+
+/*
+ * By default the snapshots are stretched to fill the animating box, which smears
+ * a 52px strip into a 500px panel. Reveal and crop instead.
+ *
+ * The duration and easing match the group below, so the box geometry and the
+ * content cross-fade resolve on one clock — otherwise the fade runs on the UA
+ * default (~250ms, linear) and drifts out of step with the grow.
+ */
+::view-transition-old(*),
+::view-transition-new(*) {
+  object-fit: none;
+  object-position: top left;
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+ * One unified morph: a soft ease-in-out, gentle at both ends. A hard-launched
+ * decelerate here read as an abrupt lurch out of the gate.
+ */
+::view-transition-group(*) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*
+ * Everything outside the named cards is captured as one "root" snapshot. Letting
+ * it cross-fade ghosts the whole page between old and new positions for a quarter
+ * of a second; snapping it is far cleaner while the eye follows the card.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/*
+ * The expanding panel. Transition pseudo-elements render in the top layer, so the
+ * panel snapshot is NOT clipped by its card's overflow-hidden — without the delay
+ * it fades in over space the card has not grown into yet, spilling past the
+ * rounded border. On close it leaves quickly, before the card shrinks past it.
+ *
+ * One pair per group: the ids are the fixed ExperimentGroupId union
+ * ("deck" | "aft" | "other") in app/services/experimentGroups.ts. A
+ * view-transition-class would collapse these, but it is younger than the base API
+ * and a dropped selector would silently restore the stretched default.
+ */
+::view-transition-new(experiment-group-panel-deck),
+::view-transition-new(experiment-group-panel-aft),
+::view-transition-new(experiment-group-panel-other) {
+  animation-delay: 150ms;
+  animation-duration: 150ms;
+  animation-fill-mode: backwards;
+}
+
+::view-transition-old(experiment-group-panel-deck),
+::view-transition-old(experiment-group-panel-aft),
+::view-transition-old(experiment-group-panel-other) {
+  animation-duration: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
