@@ -85,7 +85,7 @@ const formatNumber = (value: number) => value.toLocaleString();
     </p>
 
     <div
-      class="mt-6 grid grid-cols-3 gap-4 border-t border-gray-200 pt-5 dark:border-gray-700"
+      class="mt-6 grid grid-cols-1 gap-4 border-t border-gray-200 pt-5 lg:grid-cols-3 dark:border-gray-700"
       data-test="totals-extra"
     >
       <div>

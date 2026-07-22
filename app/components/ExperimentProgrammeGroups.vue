@@ -198,11 +198,14 @@ function formatNumber(value: number): string {
             {{ group.description }}
           </span>
         </span>
-        <!-- The badge carries the percentage; a strip has room for the count too. -->
+        <!-- The badge carries the percentage; only a strip (a closed group alone
+             on its row, lg+ only) has room to also spell out the count. On mobile
+             every closed card is a single-column strip visually, so the count is
+             hidden to keep the header a clean one-liner. -->
         <span
           v-if="mode !== 'open' && group.summary.percent !== null"
-          class="shrink-0 text-sm text-gray-500 dark:text-gray-400"
-          :class="{ 'lg:hidden': mode === 'tile' }"
+          class="hidden shrink-0 text-sm text-gray-500 dark:text-gray-400"
+          :class="{ 'lg:inline': mode === 'strip' }"
           :data-test="`experiment-group-count-${group.id}`"
         >
           {{ group.summary.total }} experiments
