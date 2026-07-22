@@ -78,6 +78,19 @@ describe("ExperimentTotals", () => {
     expect(extra.text()).toContain("2");
   });
 
+  // Asserts the placeholder on purpose: this should fail loudly, as a prompt to
+  // update it, the day a real data-volume figure is wired in.
+  it("shows the hardcoded published data volume in GB", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: { experiments: [makeExperiment()] },
+    });
+
+    const published = wrapper.find('[data-test="totals-published"]');
+    expect(published.text()).toContain("Data published");
+    expect(published.text()).toContain("0");
+    expect(published.text()).toContain("GB");
+  });
+
   it("ignores experiments with no expected years when computing progress", async () => {
     const wrapper = await mountSuspended(ExperimentTotals, {
       props: {

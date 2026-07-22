@@ -7,6 +7,13 @@ const props = defineProps<{
   experiments: PayuExperiment[];
 }>();
 
+// HARDCODED PLACEHOLDER — nothing publishes a data-volume figure yet: neither
+// experiment-config.json nor the payu telemetry API carries one. Replace this
+// with a real per-experiment sum (inside the loop below, off a new field on
+// PayuExperiment in ~/services/payuExperiments) once the API exposes it. Until
+// then the tile honestly reads 0 GB.
+const PUBLISHED_GB = 0;
+
 // Roll every experiment's years up into one planned-vs-done figure — the
 // gentlest, big-picture read on how far the whole campaign has progressed.
 // Purely presentational: the page owns loading/error states.
@@ -33,6 +40,7 @@ const totals = computed(() => {
     percent,
     serviceUnits,
     completed,
+    publishedGb: PUBLISHED_GB,
     count: props.experiments.length,
   };
 });
@@ -77,7 +85,7 @@ const formatNumber = (value: number) => value.toLocaleString();
     </p>
 
     <div
-      class="mt-6 grid grid-cols-2 gap-4 border-t border-gray-200 pt-5 dark:border-gray-700"
+      class="mt-6 grid grid-cols-3 gap-4 border-t border-gray-200 pt-5 dark:border-gray-700"
       data-test="totals-extra"
     >
       <div>
@@ -86,7 +94,9 @@ const formatNumber = (value: number) => value.toLocaleString();
         >
           CPU Hours used
         </p>
-        <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+        <p
+          class="mt-1 text-xl font-semibold text-gray-800 sm:text-2xl dark:text-gray-100"
+        >
           {{ formatNumber(totals.serviceUnits) }}
         </p>
       </div>
@@ -96,10 +106,27 @@ const formatNumber = (value: number) => value.toLocaleString();
         >
           Simulations completed
         </p>
-        <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
+        <p
+          class="mt-1 text-xl font-semibold text-gray-800 sm:text-2xl dark:text-gray-100"
+        >
           {{ totals.completed }}
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
             / {{ totals.count }}
+          </span>
+        </p>
+      </div>
+      <div data-test="totals-published">
+        <p
+          class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500"
+        >
+          Data published
+        </p>
+        <p
+          class="mt-1 text-xl font-semibold text-gray-800 sm:text-2xl dark:text-gray-100"
+        >
+          {{ formatNumber(totals.publishedGb) }}
+          <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
+            GB
           </span>
         </p>
       </div>
