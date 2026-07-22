@@ -164,11 +164,15 @@ function formatNumber(value: number): string {
           }"
         />
         <span class="min-w-0 flex-1">
-          <!-- The badge rides the title line, right-aligned, in every mode: the
-               label span is flex-1, so its right edge is the header's right edge
-               and the badge lands in the same place open or closed. That also
-               leaves the description the full width of a narrow tile. -->
-          <span class="flex items-center justify-between gap-3">
+          <!-- The badge rides the title line, right-aligned: the label span is
+               flex-1, so its right edge is the header's right edge and the badge
+               lands in the same place open or closed. On a tile at lg the column
+               is too narrow to share that line, so title and badge stack — the
+               badge drops onto its own row beneath the label. -->
+          <span
+            class="flex items-center justify-between gap-3"
+            :class="{ 'lg:flex-col lg:items-start lg:gap-2': mode === 'tile' }"
+          >
             <span
               class="text-base font-semibold text-gray-800 dark:text-gray-100"
             >
@@ -187,7 +191,8 @@ function formatNumber(value: number): string {
             />
           </span>
           <!-- Strips have one line to play with, so the description is dropped
-               there (and on mobile, where every closed card is a strip). -->
+               there (and on mobile, where every closed card is a strip). Tiles
+               show it from lg up, under the stacked title and badge. -->
           <span
             class="mt-1 block text-sm text-gray-500 dark:text-gray-400"
             :class="{
@@ -198,11 +203,14 @@ function formatNumber(value: number): string {
             {{ group.description }}
           </span>
         </span>
-        <!-- The badge carries the percentage; a strip has room for the count too. -->
+        <!-- The badge carries the percentage; only a strip (a closed group alone
+             on its row, lg+ only) has room to also spell out the count. On mobile
+             every closed card is a single-column strip visually, so the count is
+             hidden to keep the header a clean one-liner. -->
         <span
           v-if="mode !== 'open' && group.summary.percent !== null"
-          class="shrink-0 text-sm text-gray-500 dark:text-gray-400"
-          :class="{ 'lg:hidden': mode === 'tile' }"
+          class="hidden shrink-0 text-sm text-gray-500 dark:text-gray-400"
+          :class="{ 'lg:inline': mode === 'strip' }"
           :data-test="`experiment-group-count-${group.id}`"
         >
           {{ group.summary.total }} experiments
