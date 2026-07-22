@@ -181,19 +181,19 @@ function formatNumber(value: number): string {
 
           <div class="min-w-0">
             <div
-              class="hidden grid-cols-[minmax(0,1fr)_7rem_8rem_12rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
+              class="hidden grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
             >
               <span>Experiment status</span>
               <span>Type</span>
-              <span><Jargon term="ESGF">ESGF Published</Jargon></span>
               <span>Progress</span>
+              <span><Jargon term="ESGF">ESGF Published</Jargon></span>
             </div>
 
             <ul class="divide-y divide-gray-100 dark:divide-gray-800">
               <li
                 v-for="experiment in group.experiments"
                 :key="`${group.id}-${experiment.uuid || experiment.name}`"
-                class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_8rem_12rem] md:items-center md:gap-4"
+                class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] md:items-center md:gap-4"
                 :data-test="`experiment-group-row-${group.id}`"
               >
                 <div class="min-w-0 text-sm">
@@ -215,18 +215,6 @@ function formatNumber(value: number): string {
                     :experiment-class="experiment.experimentClass"
                     size="sm"
                   />
-                </div>
-
-                <div>
-                  <EsgfStatus :published="experiment.esgfPublished">
-                    <!-- The column header labels this on md+; on stacked
-                         mobile rows there is no header, so caption inline. -->
-                    <span
-                      class="text-xs text-gray-500 md:hidden dark:text-gray-400"
-                    >
-                      <Jargon term="ESGF">ESGF</Jargon> published
-                    </span>
-                  </EsgfStatus>
                 </div>
 
                 <div class="min-w-0">
@@ -263,6 +251,18 @@ function formatNumber(value: number): string {
                   >
                     {{ formatNumber(experiment.yearsRun) }} years
                   </span>
+                </div>
+
+                <div>
+                  <EsgfStatus :published="experiment.esgfPublished">
+                    <!-- The column header labels this on md+; on stacked
+                         mobile rows there is no header, so caption inline. -->
+                    <span
+                      class="text-xs text-gray-500 md:hidden dark:text-gray-400"
+                    >
+                      <Jargon term="ESGF">ESGF</Jargon> published
+                    </span>
+                  </EsgfStatus>
                 </div>
               </li>
             </ul>

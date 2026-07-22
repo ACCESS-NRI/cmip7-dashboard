@@ -84,7 +84,7 @@ const formatNumber = (value: number) => value.toLocaleString();
         <p
           class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500"
         >
-          Service units used
+          CPU Hours used
         </p>
         <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
           {{ formatNumber(totals.serviceUnits) }}
@@ -94,7 +94,7 @@ const formatNumber = (value: number) => value.toLocaleString();
         <p
           class="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500"
         >
-          Experiments completed
+          Simulations completed
         </p>
         <p class="mt-1 text-2xl font-semibold text-gray-800 dark:text-gray-100">
           {{ totals.completed }}
