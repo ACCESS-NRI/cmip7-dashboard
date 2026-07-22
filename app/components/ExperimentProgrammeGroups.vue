@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";
 import type { PayuExperiment } from "~/services/payuExperiments";
 import type { ExperimentGroup } from "~/services/experimentGroups";
@@ -81,10 +81,31 @@ function glossaryLongFor(group: { id: string; description: string }): string {
   return getTerm(group.id)?.long ?? group.description;
 }
 
+/**
+ * Toggling reflows the whole row — the card grows, its neighbours change column
+ * span and slide — so it runs inside a view transition, which morphs every named
+ * card from its old rectangle to its new one (see `main.css` for the timing).
+ * Where the API is missing (older browsers, and happy-dom under test) the state
+ * change applies synchronously and the layout snaps.
+ */
 function toggleGroup(id: string) {
-  openGroups.value = openGroups.value.includes(id)
-    ? openGroups.value.filter((openId) => openId !== id)
-    : [...openGroups.value, id];
+  const apply = () => {
+    openGroups.value = openGroups.value.includes(id)
+      ? openGroups.value.filter((openId) => openId !== id)
+      : [...openGroups.value, id];
+  };
+
+  if (typeof document === "undefined" || !("startViewTransition" in document)) {
+    apply();
+    return;
+  }
+
+  // The callback must resolve only once Vue has patched the DOM, or the browser
+  // captures the "after" state too early.
+  document.startViewTransition(() => {
+    apply();
+    return nextTick();
+  });
 }
 
 function isOpen(id: string): boolean {
@@ -120,6 +141,7 @@ function formatNumber(value: number): string {
           'border-gray-200 dark:border-gray-700': group.id === 'other',
         },
       ]"
+      :style="{ viewTransitionName: `experiment-group-${group.id}` }"
       :data-test="`experiment-group-${group.id}`"
       :data-mode="mode"
     >
@@ -193,10 +215,15 @@ function formatNumber(value: number): string {
         />
       </button>
 
+      <!-- Named separately from the card so the card's chrome morphs its
+           geometry while the panel fades in over it, rather than the whole card
+           cross-fading as one stretched image. Hidden with v-show, so when
+           closed it is display:none and simply is not captured. -->
       <div
         v-show="isOpen(group.id)"
         :id="`experiment-group-panel-${group.id}`"
         class="border-t border-gray-100 dark:border-gray-800"
+        :style="{ viewTransitionName: `experiment-group-panel-${group.id}` }"
         :data-test="`experiment-group-panel-${group.id}`"
       >
         <div class="grid gap-0 xl:grid-cols-[16rem_1fr]">
