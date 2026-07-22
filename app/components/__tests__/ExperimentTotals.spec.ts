@@ -71,8 +71,8 @@ describe("ExperimentTotals", () => {
 
     const extra = wrapper.find('[data-test="totals-extra"]');
     expect(extra.text()).toContain("1,200");
-    expect(extra.text()).toContain("Service units used");
-    expect(extra.text()).toContain("Experiments completed");
+    expect(extra.text()).toContain("CPU Hours used");
+    expect(extra.text()).toContain("Simulations completed");
     // 1 of 2 experiments completed
     expect(extra.text()).toContain("1");
     expect(extra.text()).toContain("2");
