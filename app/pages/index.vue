@@ -14,15 +14,13 @@ useSeoMeta({
     "A lightweight interface for tracking CMIP7 climate model outputs and derived metrics.",
 });
 
-// Metadata for the two collapsible detail sections (single-sourced from SECTIONS).
+// Metadata for the collapsible detail section (single-sourced from SECTIONS).
 const progressMeta = SECTIONS.find((s) => s.id === "progress")!;
-const hoodMeta = SECTIONS.find((s) => s.id === "under-the-hood")!;
 
-// Progressive disclosure: the detail sections start collapsed. Open state lives
-// here so the sidebar nav can open a section when you jump to it.
-const openSections = reactive<Record<"progress" | "under-the-hood", boolean>>({
+// Progressive disclosure: the detail section starts collapsed. Open state lives
+// here so the sidebar nav can open the section when you jump to it.
+const openSections = reactive<Record<"progress", boolean>>({
   progress: false,
-  "under-the-hood": false,
 });
 
 // Scroll-spy that drives the sidebar's active-section highlight. The detail
@@ -30,7 +28,7 @@ const openSections = reactive<Record<"progress" | "under-the-hood", boolean>>({
 const { activeId, refresh } = useActiveSection(SECTIONS.map((s) => s.id));
 
 function scrollToSection(id: SectionId) {
-  if (id === "progress" || id === "under-the-hood") openSections[id] = true;
+  if (id === "progress") openSections[id] = true;
   nextTick(() => {
     document
       .getElementById(id)
@@ -145,31 +143,6 @@ watch(payuExperiments, () => refresh());
                 :post="postByExperiment[experiment.name] ?? null"
                 variant="status"
               />
-            </div>
-          </DetailSection>
-
-          <!-- Under the hood: the classic dashboard view — summary tiles, full
-               per-run telemetry, and the derived-signal plot. -->
-          <DetailSection
-            id="under-the-hood"
-            v-model:open="openSections['under-the-hood']"
-            :title="hoodMeta.name"
-            :description="hoodMeta.description"
-            :icon="hoodMeta.icon"
-          >
-            <div class="space-y-6">
-              <ExperimentSummaryCards :experiments="payuExperiments" />
-              <PayuExperimentAccordion :experiments="payuExperiments" />
-              <ClientOnly>
-                <DummyClimatePlot />
-                <template #fallback>
-                  <div
-                    class="flex min-h-72 items-center justify-center rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-400 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-500"
-                  >
-                    Loading plot…
-                  </div>
-                </template>
-              </ClientOnly>
             </div>
           </DetailSection>
         </div>

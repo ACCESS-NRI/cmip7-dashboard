@@ -108,9 +108,9 @@ export function groupExperimentsByProgramme(
     },
     {
       id: "other" as const,
-      label: "Other experiments",
+      label: "Other simulations",
       description:
-        "Experiments tracked by the dashboard that are not currently marked as DECK or Assessment Fast Track.",
+        "Simulations tracked by the dashboard that are not currently marked as DECK or Assessment Fast Track.",
       color: "neutral" as const,
       icon: "i-lucide-circle-ellipsis",
       experiments: experiments.filter(

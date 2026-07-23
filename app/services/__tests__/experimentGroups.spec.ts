@@ -119,7 +119,7 @@ describe("groupExperimentsByProgramme", () => {
     expect(groups.map((group) => group.label)).toEqual([
       "DECK",
       "Assessment Fast Track",
-      "Other experiments",
+      "Other simulations",
     ]);
   });
 
