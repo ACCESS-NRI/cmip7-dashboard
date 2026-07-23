@@ -44,7 +44,7 @@ describe("ExperimentTotals", () => {
     expect(wrapper.text()).toContain("80");
     expect(wrapper.text()).toContain("400");
     expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
-      "20% complete across 2 experiments",
+      "20% complete across 2 simulations",
     );
   });
 
@@ -100,6 +100,6 @@ describe("ExperimentTotals", () => {
 
     // No planned total → no percentage, just the experiment count.
     expect(wrapper.find('[data-test="totals-progress"]').exists()).toBe(false);
-    expect(wrapper.text()).toContain("Across 1 experiments");
+    expect(wrapper.text()).toContain("Across 1 simulations");
   });
 });

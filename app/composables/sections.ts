@@ -1,11 +1,11 @@
 /**
  * The dashboard's on-page sections, in scroll order. "Big picture" is the
- * always-visible primary content; "Progress" and "Under the hood" are the
- * collapsible detailed views beneath it. The sidebar nav (SectionNav) and the
- * page's section anchors are both built from this single list, so their ids
- * and labels can never drift apart.
+ * always-visible primary content; "Progress" is the collapsible detailed view
+ * beneath it. The sidebar nav (SectionNav) and the page's section anchors are
+ * both built from this single list, so their ids and labels can never drift
+ * apart.
  */
-export type SectionId = "big-picture" | "progress" | "under-the-hood";
+export type SectionId = "big-picture" | "progress";
 
 export interface SectionMeta {
   id: SectionId;
@@ -25,13 +25,7 @@ export const SECTIONS: readonly SectionMeta[] = [
   {
     id: "progress",
     name: "Progress",
-    description: "How far each experiment has run, at a glance",
+    description: "How far each simulation has run, at a glance",
     icon: "i-lucide-gauge",
-  },
-  {
-    id: "under-the-hood",
-    name: "Under the hood",
-    description: "Full run telemetry and derived plots",
-    icon: "i-lucide-wrench",
   },
 ] as const;

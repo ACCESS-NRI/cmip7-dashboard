@@ -77,11 +77,11 @@ const formatNumber = (value: number) => value.toLocaleString();
         ></div>
       </div>
       <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-        {{ totals.percent }}% complete across {{ totals.count }} experiments
+        {{ totals.percent }}% complete across {{ totals.count }} simulations
       </p>
     </div>
     <p v-else class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-      Across {{ totals.count }} experiments
+      Across {{ totals.count }} simulations
     </p>
 
     <div

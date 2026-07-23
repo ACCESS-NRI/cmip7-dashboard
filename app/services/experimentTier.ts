@@ -51,7 +51,7 @@ export const EXPERIMENT_TIERS: Record<ExperimentTierId, ExperimentTier> = {
     label: "DECK",
     shortLabel: "DECK",
     description:
-      "A foundational experiment that every CMIP7 model runs. This shared baseline is what makes different models comparable in the first place.",
+      "A foundational simulation set every CMIP7 model runs. This shared baseline is what makes different models comparable in the first place.",
     foundational: true,
     color: "secondary",
     icon: "i-lucide-layers",
@@ -61,7 +61,7 @@ export const EXPERIMENT_TIERS: Record<ExperimentTierId, ExperimentTier> = {
     label: "Assessment Fast Track",
     shortLabel: "AFT",
     description:
-      "A high-priority experiment fast-tracked to feed climate assessment sooner. Layered on top of the DECK foundation, not a replacement for it.",
+      "A high-priority simulation fast-tracked to feed climate assessment sooner. Layered on top of the DECK foundation, not a replacement for it.",
     foundational: false,
     color: "success",
     icon: "i-lucide-zap",
