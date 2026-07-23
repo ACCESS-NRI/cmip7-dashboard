@@ -9,7 +9,7 @@ describe("SectionNav", () => {
       props: { activeId: "big-picture" },
     });
 
-    for (const label of ["Big picture", "Progress", "Under the hood"]) {
+    for (const label of ["Big picture", "Progress"]) {
       expect(wrapper.text()).toContain(label);
     }
     // Framed as a location indicator, not a selector.
@@ -39,9 +39,9 @@ describe("SectionNav", () => {
     });
 
     await wrapper
-      .find('[data-test="section-nav-item-under-the-hood"]')
+      .find('[data-test="section-nav-item-progress"]')
       .trigger("click");
 
-    expect(wrapper.emitted("navigate")?.at(-1)).toEqual(["under-the-hood"]);
+    expect(wrapper.emitted("navigate")?.at(-1)).toEqual(["progress"]);
   });
 });

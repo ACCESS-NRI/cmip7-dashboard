@@ -183,7 +183,7 @@ function formatNumber(value: number): string {
               variant="subtle"
               :label="
                 group.summary.percent === null
-                  ? `${group.summary.total} experiments`
+                  ? `${group.summary.total} simulations`
                   : `${group.summary.percent}% complete`
               "
               class="shrink-0"
@@ -213,7 +213,7 @@ function formatNumber(value: number): string {
           :class="{ 'lg:inline': mode === 'strip' }"
           :data-test="`experiment-group-count-${group.id}`"
         >
-          {{ group.summary.total }} experiments
+          {{ group.summary.total }} simulations
         </span>
         <UIcon
           name="i-lucide-chevron-down"
@@ -240,7 +240,7 @@ function formatNumber(value: number): string {
           >
             <dl class="grid grid-cols-2 gap-3 text-sm xl:grid-cols-1">
               <div>
-                <dt class="text-gray-500 dark:text-gray-400">Experiments</dt>
+                <dt class="text-gray-500 dark:text-gray-400">Simulations</dt>
                 <dd
                   class="mt-1 text-lg font-semibold text-gray-800 dark:text-gray-100"
                 >
@@ -300,7 +300,7 @@ function formatNumber(value: number): string {
             <div
               class="hidden grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
             >
-              <span>Experiment status</span>
+              <span>Simulation status</span>
               <span>Type</span>
               <span>Progress</span>
               <span><Jargon term="ESGF">ESGF Published</Jargon></span>

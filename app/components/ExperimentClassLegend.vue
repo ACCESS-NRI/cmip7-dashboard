@@ -23,11 +23,11 @@ const classes = computed(() => experimentClassesPresent(props.classIds));
     <h2
       class="mb-1 text-sm font-semibold uppercase text-gray-700 dark:text-gray-200"
     >
-      What these experiments are
+      What these simulations are
     </h2>
     <p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
       Most runs here are controlled model experiments, not forecasts of the real
-      world. Only experiments marked
+      world. Only simulations marked
       <span class="font-medium text-primary">Projection</span> describe a
       possible future.
     </p>
