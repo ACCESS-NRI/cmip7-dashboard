@@ -26,26 +26,26 @@ export interface ExperimentGroup {
   summary: ExperimentGroupSummary;
 }
 
-export function experimentRunStatus(
-  experiment: PayuExperiment,
-): ExperimentRunStatus {
-  if (
-    experiment.expectedYearsRun !== null &&
-    experiment.yearsRun >= experiment.expectedYearsRun
-  ) {
-    return "completed";
-  }
-  return experiment.yearsRun > 0 ? "running" : "not-started";
+/**
+ * Anything with years-run against an expectation. Both a whole experiment and a
+ * single ensemble member satisfy this, so one status/percent rule covers the
+ * top-level rows and the members fanned out beneath them.
+ */
+export interface RunProgress {
+  yearsRun: number;
+  expectedYearsRun: number | null;
 }
 
-export function experimentProgressPercent(
-  experiment: PayuExperiment,
-): number | null {
-  if (experiment.expectedYearsRun === null) return null;
-  return Math.min(
-    100,
-    Math.round((experiment.yearsRun / experiment.expectedYearsRun) * 100),
-  );
+export function experimentRunStatus(run: RunProgress): ExperimentRunStatus {
+  if (run.expectedYearsRun !== null && run.yearsRun >= run.expectedYearsRun) {
+    return "completed";
+  }
+  return run.yearsRun > 0 ? "running" : "not-started";
+}
+
+export function experimentProgressPercent(run: RunProgress): number | null {
+  if (run.expectedYearsRun === null) return null;
+  return Math.min(100, Math.round((run.yearsRun / run.expectedYearsRun) * 100));
 }
 
 export function summarizeExperimentGroup(
@@ -63,7 +63,11 @@ export function summarizeExperimentGroup(
     if (experiment.expectedYearsRun !== null) {
       plannedYears += experiment.expectedYearsRun;
     }
-    if (experiment.esgfPublished === true) published += 1;
+    // Counts whole experiments, so an ensemble lands here only once every one
+    // of its members is on ESGF.
+    if (experiment.esgfPublishedCount >= experiment.expectedEnsembleCount) {
+      published += 1;
+    }
 
     const status = experimentRunStatus(experiment);
     if (status === "completed") completed += 1;

@@ -19,7 +19,10 @@ function makeExperiment(
     serviceUnits: 100,
     yearsRun: 50,
     expectedYearsRun: 100,
-    esgfPublished: false,
+    memberExpectedYearsRun: 100,
+    expectedEnsembleCount: 1,
+    members: [],
+    esgfPublishedCount: 0,
     experimentClass: EXPERIMENT_CLASSES.historical,
     tiers: [],
     details: {},
@@ -128,12 +131,12 @@ describe("ExperimentProgrammeGroups", () => {
         experiments: [
           makeExperiment({
             name: "published",
-            esgfPublished: true,
+            esgfPublishedCount: 1,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
           makeExperiment({
             name: "unpublished",
-            esgfPublished: false,
+            esgfPublishedCount: 0,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
         ],
@@ -146,13 +149,30 @@ describe("ExperimentProgrammeGroups", () => {
       false,
     );
 
-    const checkboxes = deck
-      .findAll('[data-test="esgf-status"] input[type="checkbox"]')
-      .map((input) => (input.element as HTMLInputElement).checked);
-    expect(checkboxes).toEqual([true, false]);
+    const counts = deck
+      .findAll('[data-test="esgf-count"]')
+      .map((count) => count.text());
+    expect(counts).toEqual(["1/1", "0/1"]);
 
     // One of the two DECK experiments is published.
     expect(deck.text()).toContain("Published");
+  });
+
+  it("counts ESGF publication across the ensemble", async () => {
+    const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedEnsembleCount: 30,
+            esgfPublishedCount: 0,
+            tiers: [EXPERIMENT_TIERS.deck],
+          }),
+        ],
+      },
+    });
+
+    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0/30");
   });
 
   it("renders experiment type badges in their own column", async () => {
@@ -320,6 +340,146 @@ describe("ExperimentProgrammeGroups", () => {
         ["open", "lg:col-span-6"],
         ["open", "lg:col-span-6"],
       ]);
+    });
+  });
+
+  describe("ensemble fan-out", () => {
+    function makeMember(name: string, yearsRun: number) {
+      return {
+        name,
+        uuid: `uuid-${name}`,
+        modelStartTime: "1850-01-01",
+        modelCurrentTime: "1900-01-01",
+        serviceUnitsDisplay: "10",
+        serviceUnits: 10,
+        yearsRun,
+        expectedYearsRun: 172,
+        hasTelemetry: yearsRun > 0,
+        details: {},
+      };
+    }
+
+    function makeEnsemble(overrides: Partial<PayuExperiment> = {}) {
+      return makeExperiment({
+        name: "historical",
+        tiers: [EXPERIMENT_TIERS.deck],
+        yearsRun: 130,
+        expectedYearsRun: 516,
+        memberExpectedYearsRun: 172,
+        expectedEnsembleCount: 3,
+        members: [
+          makeMember("r1i1p1f1", 86),
+          makeMember("r2i1p1f1", 44),
+          makeMember("r3i1p1f1", 0),
+        ],
+        ...overrides,
+      });
+    }
+
+    it("keeps the ensemble collapsed to one summed row by default", async () => {
+      const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+        props: { experiments: [makeEnsemble()] },
+      });
+
+      const toggle = wrapper.find('[data-test="ensemble-toggle-historical"]');
+      expect(toggle.attributes("aria-expanded")).toBe("false");
+      // 130 of 516 planned years — the sum, not one member's share.
+      expect(wrapper.find('[data-test="group-progress-bar"]').text()).toContain(
+        "25%",
+      );
+      expect(
+        wrapper.find('[data-test="ensemble-count-historical"]').text(),
+      ).toBe("2/3 members");
+    });
+
+    it("fans out to a row per ensemble member when expanded", async () => {
+      const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+        props: { experiments: [makeEnsemble()] },
+      });
+
+      const toggle = wrapper.find('[data-test="ensemble-toggle-historical"]');
+      await toggle.trigger("click");
+
+      expect(toggle.attributes("aria-expanded")).toBe("true");
+      const members = wrapper.findAll(
+        '[data-test="ensemble-member-historical"]',
+      );
+      expect(members).toHaveLength(3);
+      expect(members[0]!.text()).toContain("r1i1p1f1");
+      // Each member reads against its own 172-year expectation: 86 → 50%.
+      expect(members[0]!.text()).toContain("50%");
+      expect(members[2]!.text()).toContain("0%");
+    });
+
+    it("names the planned members that have not started", async () => {
+      const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+        props: {
+          experiments: [
+            makeEnsemble({
+              expectedEnsembleCount: 10,
+              members: [makeMember("r1i1p1f1", 86)],
+            }),
+          ],
+        },
+      });
+
+      await wrapper
+        .find('[data-test="ensemble-toggle-historical"]')
+        .trigger("click");
+
+      expect(
+        wrapper.find('[data-test="ensemble-pending-historical"]').text(),
+      ).toBe("9 further members not started yet");
+    });
+
+    it("gives a single-run experiment no fan-out control", async () => {
+      const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+        props: {
+          experiments: [
+            makeExperiment({
+              name: "abrupt-4xCO2",
+              tiers: [EXPERIMENT_TIERS.deck],
+            }),
+          ],
+        },
+      });
+
+      expect(
+        wrapper.find('[data-test="ensemble-toggle-abrupt-4xCO2"]').exists(),
+      ).toBe(false);
+      expect(
+        wrapper.find('[data-test="ensemble-count-abrupt-4xCO2"]').exists(),
+      ).toBe(false);
+    });
+
+    it("expands the two copies of a shared experiment independently", async () => {
+      const wrapper = await mountSuspended(ExperimentProgrammeGroups, {
+        props: {
+          experiments: [
+            makeEnsemble({
+              tiers: [EXPERIMENT_TIERS.deck, EXPERIMENT_TIERS.aft],
+            }),
+          ],
+        },
+      });
+
+      const deck = wrapper.find('[data-test="experiment-group-deck"]');
+      const aft = wrapper.find('[data-test="experiment-group-aft"]');
+
+      await deck
+        .find('[data-test="ensemble-toggle-historical"]')
+        .trigger("click");
+
+      expect(
+        deck
+          .find('[data-test="ensemble-toggle-historical"]')
+          .attributes("aria-expanded"),
+      ).toBe("true");
+      expect(
+        aft
+          .find('[data-test="ensemble-toggle-historical"]')
+          .attributes("aria-expanded"),
+      ).toBe("false");
     });
   });
 

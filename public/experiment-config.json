@@ -1,12 +1,21 @@
 [
   {
-    "uuid": "e523e199-80f6-4ca6-b84a-e513a16f2029",
     "name": "piControl",
+    "related_experiments": [
+      {
+        "name": "PI-CNP-concentrations",
+        "uuid": "92f372d7-50e3-4aac-b373-99eef3cd85c4"
+      },
+      {
+        "name": "Ndep2-PI-CNP-concentrations",
+        "uuid": "e523e199-80f6-4ca6-b84a-e513a16f2029"
+      }
+    ],
     "description": "-",
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1000,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b",
@@ -15,7 +24,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1000,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "bc4ae139-0c1d-4c05-aa75-7be4eb2e660f",
@@ -24,54 +33,222 @@
     "class": "idealised",
     "deck": true,
     "expected_years_run": 300,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "name": "amip",
     "description": "-",
     "class": "historical",
     "deck": true,
-    "expected_years_run": 44,
-    "esgf_published": false
+    "expected_years_run": 43,
+    "esgf_published": 0,
+    "expected_n_ensembles": 10
   },
   {
     "name": "historical",
     "description": "-",
     "class": "historical",
     "deck": true,
-    "aft": true,
     "expected_years_run": 172,
-    "esgf_published": false
+    "esgf_published": 0,
+    "expected_n_ensembles": 10,
+    "ensembles": [
+      {
+        "name": "r10i1p1f1",
+        "uuid": "aaca3142-20d2-43d4-94ab-c6417fd73f3d"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "faef2965-5944-4ffc-b85c-d998285b7960"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "30c9935c-e547-4486-b038-ee1956d17d57"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "ab5c6b2a-2045-473c-99d9-1dee78462b8f"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "35855ee5-a0c9-4264-8716-4bc89c49714a"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "4742e54d-3303-4cb0-b5cc-5e9add419fba"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "6052d747-304e-436b-9543-ee6ecdec8518"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "db6902f6-e63a-4951-9ff0-f5fb0a5f5236"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "2399b4a4-16f1-471b-8a1f-d0e37ebd6dc7"
+      },
+      {
+        "name": "r1i1p1f1",
+        "uuid": "01409bc3-2ad3-4d0e-9552-074979ac631d"
+      }
+    ]
   },
   {
-    "uuid": "38c867bd-e40c-48b0-ad44-e9ee42a57086",
     "name": "esm-historical",
     "description": "-",
     "class": "historical",
     "deck": true,
     "expected_years_run": 172,
-    "esgf_published": false
+    "esgf_published": 0,
+    "expected_n_ensembles": 30,
+    "ensembles": [
+      {
+        "name": "r27i1p1f1",
+        "uuid": "16897734-4456-4279-91f9-b3389d6a7673"
+      },
+      {
+        "name": "r1i1p1f1",
+        "uuid": "135fafe6-5457-4300-a3d9-56138a932b99"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "33d7dfbf-282c-4b53-88ac-271432f7c9b5"
+      },
+      {
+        "name": "r13i1p1f1",
+        "uuid": "9a7e54df-7b36-40db-b7ad-88c9e505f879"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "160950b2-9467-422b-a087-f9bf2e6245fc"
+      },
+      {
+        "name": "r29i1p1f1",
+        "uuid": "a9696d00-6816-4378-8fe0-da6590389b4e"
+      },
+      {
+        "name": "r20i1p1f1",
+        "uuid": "61805c51-205e-4473-a0d4-e567ab12f8f9"
+      },
+      {
+        "name": "r12i1p1f1",
+        "uuid": "090a952e-906c-4d47-a208-b6a41e13fdb3"
+      },
+      {
+        "name": "r15i1p1f1",
+        "uuid": "1a8b670c-5663-419e-a94d-17e8b73c2456"
+      },
+      {
+        "name": "r10i1p1f1",
+        "uuid": "c0589abb-3327-496e-84f2-d42003dc7a01"
+      },
+      {
+        "name": "r26i1p1f1",
+        "uuid": "d708e053-b7db-4a10-9318-d55af708d7c0"
+      },
+      {
+        "name": "r28i1p1f1",
+        "uuid": "995fd081-7954-427a-a69a-d9d9b8a83ab8"
+      },
+      {
+        "name": "r30i1p1f1",
+        "uuid": "f55e2276-7970-48cc-9034-d098e34116b4"
+      },
+      {
+        "name": "r24i1p1f1",
+        "uuid": "fd4c9cba-92d3-4ff2-8ba7-9ba989b6537d"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "93a39bb3-11a1-48ef-8a8d-7d6e2c451c26"
+      },
+      {
+        "name": "r16i1p1f1",
+        "uuid": "919909fe-e49d-4f52-b17e-60f3698f8041"
+      },
+      {
+        "name": "r25i1p1f1",
+        "uuid": "9b5a64ec-dbc5-4935-98a8-6bd6bf5ed2a7"
+      },
+      {
+        "name": "r18i1p1f1",
+        "uuid": "aa6ff4be-1adc-42fc-a0ea-8c11fc672456"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "faeb0bae-c885-4572-94cc-688aaaecda5f"
+      },
+      {
+        "name": "r22i1p1f1",
+        "uuid": "e71ea255-9dae-4e0b-ab3a-b38f159c62f3"
+      },
+      {
+        "name": "r11i1p1f1",
+        "uuid": "de7b1f04-256e-45b8-886c-0cc9d4ed21b1"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "22a9ee87-9ea8-4c7f-b23d-a4f75876dbad"
+      },
+      {
+        "name": "r14i1p1f1",
+        "uuid": "d7b1858e-6a12-469c-a4f3-671a9e051b2c"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "295f0b5a-fd9c-4c54-90ea-cd185e94a9fa"
+      },
+      {
+        "name": "r19i1p1f1",
+        "uuid": "e1cc46ce-979a-477c-8475-f37484983dcb"
+      },
+      {
+        "name": "r23i1p1f1",
+        "uuid": "61420273-1804-43b8-a636-ac351ca1b0d2"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "d8a30ca4-fbf6-4c00-97b8-4c1b32018f88"
+      },
+      {
+        "name": "r21i1p1f1",
+        "uuid": "e137a8d6-5ff4-4465-aac0-0470616fd62c"
+      },
+      {
+        "name": "r17i1p1f1",
+        "uuid": "7716bd9f-cc9a-46ef-a97e-0f4e672795cb"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "7e8c31ad-092e-46a7-bf3b-a92d43a535a1"
+      }
+    ]
   },
   {
     "name": "piClim-Control",
     "description": "-",
     "class": "idealised",
+    "deck": true,
     "expected_years_run": 30,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "name": "piClim-anthro",
     "description": "-",
     "class": "idealised",
+    "deck": true,
     "expected_years_run": 30,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "name": "piClim-4xCO2",
     "description": "-",
     "class": "idealised",
+    "deck": true,
     "expected_years_run": 30,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "7be18101-ad62-45db-9be7-e3703753b103",
@@ -80,23 +257,25 @@
     "class": "idealised",
     "deck": true,
     "expected_years_run": 150,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "f4cc0eee-412a-4f83-8495-819f4dd8dc5d",
     "name": "1pctCO2-bgc",
     "description": "-",
     "class": "idealised",
+    "aft": true,
     "expected_years_run": 150,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "104718fd-8ebe-456a-8035-344d1c183d90",
     "name": "1pctCO2-rad",
     "description": "-",
     "class": "idealised",
+    "aft": true,
     "expected_years_run": 150,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "4d052f54-ddc0-4cb6-9fbb-c89054462d72",
@@ -105,7 +284,7 @@
     "class": "idealised",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
@@ -114,7 +293,7 @@
     "class": "idealised",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": false
+    "esgf_published": 0
   },
   {
     "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
@@ -123,6 +302,183 @@
     "class": "idealised",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": false
+    "esgf_published": 0
+  },
+  {
+    "name": "scen7-h",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 30,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-hl",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-m",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-ml",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-l",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-ln",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "scen7-vl",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 30,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-h",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 30,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-hl",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-m",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-ml",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-l",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-ln",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 10,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "esm-scen7-vl",
+    "description": "-",
+    "aft": true,
+    "expected_years_run": 79,
+    "expected_n_ensembles": 30,
+    "esgf_published": 0,
+    "class": "projection"
+  },
+  {
+    "name": "hist-nat",
+    "description": "-",
+    "expected_years_run": 186,
+    "expected_n_ensembles": 3,
+    "esgf_published": 0,
+    "class": "historical",
+    "aft": true
+  },
+  {
+    "name": "hist-aer",
+    "description": "-",
+    "expected_years_run": 186,
+    "expected_n_ensembles": 3,
+    "esgf_published": 0,
+    "class": "historical",
+    "aft": true
+  },
+  {
+    "name": "hist-GHG",
+    "description": "-",
+    "expected_years_run": 186,
+    "expected_n_ensembles": 3,
+    "esgf_published": 0,
+    "class": "historical",
+    "aft": true
+  },
+  {
+    "name": "abrupt-2xCO2",
+    "description": "-",
+    "expected_years_run": 300,
+    "esgf_published": 0,
+    "class": "idealised",
+    "aft": true
+  },
+  {
+    "name": "abrupt-0p5xCO2",
+    "description": "-",
+    "expected_years_run": 300,
+    "esgf_published": 0,
+    "class": "idealised",
+    "aft": true
+  },
+  {
+    "name": "abrupt-127k",
+    "description": "-",
+    "expected_years_run": 300,
+    "esgf_published": 0,
+    "class": "idealised",
+    "aft": true
   }
 ]
