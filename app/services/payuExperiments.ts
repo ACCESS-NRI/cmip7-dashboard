@@ -116,10 +116,11 @@ export function calculateYearsRun(raw: PayuExperimentRaw): number {
 }
 
 /**
- * The runs that make up an experiment. An ensemble lists its realisations; a
- * plain experiment is a single run named after the experiment itself. An
- * experiment with neither (only `related_experiments`, which is not yet
- * interpreted) has no runs to report on.
+ * The runs shown as an experiment's fan-out: the realisations you can expand to
+ * inspect one at a time. An ensemble lists its realisations; a plain experiment
+ * is a single run named after the experiment itself. `related_experiments` are
+ * deliberately *not* here — they roll up into the totals but are not a fan-out
+ * (see `relatedSubRuns`).
  */
 function configMembers(
   configEntry: ExperimentConfig,
@@ -134,6 +135,20 @@ function configMembers(
     return [{ name: configEntry.name, uuid: configEntry.uuid }];
   }
   return [];
+}
+
+/**
+ * Sub-runs of one experiment recorded under separate payu UUIDs (e.g.
+ * piControl's PI-CNP / Ndep2-PI-CNP concentrations runs). Their telemetry sums
+ * into the experiment's totals, but they are one experiment — not an ensemble —
+ * so they contribute no fan-out and do not change the planned ensemble size.
+ * Only read when there is no ensemble, which already supplies the runs.
+ */
+function relatedSubRuns(
+  configEntry: ExperimentConfig,
+): ExperimentEnsembleMember[] {
+  if (configEntry.ensembles?.length) return [];
+  return configEntry.related_experiments ?? [];
 }
 
 export function normalizePayuMember(
@@ -191,16 +206,24 @@ export function normalizePayuExperiment(
     configEntry.expected_n_ensembles ?? 1,
   );
 
-  const members = configMembers(configEntry).map((member) =>
+  const findTelemetry = (member: ExperimentEnsembleMember) =>
     normalizePayuMember(
       member,
       memberExpectedYearsRun,
       telemetry.find((row) => row.experiment_uuid === member.uuid),
-    ),
-  );
+    );
+
+  const members = configMembers(configEntry).map(findTelemetry);
+  // Related sub-runs sum into the totals but never fan out, so they are kept
+  // apart from `members` (which drives the fan-out) and only joined for the
+  // roll-up below.
+  const relatedRuns = relatedSubRuns(configEntry).map(findTelemetry);
+  const summedRuns = [...members, ...relatedRuns];
 
   // A single-run experiment reports that run's own telemetry directly, so
-  // consumers that predate ensembles keep seeing what they always did.
+  // consumers that predate ensembles keep seeing what they always did. A set of
+  // related sub-runs has no single run to speak for it, so those fields stay
+  // blank while the numeric totals below still sum across them.
   const soleMember = members.length === 1 ? members[0] : undefined;
 
   return {
@@ -209,8 +232,8 @@ export function normalizePayuExperiment(
     modelStartTime: soleMember?.modelStartTime ?? "—",
     modelCurrentTime: soleMember?.modelCurrentTime ?? "—",
     serviceUnitsDisplay: soleMember?.serviceUnitsDisplay ?? "—",
-    serviceUnits: sumServiceUnits(members),
-    yearsRun: members.reduce((sum, member) => sum + member.yearsRun, 0),
+    serviceUnits: sumServiceUnits(summedRuns),
+    yearsRun: summedRuns.reduce((sum, member) => sum + member.yearsRun, 0),
     expectedYearsRun:
       memberExpectedYearsRun === null
         ? null

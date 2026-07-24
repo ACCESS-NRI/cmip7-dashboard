@@ -177,14 +177,60 @@ describe("normalizePayuExperiment", () => {
     expect(result.members[0]!.expectedYearsRun).toBe(300);
   });
 
-  it("has no members when the config records no UUID", () => {
-    // piControl currently carries only `related_experiments`, which is not yet
-    // interpreted — so there is no run to report telemetry for.
+  it("has no members when the config records no UUID or related runs", () => {
     const { uuid: _uuid, ...withoutUuid } = BASE_CONFIG;
     const result = normalizePayuExperiment(withoutUuid, [BASE_PAYU]);
     expect(result.members).toEqual([]);
     expect(result.yearsRun).toBe(0);
     expect(result.details).toEqual({});
+  });
+
+  describe("related sub-runs", () => {
+    // piControl: one experiment whose run is split across two payu UUIDs, with
+    // no top-level uuid and no ensemble of its own.
+    const RELATED_CONFIG: ExperimentConfig = {
+      name: "piControl",
+      expected_years_run: 1000,
+      esgf_published: 0,
+      related_experiments: [
+        { name: "PI-CNP-concentrations", uuid: "cnp-1" },
+        { name: "Ndep2-PI-CNP-concentrations", uuid: "cnp-2" },
+      ],
+    };
+
+    const relatedRaw = (
+      uuid: string,
+      currentYear: string,
+    ): PayuExperimentRaw => ({
+      experiment_name: "piControl",
+      experiment_uuid: uuid,
+      experiment_model_start_time: "0001-01-01T00:00:00",
+      experiment_model_current_time: `${currentYear}-01-01T00:00:00`,
+      experiment_service_units: 100,
+    });
+
+    it("sums related sub-runs into a single experiment total", () => {
+      const result = normalizePayuExperiment(RELATED_CONFIG, [
+        relatedRaw("cnp-1", "0401"), // 400 years
+        relatedRaw("cnp-2", "0301"), // 300 years
+      ]);
+
+      expect(result.yearsRun).toBe(700);
+      expect(result.serviceUnits).toBe(200);
+      // Measured against the single experiment's planned length, not doubled.
+      expect(result.expectedYearsRun).toBe(1000);
+      expect(result.expectedEnsembleCount).toBe(1);
+    });
+
+    it("does not fan the related sub-runs out as ensemble members", () => {
+      const result = normalizePayuExperiment(RELATED_CONFIG, [
+        relatedRaw("cnp-1", "0401"),
+      ]);
+
+      // No fan-out: an ensemble of one, with no members exposed to expand.
+      expect(result.members).toEqual([]);
+      expect(result.esgfPublishedCount).toBe(0);
+    });
   });
 
   describe("ensembles", () => {
