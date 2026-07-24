@@ -46,9 +46,11 @@ export interface ExperimentConfig {
   /** Ensemble members that exist, each with its own payu UUID. */
   ensembles?: ExperimentEnsembleMember[];
   /**
-   * The same simulation recorded under several UUIDs. Carried through so the
-   * config round-trips, but deliberately not interpreted yet — how these should
-   * roll up into one figure is still an open question.
+   * Sub-runs of this one experiment recorded under several UUIDs (e.g.
+   * piControl's PI-CNP / Ndep2-PI-CNP concentrations runs). Their telemetry is
+   * summed into the experiment's totals, but they are treated as one experiment
+   * — not an ensemble — so they add no fan-out and do not change the planned
+   * ensemble size.
    */
   related_experiments?: ExperimentEnsembleMember[];
 }
