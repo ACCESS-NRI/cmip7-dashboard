@@ -1,11 +1,19 @@
+<!--
+  FurtherReading — outbound "Further reading" links from a post's frontmatter.
+
+  Shared by the dashboard overview cards and the blog post pages. Stateless: the
+  links array is passed in as a prop.
+
+  Used by: app/components/BlogArticle.vue, app/components/ExperimentCard.vue,
+  app/components/ExperimentExplainer.vue, app/components/content/Jargon.vue,
+  app/pages/glossary.vue
+-->
 <script setup lang="ts">
 defineProps<{
   links: { title: string; url: string }[];
 }>();
 </script>
 
-<!-- Outbound "Further reading" links from a post's frontmatter; shared by the
-     dashboard overview cards and the blog post pages. -->
 <template>
   <div data-test="further-reading">
     <p class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">

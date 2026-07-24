@@ -1,14 +1,17 @@
 import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 
 /**
- * Scroll-spy for the sidebar navigation indicator. Watches the given section
- * elements (by id) and reports which one is currently in the middle of the
- * viewport, so the sidebar can highlight "where you are" as you scroll — it is
- * a position indicator, not a selector.
+ * useActiveSection — scroll-spy for the sidebar navigation indicator.
+ *
+ * Watches the given section elements (by id) and reports which one is currently
+ * in the middle of the viewport, so the sidebar can highlight "where you are" as
+ * you scroll — it is a position indicator, not a selector.
  *
  * Client-only: a no-op during SSR (there is no viewport to observe). Because
  * the detail sections mount after the experiment data loads, `refresh()` lets
  * the caller re-attach the observer once those elements exist.
+ *
+ * Used by: app/pages/index.vue
  */
 export function useActiveSection(ids: readonly string[]) {
   const activeId = ref<string>(ids[0] ?? "");

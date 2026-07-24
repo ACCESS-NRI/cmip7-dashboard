@@ -1,3 +1,12 @@
+<!--
+  ExperimentTierBadge — a coloured badge labelling an experiment's participation tier.
+
+  Renders a CMIP7 participation tier (e.g. DECK, AFT) with its colour, at one of
+  two sizes. Stateless: the tier is passed in as a prop. The tier taxonomy lives
+  in services/experimentTier.ts.
+
+  Used by: app/components/ExperimentCard.vue
+-->
 <script setup lang="ts">
 import type { ExperimentTier } from "~/services/experimentTier";
 

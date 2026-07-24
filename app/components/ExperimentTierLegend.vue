@@ -1,3 +1,12 @@
+<!--
+  ExperimentTierLegend — a key to the participation tiers on the dashboard.
+
+  Lists only the tiers actually present in the current experiment set (resolved
+  by experimentTiersPresent), each with its badge and description. Stateless: the
+  resolved tiers for the experiments in view are passed in as a prop.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import { experimentTiersPresent } from "~/services/experimentTier";

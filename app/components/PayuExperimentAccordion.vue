@@ -1,3 +1,14 @@
+<!--
+  PayuExperimentAccordion — the experiment list as an expandable accordion.
+
+  The embed/iframe view of the experiment list: each experiment is a UAccordion
+  panel showing its progress, class badge and ESGF status. The dashboard proper
+  presents the same data through ExperimentProgrammeGroups instead; this simpler
+  accordion is the standalone, embeddable variant. Owns only its open-panel state
+  (bound via v-model to UAccordion); the experiment list is passed in as a prop.
+
+  Used by: app/pages/embed/experiments.vue
+-->
 <template>
   <section
     class="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"

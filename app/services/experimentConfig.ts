@@ -1,3 +1,13 @@
+/**
+ * experimentConfig — the shape of public/experiment-config.json and its loader.
+ *
+ * Pure TypeScript, no Vue imports. Types every field of the static config that
+ * is the dashboard's source of truth for which experiments exist (their expected
+ * years/ensembles, class, tier flags, ESGF counts, and related runs), and loads
+ * it. Live payu telemetry is merged onto this shape by UUID in payuExperiments.
+ *
+ * Used by: app/services/payuExperiments.ts
+ */
 import type { ExperimentClassId } from "./experimentClass";
 
 /** A named run with its own payu UUID: one ensemble member of an experiment. */

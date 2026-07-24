@@ -1,16 +1,25 @@
+<!--
+  Jargon — inline jargon/acronym term with a hover popover (issue #12).
+
+  A single hover popover (reka's HoverCard under the hood) surfaces the
+  definition on hover *and* keyboard focus, and its panel is itself hoverable so
+  the further-reading and glossary links stay clickable. The trigger is visibly
+  highlighted so it's obvious the term is explained. On touch, tapping focuses
+  the trigger and opens the card. Lives in components/content/ so it also works
+  inside markdown via MDC (`:jargon[DECK]{term="DECK"}`). Unknown terms degrade
+  to plain text, so a typo'd `term` never breaks the surrounding page.
+
+  Used by: app/components/ExperimentCard.vue,
+  app/components/EvaluationStatus.vue, app/components/ExperimentGroupRow.vue,
+  app/components/ExperimentProgrammeGroups.vue,
+  app/components/ExperimentTierLegend.vue,
+  app/components/PayuExperimentAccordion.vue, app/pages/index.vue,
+  app/pages/glossary.vue, and content/*.md via MDC
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import { useGlossary } from "~/composables/useGlossary";
 
-// Inline jargon/acronym term (issue #12). A single hover popover (reka's
-// HoverCard under the hood) surfaces the definition on hover *and* keyboard
-// focus, and its panel is itself hoverable so the further-reading and glossary
-// links stay clickable. The trigger is visibly highlighted so it's obvious the
-// term is explained. On touch, tapping focuses the trigger and opens the card.
-//
-// Lives in components/content/ so it also works inside markdown via MDC
-// (`:jargon[DECK]{term="DECK"}`). Unknown terms degrade to plain text, so a
-// typo'd `term` never breaks the surrounding page.
 const props = defineProps<{
   /** The glossary key to look up (term, slug or alias). */
   term: string;

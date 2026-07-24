@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// The /blog route: lists every published post as cards via the BlogItems
+// component (which loads the posts through useBlogPosts).
 useSeoMeta({
   title: "CMIP7 Updates",
   description:

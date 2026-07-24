@@ -1,3 +1,14 @@
+<!--
+  ExperimentSummaryCards — the three headline totals for the embed summary view.
+
+  Compact summary of the experiment set (counts and aggregated service units)
+  for the iframe-embeddable summary page. Keeps its own fractional service-units
+  formatter (`toLocaleString(undefined, { maximumFractionDigits: 2 })`), distinct
+  from the shared integer formatNumber util. Stateless: the experiment list and
+  layout orientation are passed in as props.
+
+  Used by: app/pages/embed/experiments-summary.vue
+-->
 <template>
   <section
     class="grid gap-4"

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// Iframe-embeddable blog post (embed layout, no site chrome). Renders any
+// content/blog/*.md by path through BlogArticle and reports its height to the
+// host frame via useIframeEmbedHeight.
 import { useIframeEmbedHeight } from "~/composables/useIframeEmbedHeight";
 
 definePageMeta({ layout: "embed" });

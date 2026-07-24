@@ -1,5 +1,7 @@
 /**
- * Experiment participation tiers (issue #21).
+ * experimentTier — the CMIP7 experiment participation tiers (issue #21).
+ *
+ * Pure data and helpers, no Vue imports.
  *
  * A second axis, orthogonal to the scientific taxonomy in `experimentClass.ts`.
  * Where the taxonomy answers "is this a real-world projection?", the tiers
@@ -19,6 +21,9 @@
  * evaluation-status dimension, not an experiment-membership one, so it lives in
  * its own component (`EvaluationStatus.vue`) rather than as a badge alongside
  * these.
+ *
+ * Used by: app/services/experimentGroups.ts, app/services/payuExperiments.ts,
+ * app/components/ExperimentTierBadge.vue, app/components/ExperimentTierLegend.vue
  */
 
 export type ExperimentTierId = "deck" | "aft";

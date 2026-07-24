@@ -1,4 +1,8 @@
 <script setup lang="ts">
+// The dashboard home route. Loads payu telemetry (usePayuExperiments) and
+// explainer posts (useExperimentExplainers), then lays out the hero, totals,
+// programme groups and the collapsible detailed-view sections, with a
+// scroll-spy driving the sidebar section nav.
 import { reactive, watch } from "vue";
 import { SECTIONS } from "~/composables/sections";
 import type { SectionId } from "~/composables/sections";

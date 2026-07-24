@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// Iframe-embeddable summary view (embed layout, no site chrome). Loads payu
+// telemetry via usePayuExperiments and renders the ExperimentSummaryCards totals.
 import { usePayuExperiments } from "~/composables/usePayuExperiments";
 
 definePageMeta({ layout: "embed" });

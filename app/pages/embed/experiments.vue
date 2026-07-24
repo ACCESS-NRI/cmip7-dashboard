@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// Iframe-embeddable experiment list (embed layout, no site chrome). Loads payu
+// telemetry via usePayuExperiments, renders the PayuExperimentAccordion, and
+// reports its height to the host frame via useIframeEmbedHeight.
 import { usePayuExperiments } from "~/composables/usePayuExperiments";
 import { useIframeEmbedHeight } from "~/composables/useIframeEmbedHeight";
 

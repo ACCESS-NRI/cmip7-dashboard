@@ -1,3 +1,12 @@
+<!--
+  GitCommit — the build/version footer pinned to the bottom of the sidebar.
+
+  Shows the short commit SHA (linked to GitHub) and, when tagged, the app
+  version and build time, all sourced from runtime config injected at build time.
+  Degrades gracefully when the commit/tag are "unknown".
+
+  Used by: app/components/AppSidebar.vue
+-->
 <script setup lang="ts">
 const config = useRuntimeConfig();
 
