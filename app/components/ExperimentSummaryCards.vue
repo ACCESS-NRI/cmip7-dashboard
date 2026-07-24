@@ -69,10 +69,12 @@ const totalYearsRun = computed(() => {
 
 const totalServiceUnits = computed(() => {
   if (props.loading || props.error) return "-";
-  const total = props.experiments.reduce((sum, e) => {
-    const su = e.details["experiment_service_units"];
-    return typeof su === "number" ? sum + su : sum;
-  }, 0);
+  // `serviceUnits` is already summed over an experiment's ensemble members;
+  // the raw `details` row only exists for single-run experiments.
+  const total = props.experiments.reduce(
+    (sum, e) => sum + (e.serviceUnits ?? 0),
+    0,
+  );
   return total.toLocaleString(undefined, { maximumFractionDigits: 2 });
 });
 </script>

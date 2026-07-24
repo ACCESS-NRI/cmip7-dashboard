@@ -103,19 +103,45 @@
             <ExperimentProgress
               :years-run="item.experiment.yearsRun"
               :expected-years-run="item.experiment.expectedYearsRun"
+              :ensemble-count="item.experiment.expectedEnsembleCount"
             />
 
             <!-- ESGF column -->
             <EsgfStatus
-              :published="item.experiment.esgfPublished"
+              :published-count="item.experiment.esgfPublishedCount"
+              :total="item.experiment.expectedEnsembleCount"
               class="justify-center"
             />
           </div>
         </template>
 
         <template #content="{ item }">
+          <!-- An ensemble has no single set of run details to show, so it lists
+               its members' progress instead of one run's key/value table. -->
+          <ul
+            v-if="item.experiment.members.length > 1"
+            class="space-y-1 px-5 py-2"
+            data-test="accordion-content"
+          >
+            <li
+              v-for="member in item.experiment.members"
+              :key="member.uuid"
+              class="grid items-center gap-4 [grid-template-columns:1fr_11rem]"
+              data-test="accordion-member"
+            >
+              <span
+                class="truncate font-mono text-xs text-gray-600 dark:text-gray-400"
+              >
+                {{ member.name }}
+              </span>
+              <ExperimentProgress
+                :years-run="member.yearsRun"
+                :expected-years-run="member.expectedYearsRun"
+              />
+            </li>
+          </ul>
           <div
-            v-if="Object.keys(item.experiment.details).length === 0"
+            v-else-if="Object.keys(item.experiment.details).length === 0"
             class="px-5 py-2 text-center text-sm text-gray-400 dark:text-gray-500"
             data-test="accordion-content"
           >

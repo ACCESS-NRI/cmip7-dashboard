@@ -4,6 +4,12 @@ import { computed } from "vue";
 const props = defineProps<{
   yearsRun: number;
   expectedYearsRun: number | null;
+  /**
+   * Planned ensemble size. Shown when it is more than one, because the years
+   * figures are then summed across every member and the totals look
+   * inexplicably large without it.
+   */
+  ensembleCount?: number;
 }>();
 
 const percent = computed(() =>
@@ -23,6 +29,11 @@ const percent = computed(() =>
   >
     <span class="text-xs text-gray-500 dark:text-gray-400">
       {{ yearsRun }} / {{ expectedYearsRun }} years
+      <template v-if="ensembleCount && ensembleCount > 1">
+        <span data-test="progress-ensemble-count">
+          across {{ ensembleCount }} members
+        </span>
+      </template>
     </span>
     <div
       class="h-1.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700"

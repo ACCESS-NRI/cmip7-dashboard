@@ -1,20 +1,35 @@
 <script setup lang="ts">
-defineProps<{
-  published: boolean | null;
+import { computed } from "vue";
+
+const props = defineProps<{
+  /** Ensemble members published to ESGF. */
+  publishedCount: number;
+  /** Members expected in total; 1 for an experiment that is a single run. */
+  total: number;
 }>();
+
+const isComplete = computed(
+  () => props.total > 0 && props.publishedCount >= props.total,
+);
 </script>
 
-<!-- ESGF publication indicator. The default slot can add a caption next to
-     the checkbox; shared by the accordion and the card grid. -->
+<!-- ESGF publication indicator: how many of an experiment's ensemble members
+     have been published. The default slot can add a caption beside the count;
+     shared by the accordion, the card grid and the grouped rows. -->
 <template>
   <div class="flex items-center gap-2" data-test="esgf-status">
-    <input
-      type="checkbox"
-      :checked="published ?? false"
-      disabled
-      class="h-4 w-4 rounded accent-blue-600"
-      :aria-label="`ESGF published: ${published ? 'yes' : 'no'}`"
-    />
+    <span
+      class="text-sm tabular-nums"
+      :class="
+        isComplete
+          ? 'font-medium text-green-600 dark:text-green-400'
+          : 'text-gray-600 dark:text-gray-400'
+      "
+      :aria-label="`${publishedCount} of ${total} published to ESGF`"
+      data-test="esgf-count"
+    >
+      {{ publishedCount }}/{{ total }}
+    </span>
     <slot />
   </div>
 </template>
