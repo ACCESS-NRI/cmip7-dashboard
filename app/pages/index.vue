@@ -87,8 +87,8 @@ watch(payuExperiments, () => refresh());
 
     <template #body>
       <!-- One hero: a slim brand rail beside the rolled-up campaign stats. The
-           asymmetric split keeps the card short so DECK / Fast Track sit near
-           the fold on an iPad. -->
+           asymmetric split keeps the card short so the simulation groups sit
+           near the fold on an iPad. -->
       <DashboardHero
         :experiments="payuExperiments"
         :loading="payuLoading"

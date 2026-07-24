@@ -102,50 +102,83 @@ describe("summarizeExperimentGroup", () => {
 });
 
 describe("groupExperimentsByProgramme", () => {
-  it("returns DECK, Assessment Fast Track, and Other groups in display order", () => {
+  it("returns DECK, Scenarios, and Other groups in display order", () => {
     const groups = groupExperimentsByProgramme([
       makeExperiment({
         name: "historical",
         tiers: [EXPERIMENT_TIERS.deck],
       }),
       makeExperiment({
-        name: "esm-flat10",
+        name: "scen7-h",
         tiers: [EXPERIMENT_TIERS.aft],
+        experimentClass: EXPERIMENT_CLASSES.projection,
       }),
       makeExperiment({
         name: "piClim-Control",
         tiers: [],
+        experimentClass: EXPERIMENT_CLASSES.idealised,
       }),
     ]);
 
-    expect(groups.map((group) => group.id)).toEqual(["deck", "aft", "other"]);
+    expect(groups.map((group) => group.id)).toEqual([
+      "deck",
+      "scenario",
+      "other",
+    ]);
     expect(groups.map((group) => group.label)).toEqual([
       "DECK",
-      "Assessment Fast Track",
+      "Scenarios",
       "Other simulations",
     ]);
   });
 
-  it("shows experiments with overlapping membership in both groups", () => {
-    const historical = makeExperiment({
-      name: "historical",
-      tiers: [EXPERIMENT_TIERS.deck, EXPERIMENT_TIERS.aft],
+  it("splits the Fast Track between scenarios and other", () => {
+    const scenario = makeExperiment({
+      name: "scen7-h",
+      tiers: [EXPERIMENT_TIERS.aft],
+      experimentClass: EXPERIMENT_CLASSES.projection,
+    });
+    const idealised = makeExperiment({
+      name: "esm-flat10",
+      tiers: [EXPERIMENT_TIERS.aft],
+      experimentClass: EXPERIMENT_CLASSES.idealised,
     });
 
-    const groups = groupExperimentsByProgramme([historical]);
+    const groups = groupExperimentsByProgramme([scenario, idealised]);
+
+    expect(
+      groups.find((group) => group.id === "scenario")?.experiments,
+    ).toEqual([scenario]);
+    expect(groups.find((group) => group.id === "other")?.experiments).toEqual([
+      idealised,
+    ]);
+  });
+
+  it("shows experiments with overlapping membership in both groups", () => {
+    const deckScenario = makeExperiment({
+      name: "scen7-h",
+      tiers: [EXPERIMENT_TIERS.deck],
+      experimentClass: EXPERIMENT_CLASSES.projection,
+    });
+
+    const groups = groupExperimentsByProgramme([deckScenario]);
 
     expect(groups).toHaveLength(2);
     expect(groups.find((group) => group.id === "deck")?.experiments).toEqual([
-      historical,
+      deckScenario,
     ]);
-    expect(groups.find((group) => group.id === "aft")?.experiments).toEqual([
-      historical,
-    ]);
+    expect(
+      groups.find((group) => group.id === "scenario")?.experiments,
+    ).toEqual([deckScenario]);
   });
 
   it("omits empty groups", () => {
     const groups = groupExperimentsByProgramme([
-      makeExperiment({ name: "piClim-Control", tiers: [] }),
+      makeExperiment({
+        name: "piClim-Control",
+        tiers: [],
+        experimentClass: EXPERIMENT_CLASSES.idealised,
+      }),
     ]);
 
     expect(groups.map((group) => group.id)).toEqual(["other"]);

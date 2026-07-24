@@ -29,7 +29,7 @@ const SPAN_CLASS: Record<number, string> = {
 /**
  * Lays the groups out as bands over a six-column grid: each open group takes a full
  * row, and each run of consecutive closed groups splits a row evenly between them.
- * That keeps the vertical order intact — opening DECK expands it above Fast Track and
+ * That keeps the vertical order intact — opening DECK expands it above Scenarios and
  * Other, which close ranks into a two-up row. A closed group left alone on its row
  * renders as a slim strip rather than a stretched, mostly-empty tile.
  */
@@ -70,8 +70,9 @@ const { getTerm } = useGlossary();
 
 /**
  * The plain-language glossary definition shown in the collapsed footer. Sourced
- * from the glossary's `long` field (deck / aft → fast-track), falling back to the
- * group's own description for groups with no glossary entry (e.g. "other").
+ * from the glossary's `long` field (deck → deck, scenario → ssp via its alias),
+ * falling back to the group's own description for groups with no glossary entry
+ * (e.g. "other").
  */
 function glossaryLongFor(group: { id: string; description: string }): string {
   return getTerm(group.id)?.long ?? group.description;
@@ -122,7 +123,7 @@ function explainerFor(
  * An experiment row stays a single line summarising the whole ensemble; the
  * members it is summed from are one click away, as nested rows on the same
  * column grid. Rows are keyed per group because an experiment can appear in
- * both DECK and Fast Track, and the two copies expand independently.
+ * more than one group, and the copies expand independently.
  */
 const expandedRows = ref<string[]>([]);
 
@@ -181,7 +182,7 @@ function formatNumber(value: number): string {
         SPAN_CLASS[span],
         {
           'border-blue-200 dark:border-blue-800': group.id === 'deck',
-          'border-green-200 dark:border-green-800': group.id === 'aft',
+          'border-indigo-200 dark:border-indigo-800': group.id === 'scenario',
           'border-gray-200 dark:border-gray-700': group.id === 'other',
         },
       ]"
@@ -203,7 +204,7 @@ function formatNumber(value: number): string {
           class="mt-0.5 size-5 shrink-0"
           :class="{
             'text-blue-600 dark:text-blue-400': group.id === 'deck',
-            'text-green-600 dark:text-green-400': group.id === 'aft',
+            'text-indigo-600 dark:text-indigo-400': group.id === 'scenario',
             'text-gray-500 dark:text-gray-400': group.id === 'other',
           }"
         />
