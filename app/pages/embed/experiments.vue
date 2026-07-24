@@ -1,46 +1,26 @@
 <script setup lang="ts">
-import { loadPayuExperiments } from "~/services/payuExperiments";
-import type { PayuExperiment } from "~/services/payuExperiments";
+import { usePayuExperiments } from "~/composables/usePayuExperiments";
+import { useIframeEmbedHeight } from "~/composables/useIframeEmbedHeight";
 
 definePageMeta({ layout: "embed" });
 
 useSeoMeta({ title: "CMIP7 Experiments" });
 
-const config = useRuntimeConfig();
+const {
+  experiments: payuExperiments,
+  loading: payuLoading,
+  error: payuError,
+} = usePayuExperiments();
 
-const payuExperiments = ref<PayuExperiment[]>([]);
-const payuLoading = ref(true);
-const payuError = ref<string | null>(null);
+const { elementRef: mainRef, start } = useIframeEmbedHeight();
 
-const mainRef = ref<HTMLElement | null>(null);
-
-// Iframe-embed helper: tell the parent document how tall we are so it can size
-// the iframe to fit, and keep it in sync as panels expand/collapse.
-function notifyHeight() {
-  if (mainRef.value) {
-    window.parent.postMessage({ height: mainRef.value.scrollHeight }, "*");
-  }
-}
-
-onMounted(async () => {
-  try {
-    payuExperiments.value = await loadPayuExperiments(
-      config.public.payuCmip7ApiUrl as string,
-    );
-  } catch (err) {
-    payuError.value =
-      err instanceof Error ? err.message : "Failed to load experiments.";
-  } finally {
-    payuLoading.value = false;
-  }
-
-  await nextTick();
-  notifyHeight();
-
-  if (mainRef.value) {
-    const observer = new ResizeObserver(() => notifyHeight());
-    observer.observe(mainRef.value);
-  }
+// The first height report must happen only after the experiments have loaded
+// and the accordion has rendered — the same ordering the inline version had
+// when the fetch and the notify lived in one onMounted. usePayuExperiments now
+// owns that fetch, so begin reporting when its loading flag settles (which,
+// like the original, fires on both success and failure).
+watch(payuLoading, (loading) => {
+  if (!loading) start();
 });
 </script>
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useIframeEmbedHeight } from "~/composables/useIframeEmbedHeight";
+
 definePageMeta({ layout: "embed" });
 
 const route = useRoute();
@@ -21,24 +23,10 @@ if (!post.value) {
 
 useSeoMeta({ title: () => post.value?.title });
 
-const mainRef = ref<HTMLElement | null>(null);
-
-// Iframe-embed helper: tell the parent document how tall we are so it can size
-// the iframe to fit, and keep it in sync as content/layout changes.
-function notifyHeight() {
-  if (mainRef.value) {
-    window.parent.postMessage({ height: mainRef.value.scrollHeight }, "*");
-  }
-}
+const { elementRef: mainRef, start } = useIframeEmbedHeight();
 
 onMounted(async () => {
-  await nextTick();
-  notifyHeight();
-
-  if (mainRef.value) {
-    const observer = new ResizeObserver(() => notifyHeight());
-    observer.observe(mainRef.value);
-  }
+  await start();
 });
 </script>
 

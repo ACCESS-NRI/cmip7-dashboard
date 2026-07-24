@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { reactive, watch } from "vue";
-import type { ContentCollectionItem } from "@nuxt/content";
-import { loadPayuExperiments } from "~/services/payuExperiments";
-import type { PayuExperiment } from "~/services/payuExperiments";
 import { SECTIONS } from "~/composables/sections";
 import type { SectionId } from "~/composables/sections";
 import { useActiveSection } from "~/composables/useActiveSection";
+import { usePayuExperiments } from "~/composables/usePayuExperiments";
+import { useExperimentExplainers } from "~/composables/useExperimentExplainers";
 import accessLogo from "~/assets/ACCESS-logo.svg";
 
 useSeoMeta({
@@ -38,36 +37,13 @@ function scrollToSection(id: SectionId) {
 
 // Explainer posts are tagged with an `experiment` name in their frontmatter;
 // map them by that name so grouped experiment rows can open the explainer.
-const { data: explainers } = await useAsyncData("experiment-explainers", () =>
-  queryCollection("content").where("experiment", "IS NOT NULL").all(),
-);
+const { postByExperiment } = await useExperimentExplainers();
 
-const postByExperiment = computed<Record<string, ContentCollectionItem>>(() => {
-  const map: Record<string, ContentCollectionItem> = {};
-  for (const post of explainers.value ?? []) {
-    if (post.experiment) map[post.experiment] = post;
-  }
-  return map;
-});
-
-const config = useRuntimeConfig();
-
-const payuExperiments = ref<PayuExperiment[]>([]);
-const payuLoading = ref(true);
-const payuError = ref<string | null>(null);
-
-onMounted(async () => {
-  try {
-    payuExperiments.value = await loadPayuExperiments(
-      config.public.payuCmip7ApiUrl as string,
-    );
-  } catch (err) {
-    payuError.value =
-      err instanceof Error ? err.message : "Failed to load experiments.";
-  } finally {
-    payuLoading.value = false;
-  }
-});
+const {
+  experiments: payuExperiments,
+  loading: payuLoading,
+  error: payuError,
+} = usePayuExperiments();
 
 // Once the experiments load, the section anchors exist — attach the scroll-spy.
 watch(payuExperiments, () => refresh());
