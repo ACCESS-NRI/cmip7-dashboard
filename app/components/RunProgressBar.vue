@@ -1,3 +1,19 @@
+<!--
+  RunProgressBar — years-run bar with its percentage alongside.
+
+  Shared by the experiment rows and the ensemble-member rows fanned out beneath
+  them, so both read against the same scale. Falls back to a plain years figure
+  when nothing has declared how long the run is expected to be. Horizontal bar +
+  trailing percent, supports a `compact` mode for nested rows, and turns green on
+  completion.
+
+  Not to be confused with ExperimentProgress.vue: that one is a stacked
+  label-over-bar with an "across N members" caption and no completion colour,
+  serving a different layout (the accordion and card grid). They are kept
+  separate on purpose — see ExperimentProgress.vue.
+
+  Used by: app/components/ExperimentProgrammeGroups.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import {
@@ -26,14 +42,8 @@ const percent = computed(() => experimentProgressPercent(run.value));
 const isComplete = computed(
   () => experimentRunStatus(run.value) === "completed",
 );
-
-const formatNumber = (value: number) => value.toLocaleString();
 </script>
 
-<!-- Years-run bar with its percentage alongside. Shared by the experiment rows
-     and the ensemble-member rows fanned out beneath them, so both read against
-     the same scale. Falls back to a plain years figure when nothing has
-     declared how long the run is expected to be. -->
 <template>
   <div
     v-if="percent !== null"
