@@ -7,10 +7,10 @@ long: >-
   emissions. Pairing an SSP with a level of climate forcing (for example
   "SSP2-4.5") gives a scenario that models run forward to project a possible
   future climate — as opposed to the idealised or historical experiments that
-  characterise how the model itself behaves.
+  characterise how the model itself behaves. CMIP7 names its scenarios by the
+  emissions level they reach (High, Medium, Very Low …) rather than by SSP number.
 aliases:
   - SSPs
-  - scenario
 links:
   - title: "O'Neill et al. (2016): The Scenario Model Intercomparison Project (ScenarioMIP)"
     url: "https://doi.org/10.5194/gmd-9-3461-2016"

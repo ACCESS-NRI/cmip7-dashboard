@@ -3,7 +3,7 @@ import { EXPERIMENT_TIERS } from "./experimentTier";
 import type { ExperimentTierId } from "./experimentTier";
 
 export type ExperimentRunStatus = "completed" | "running" | "not-started";
-export type ExperimentGroupId = ExperimentTierId | "other";
+export type ExperimentGroupId = "deck" | "scenario" | "other";
 
 export interface ExperimentGroupSummary {
   total: number;
@@ -20,7 +20,7 @@ export interface ExperimentGroup {
   id: ExperimentGroupId;
   label: string;
   description: string;
-  color: "secondary" | "success" | "neutral";
+  color: "secondary" | "success" | "primary" | "neutral";
   icon: string;
   experiments: PayuExperiment[];
   summary: ExperimentGroupSummary;
@@ -94,31 +94,54 @@ function hasTier(experiment: PayuExperiment, id: ExperimentTierId): boolean {
   return experiment.tiers.some((tier) => tier.id === id);
 }
 
+/**
+ * The three cards on the big-picture row. DECK comes off the tier axis; the
+ * other two split everything else by whether it is a future scenario, which is
+ * already declared per experiment as `class: "projection"` in
+ * experiment-config.json — the Fast Track is spread across both, since a
+ * fast-tracked scenario and a fast-tracked idealised run answer very different
+ * questions for a reader.
+ *
+ * DECK and scenario membership are independent, so a DECK experiment classed as
+ * a projection would appear in both; `other` is the true complement of the two,
+ * so every experiment lands in at least one card.
+ */
 export function groupExperimentsByProgramme(
   experiments: PayuExperiment[],
 ): ExperimentGroup[] {
   const groupDefinitions = [
     {
+      // Label, description, colour and icon come from the tier definition; the
+      // id is re-pinned because `EXPERIMENT_TIERS` types it as any tier id, and
+      // only DECK is a group.
       ...EXPERIMENT_TIERS.deck,
+      id: "deck" as const,
       experiments: experiments.filter((experiment) =>
         hasTier(experiment, "deck"),
       ),
     },
     {
-      ...EXPERIMENT_TIERS.aft,
-      experiments: experiments.filter((experiment) =>
-        hasTier(experiment, "aft"),
+      id: "scenario" as const,
+      label: "Scenarios",
+      description:
+        "Simulations of plausible future climates under different emissions and policy pathways — the closest thing here to a real-world outlook.",
+      color: "primary" as const,
+      icon: "i-lucide-trending-up",
+      experiments: experiments.filter(
+        (experiment) => experiment.experimentClass.isProjection,
       ),
     },
     {
       id: "other" as const,
       label: "Other simulations",
       description:
-        "Simulations tracked by the dashboard that are not currently marked as DECK or Assessment Fast Track.",
+        "Simulations that are neither DECK baselines nor future scenarios — idealised and single-forcing runs that probe how the model itself behaves.",
       color: "neutral" as const,
       icon: "i-lucide-circle-ellipsis",
       experiments: experiments.filter(
-        (experiment) => experiment.tiers.length === 0,
+        (experiment) =>
+          !hasTier(experiment, "deck") &&
+          !experiment.experimentClass.isProjection,
       ),
     },
   ];

@@ -55,8 +55,16 @@ describe("ExperimentProgrammeGroups", () => {
             name: "historical",
             tiers: [EXPERIMENT_TIERS.deck],
           }),
-          makeExperiment({ name: "esm-flat10", tiers: [EXPERIMENT_TIERS.aft] }),
-          makeExperiment({ name: "piClim-Control", tiers: [] }),
+          makeExperiment({
+            name: "scen7-h",
+            tiers: [EXPERIMENT_TIERS.aft],
+            experimentClass: EXPERIMENT_CLASSES.projection,
+          }),
+          makeExperiment({
+            name: "piClim-Control",
+            tiers: [],
+            experimentClass: EXPERIMENT_CLASSES.idealised,
+          }),
         ],
       },
     });
@@ -66,7 +74,7 @@ describe("ExperimentProgrammeGroups", () => {
       .map((toggle) => toggle.text());
 
     expect(groupLabels[0]).toContain("DECK");
-    expect(groupLabels[1]).toContain("Assessment Fast Track");
+    expect(groupLabels[1]).toContain("Scenarios");
     expect(groupLabels[2]).toContain("Other simulations");
   });
 
@@ -75,8 +83,9 @@ describe("ExperimentProgrammeGroups", () => {
       props: {
         experiments: [
           makeExperiment({
-            name: "historical",
-            tiers: [EXPERIMENT_TIERS.deck, EXPERIMENT_TIERS.aft],
+            name: "scen7-h",
+            tiers: [EXPERIMENT_TIERS.deck],
+            experimentClass: EXPERIMENT_CLASSES.projection,
           }),
         ],
       },
@@ -84,10 +93,10 @@ describe("ExperimentProgrammeGroups", () => {
 
     expect(
       wrapper.find('[data-test="experiment-group-deck"]').text(),
-    ).toContain("historical");
-    expect(wrapper.find('[data-test="experiment-group-aft"]').text()).toContain(
-      "historical",
-    );
+    ).toContain("scen7-h");
+    expect(
+      wrapper.find('[data-test="experiment-group-scenario"]').text(),
+    ).toContain("scen7-h");
   });
 
   it("renders status counts and progress for a group", async () => {
@@ -244,10 +253,15 @@ describe("ExperimentProgrammeGroups", () => {
               tiers: [EXPERIMENT_TIERS.deck],
             }),
             makeExperiment({
-              name: "esm-flat10",
+              name: "scen7-h",
               tiers: [EXPERIMENT_TIERS.aft],
+              experimentClass: EXPERIMENT_CLASSES.projection,
             }),
-            makeExperiment({ name: "piClim-Control", tiers: [] }),
+            makeExperiment({
+              name: "piClim-Control",
+              tiers: [],
+              experimentClass: EXPERIMENT_CLASSES.idealised,
+            }),
           ],
         },
       });
@@ -295,7 +309,7 @@ describe("ExperimentProgrammeGroups", () => {
 
     it("renders closed groups left alone on a row as strips", async () => {
       const wrapper = await mountThreeGroups();
-      await open(wrapper, "aft");
+      await open(wrapper, "scenario");
 
       // Opening the middle group strands DECK above it and Other below it.
       expect(cards(wrapper)).toEqual([
@@ -332,7 +346,7 @@ describe("ExperimentProgrammeGroups", () => {
     it("stacks every group full width when all are open", async () => {
       const wrapper = await mountThreeGroups();
       await open(wrapper, "deck");
-      await open(wrapper, "aft");
+      await open(wrapper, "scenario");
       await open(wrapper, "other");
 
       expect(cards(wrapper)).toEqual([
@@ -457,14 +471,15 @@ describe("ExperimentProgrammeGroups", () => {
         props: {
           experiments: [
             makeEnsemble({
-              tiers: [EXPERIMENT_TIERS.deck, EXPERIMENT_TIERS.aft],
+              tiers: [EXPERIMENT_TIERS.deck],
+              experimentClass: EXPERIMENT_CLASSES.projection,
             }),
           ],
         },
       });
 
       const deck = wrapper.find('[data-test="experiment-group-deck"]');
-      const aft = wrapper.find('[data-test="experiment-group-aft"]');
+      const scenario = wrapper.find('[data-test="experiment-group-scenario"]');
 
       await deck
         .find('[data-test="ensemble-toggle-historical"]')
@@ -476,7 +491,7 @@ describe("ExperimentProgrammeGroups", () => {
           .attributes("aria-expanded"),
       ).toBe("true");
       expect(
-        aft
+        scenario
           .find('[data-test="ensemble-toggle-historical"]')
           .attributes("aria-expanded"),
       ).toBe("false");

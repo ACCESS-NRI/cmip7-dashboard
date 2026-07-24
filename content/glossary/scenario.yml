@@ -1,0 +1,23 @@
+term: Scenario
+short: A storyline of future emissions that models run forward to project a possible climate.
+long: >-
+  A scenario is a storyline of future emissions — built from assumptions about
+  population, economic growth, technology and climate policy — that models run
+  forward to project how the climate could respond. CMIP7 uses seven, named for
+  where they end up rather than by an SSP number: High (h), High-to-Low (hl),
+  Medium (m), Medium-to-Low (ml), Low (l), Low-to-Negative (ln) and Very Low (vl).
+  Medium follows today's policies; Very Low cuts emissions as fast as is plausibly
+  possible; the "-to-" pathways rise first and fall later, overshooting before
+  coming back down. Runs named esm-scen7-* are the same pathways driven by
+  emissions with an interactive carbon cycle rather than by prescribed CO₂
+  concentrations. Scenarios are exploratory, not predictions: each asks "if the
+  world went this way, what would the climate do?"
+aliases:
+  - Scenarios
+  - ScenarioMIP
+  - scen7
+links:
+  - title: "WCRP CMIP — Explainer: scenarios for CMIP7"
+    url: "https://wcrp-cmip.org/explainer-scenarios-for-cmip7/"
+  - title: "van Vuuren et al. (2026): The Scenario Model Intercomparison Project for CMIP7"
+    url: "https://gmd.copernicus.org/articles/19/2627/2026/"
