@@ -1,3 +1,15 @@
+<!--
+  ExperimentCard — one experiment rendered as a card.
+
+  Shows a single payu experiment as a card in one of two faces selected by the
+  `variant` prop: "status" (the default) is the run-status readout, and
+  "overview" is the plain-language explainer face. Only `variant="status"` is
+  currently mounted anywhere — app/pages/index.vue renders the Progress grid
+  with it. The "overview" variant is a designed, still-supported API kept for
+  content that may use it again; it is not reached today.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";

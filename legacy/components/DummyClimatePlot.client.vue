@@ -65,10 +65,10 @@ import {
   type TooltipItem,
 } from "chart.js";
 import { Line } from "vue-chartjs";
-import { useDummyClimatePlot } from "~/composables/useDummyClimatePlot";
-import { buildCmip7PlotData, type PlotSeries } from "~/services/cmip7PlotData";
-import { getCmip7ParquetSource } from "~/services/cmip7Source";
-import { loadRemoteParquetDataSource } from "~/services/dataSource";
+import { useDummyClimatePlot } from "../composables/useDummyClimatePlot";
+import { buildCmip7PlotData, type PlotSeries } from "../services/cmip7PlotData";
+import { getCmip7ParquetSource } from "../services/cmip7Source";
+import { loadRemoteParquetDataSource } from "../services/dataSource";
 
 ChartJS.register(
   CategoryScale,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import { DETAIL_LEVELS, useDetailLevel } from "~/composables/useDetailLevel";
+import { DETAIL_LEVELS, useDetailLevel } from "../composables/useDetailLevel";
 
 const level = useDetailLevel();
 
