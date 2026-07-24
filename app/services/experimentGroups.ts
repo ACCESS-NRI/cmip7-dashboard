@@ -1,3 +1,16 @@
+/**
+ * experimentGroups — grouping and summary maths over the experiment list.
+ *
+ * Pure functions only, no Vue imports. Turns the flat experiment list into
+ * per-run status/percent, per-group rollup summaries, and the three
+ * programme cards (DECK / Scenarios / Other) shown on the dashboard.
+ * `experimentProgressPercent` here intentionally differs from the percent
+ * computed in ~/components/ExperimentProgress.vue on the expectedYearsRun === 0
+ * edge case; see the note on that function.
+ *
+ * Used by: app/components/ExperimentProgrammeGroups.vue,
+ * app/components/ExperimentTotals.vue, app/components/RunProgressBar.vue
+ */
 import type { PayuExperiment } from "./payuExperiments";
 import { EXPERIMENT_TIERS } from "./experimentTier";
 import type { ExperimentTierId } from "./experimentTier";
@@ -43,6 +56,12 @@ export function experimentRunStatus(run: RunProgress): ExperimentRunStatus {
   return run.yearsRun > 0 ? "running" : "not-started";
 }
 
+// The `=== null` guard is deliberately narrower than the truthy check used by
+// the `percent` computed in ~/components/ExperimentProgress.vue. They are NOT
+// interchangeable: an expectedYearsRun of 0 passes this guard and would divide
+// by zero here, whereas the component's truthy check would return null. This
+// function's callers never pass 0, so the guard is correct as written — do not
+// "align" it with the component's truthy form. See the matching note there.
 export function experimentProgressPercent(run: RunProgress): number | null {
   if (run.expectedYearsRun === null) return null;
   return Math.min(100, Math.round((run.yearsRun / run.expectedYearsRun) * 100));

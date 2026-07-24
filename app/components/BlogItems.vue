@@ -3,7 +3,8 @@
 
   Renders every published post (newest-first) as a link card showing its date,
   optional author, title, and description. The data comes from the useBlogPosts
-  composable; this component owns only the presentation and the date formatting.
+  composable and dates are formatted by the shared formatPostDate util (a missing
+  date renders as "Draft" here); this component owns only the presentation.
   Shows a "No updates published yet" note when the list is empty.
 
   Used by: app/pages/blog/index.vue
@@ -12,18 +13,6 @@
 import { useBlogPosts } from "~/composables/useBlogPosts";
 
 const { posts } = await useBlogPosts();
-
-const formatPostDate = (value?: string) => {
-  if (!value) {
-    return "Draft";
-  }
-
-  return new Date(value).toLocaleDateString("en-AU", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
 </script>
 
 <template>
@@ -37,7 +26,7 @@ const formatPostDate = (value?: string) => {
       <div
         class="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wide font-medium"
       >
-        {{ formatPostDate(post.date) }}
+        {{ formatPostDate(post.date, "Draft") }}
         <span v-if="post.author"> · {{ post.author }}</span>
       </div>
       <div

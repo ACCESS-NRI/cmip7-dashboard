@@ -1,3 +1,14 @@
+<!--
+  ExperimentTotals — the campaign-wide totals tile at the top of the dashboard.
+
+  Rolls every experiment's years, service units and completion count into one
+  planned-vs-done summary with a progress bar. Purely presentational: the parent
+  page owns loading/error state and passes the experiment list in as a prop. The
+  "Data published" figure is a hardcoded placeholder until the API exposes a
+  data-volume field (see the PUBLISHED_GB note below).
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import type { PayuExperiment } from "~/services/payuExperiments";
@@ -44,8 +55,6 @@ const totals = computed(() => {
     count: props.experiments.length,
   };
 });
-
-const formatNumber = (value: number) => value.toLocaleString();
 </script>
 
 <template>

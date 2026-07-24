@@ -1,3 +1,15 @@
+<!--
+  ExperimentProgrammeGroups — the three programme-group cards (DECK, Scenarios,
+  Other) with their expandable experiment and ensemble-member rows.
+
+  Groups the experiment list via groupExperimentsByProgramme and lays each group
+  out as an open panel, a shared-row tile, or a closed strip depending on how many
+  are open. Owns only local open/closed UI state; the experiment data and the
+  per-experiment explainer posts are passed in as props. Uses the view-transition
+  API for the expand/collapse animation.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { computed, nextTick, ref } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";
@@ -161,10 +173,6 @@ function pendingMembers(experiment: PayuExperiment): number {
     0,
     experiment.expectedEnsembleCount - startedMembers(experiment),
   );
-}
-
-function formatNumber(value: number): string {
-  return value.toLocaleString();
 }
 </script>
 

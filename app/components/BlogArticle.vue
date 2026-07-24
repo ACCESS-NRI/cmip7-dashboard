@@ -1,18 +1,17 @@
+<!--
+  BlogArticle — shared blog-post renderer.
+
+  Used by the /blog/:slug page and the iframe embed route so both show the same
+  title, byline, body and further-reading list. Purely presentational: the post
+  is passed in as a prop. A missing date renders as nothing (the empty-string
+  fallback of formatPostDate).
+
+  Used by: app/pages/blog/[...slug].vue, app/pages/embed/blog/[...slug].vue
+-->
 <script setup lang="ts">
 import type { ContentCollectionItem } from "@nuxt/content";
 
-// Shared blog-post renderer, used by the /blog/:slug page and the iframe embed
-// route so both show the same title, byline, body and further-reading list.
 defineProps<{ post: ContentCollectionItem }>();
-
-const formatDate = (value?: string) =>
-  value
-    ? new Date(value).toLocaleDateString("en-AU", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "";
 </script>
 
 <template>
@@ -31,7 +30,7 @@ const formatDate = (value?: string) =>
         v-if="post.date || post.author"
         class="text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500"
       >
-        {{ formatDate(post.date) }}
+        {{ formatPostDate(post.date) }}
         <span v-if="post.author"> · {{ post.author }}</span>
       </div>
     </header>

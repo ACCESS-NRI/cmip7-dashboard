@@ -1,3 +1,18 @@
+<!--
+  ExperimentProgress — years-run progress against the expected total, or a plain
+  badge when no expectation is configured.
+
+  Stacked label-over-bar with an "across N members" caption for ensembles, and no
+  completion colour. Shared by the accordion and the card grid.
+
+  Not to be confused with RunProgressBar.vue: that one is a horizontal bar with a
+  trailing percent, a `compact` mode, and a green completion state, serving the
+  programme-group and ensemble-member rows. They render differently for
+  different layouts and are kept separate on purpose — see RunProgressBar.vue.
+
+  Used by: app/components/ExperimentCard.vue,
+  app/components/PayuExperimentAccordion.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 
@@ -12,6 +27,11 @@ const props = defineProps<{
   ensembleCount?: number;
 }>();
 
+// Deliberately a truthy check rather than the `=== null` guard used by
+// experimentProgressPercent in ~/services/experimentGroups.ts. They are NOT
+// interchangeable: when expectedYearsRun is 0, this yields null (rendering the
+// plain years badge) whereas the service function would divide by zero. Do not
+// unify the two — see the matching note in experimentGroups.ts.
 const percent = computed(() =>
   props.expectedYearsRun
     ? Math.min(100, Math.round((props.yearsRun / props.expectedYearsRun) * 100))
@@ -19,8 +39,6 @@ const percent = computed(() =>
 );
 </script>
 
-<!-- Years-run progress against the expected total, or a plain badge when no
-     expectation is configured. Shared by the accordion and the card grid. -->
 <template>
   <div
     v-if="percent !== null"
