@@ -1,3 +1,13 @@
+<!--
+  BlogItems — the blog listing as a stack of post cards.
+
+  Renders every published post (newest-first) as a link card showing its date,
+  optional author, title, and description. The data comes from the useBlogPosts
+  composable; this component owns only the presentation and the date formatting.
+  Shows a "No updates published yet" note when the list is empty.
+
+  Used by: app/pages/blog/index.vue
+-->
 <script setup lang="ts">
 import { useBlogPosts } from "~/composables/useBlogPosts";
 
