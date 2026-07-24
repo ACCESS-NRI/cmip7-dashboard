@@ -6,7 +6,7 @@ import DummyClimatePlot from "../DummyClimatePlot.client.vue";
 // Unlike DummyClimatePlot.spec.ts we deliberately do NOT mock `vue-chartjs`
 // here: we want the real Chart.js so the `axisZoom` plugin lifecycle
 // (afterInit/afterDestroy) and the window-level pointer handlers actually run.
-vi.mock("~/services/dataSource", () => ({
+vi.mock("../../services/dataSource", () => ({
   loadRemoteParquetDataSource: vi.fn().mockResolvedValue({
     columns: ["year", "Model_A", "Model_B"],
     rows: [

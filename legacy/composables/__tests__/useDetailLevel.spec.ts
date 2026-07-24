@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 import { defineComponent } from "vue";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
-import { useDetailLevel } from "~/composables/useDetailLevel";
+import { useDetailLevel } from "../useDetailLevel";
 
 const Harness = defineComponent({
   setup() {

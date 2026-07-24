@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import DummyClimatePlot from "../DummyClimatePlot.client.vue";
-import { loadRemoteParquetDataSource } from "~/services/dataSource";
+import { loadRemoteParquetDataSource } from "../../services/dataSource";
 
 vi.mock("vue-chartjs", () => ({
   Line: {
@@ -12,7 +12,7 @@ vi.mock("vue-chartjs", () => ({
   },
 }));
 
-vi.mock("~/services/dataSource", () => ({
+vi.mock("../../services/dataSource", () => ({
   loadRemoteParquetDataSource: vi.fn(),
 }));
 

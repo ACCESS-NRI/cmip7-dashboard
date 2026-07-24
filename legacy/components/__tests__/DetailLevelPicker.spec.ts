@@ -10,9 +10,9 @@ const levelState = vi.hoisted(() => ({
   ref: null as null | { value: number },
 }));
 
-vi.mock("~/composables/useDetailLevel", async (importOriginal) => {
+vi.mock("../../composables/useDetailLevel", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("~/composables/useDetailLevel")>();
+    await importOriginal<typeof import("../../composables/useDetailLevel")>();
   return { ...actual, useDetailLevel: () => levelState.ref };
 });
 

@@ -20,29 +20,6 @@ const badgeUrl = hasTag
   : hasValidCommit
     ? `${githubRepositoryUrl}/commit/${commitSha}`
     : undefined;
-
-const copied = ref(false);
-let copiedTimer: ReturnType<typeof setTimeout> | undefined;
-
-const copyCommitSha = async () => {
-  if (!commitSha) return;
-
-  try {
-    await navigator.clipboard.writeText(commitSha);
-    copied.value = true;
-
-    if (copiedTimer) clearTimeout(copiedTimer);
-    copiedTimer = setTimeout(() => {
-      copied.value = false;
-    }, 1600);
-  } catch (err) {
-    console.error("Failed to copy commit SHA:", err);
-  }
-};
-
-onBeforeUnmount(() => {
-  if (copiedTimer) clearTimeout(copiedTimer);
-});
 </script>
 
 <template>

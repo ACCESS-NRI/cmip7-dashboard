@@ -54,6 +54,7 @@ export default defineNuxtConfig({
       githubRepositoryUrl: "https://github.com/ACCESS-NRI/cmip7-dashboard",
       buildTime: new Date().toISOString(),
       // CMIP7 parquet data source (previously the VITE_CMIP7_* env vars).
+      // These keys serve the parked DummyClimatePlot in legacy/ (see legacy/README.md).
       cmip7ParquetSource:
         process.env.NUXT_PUBLIC_CMIP7_PARQUET_SOURCE ?? "s3://gm-tas/gm_tas.pq",
       cmip7ParquetFileName:
