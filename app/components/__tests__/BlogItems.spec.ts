@@ -35,8 +35,10 @@ describe("BlogItems", () => {
 
     const wrapper = await mountSuspended(BlogItems);
 
-    const link = wrapper.find('a[href="/blog/first-look"]');
-    expect(link.exists()).toBe(true);
+    // NuxtLink prefixes hrefs with the app base URL, which differs between
+    // environments (/ locally, /cmip7-dashboard/ in a production build), so
+    // assert the target path appears rather than pinning the exact attribute.
+    expect(wrapper.html()).toContain("/blog/first-look");
     expect(wrapper.text()).toContain("First look at gm_tas");
     expect(wrapper.text()).toContain("An early readiness signal.");
     // formatPostDate renders the en-AU long form and appends the author.
