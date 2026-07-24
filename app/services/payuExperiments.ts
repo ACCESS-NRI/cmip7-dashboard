@@ -1,3 +1,18 @@
+/**
+ * payuExperiments — the normalised experiment view model and its loader.
+ *
+ * Pure TypeScript, no Vue imports. Merges the static experiment-config.json onto
+ * live payu telemetry (by UUID) into the PayuExperiment shape the UI consumes,
+ * and exposes the small pure predicates describing an experiment's ensemble
+ * (`hasEnsemble`, `startedMembers`, `pendingMembers`) alongside it.
+ *
+ * Used by: app/composables/usePayuExperiments.ts,
+ * app/services/experimentGroups.ts, app/components/DashboardHero.vue,
+ * app/components/ExperimentCard.vue, app/components/ExperimentSummaryCards.vue,
+ * app/components/ExperimentTotals.vue, app/components/PayuExperimentAccordion.vue,
+ * app/components/ExperimentProgrammeGroups.vue,
+ * app/components/ExperimentGroupRow.vue
+ */
 import { loadExperimentConfig } from "./experimentConfig";
 import type {
   ExperimentConfig,
@@ -84,6 +99,32 @@ export interface PayuExperiment {
   tiers: ExperimentTier[];
   /** All original key/value pairs for the expanded details panel. */
   details: Record<string, unknown>;
+}
+
+// ---------------------------------------------------------------------------
+// Ensemble predicates
+// ---------------------------------------------------------------------------
+
+/** True when there is an ensemble to fan out to — planned, started, or both. */
+export function hasEnsemble(experiment: PayuExperiment): boolean {
+  return experiment.expectedEnsembleCount > 1 || experiment.members.length > 1;
+}
+
+/** Members with telemetry showing time on the clock. */
+export function startedMembers(experiment: PayuExperiment): number {
+  return experiment.members.filter((member) => member.yearsRun > 0).length;
+}
+
+/**
+ * Members that are planned but have no run recorded yet. Counted against the
+ * planned ensemble size rather than the member list, so an experiment whose
+ * members have not been created still shows what is outstanding.
+ */
+export function pendingMembers(experiment: PayuExperiment): number {
+  return Math.max(
+    0,
+    experiment.expectedEnsembleCount - startedMembers(experiment),
+  );
 }
 
 // ---------------------------------------------------------------------------

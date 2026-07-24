@@ -2,20 +2,23 @@
   ExperimentProgrammeGroups — the three programme-group cards (DECK, Scenarios,
   Other) with their expandable experiment and ensemble-member rows.
 
-  Groups the experiment list via groupExperimentsByProgramme and lays each group
-  out as an open panel, a shared-row tile, or a closed strip depending on how many
-  are open. Owns only local open/closed UI state; the experiment data and the
-  per-experiment explainer posts are passed in as props. Uses the view-transition
-  API for the expand/collapse animation.
+  Groups the experiment list via groupExperimentsByProgramme, arranges the cards
+  into rows with layoutGroupBands, and owns the open/closed UI state for both the
+  group panels and the per-experiment ensemble rows. Delegates each open group's
+  sidebar to ExperimentGroupStats and each experiment row to ExperimentGroupRow;
+  the collapsed-card header and glossary footer stay here because their layout is
+  coupled to the band the parent owns. The experiment data and per-experiment
+  explainer posts are passed in as props. Uses the view-transition API for the
+  expand/collapse animation.
 
   Used by: app/pages/index.vue
 -->
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";
 import type { PayuExperiment } from "~/services/payuExperiments";
-import type { ExperimentGroup } from "~/services/experimentGroups";
 import { groupExperimentsByProgramme } from "~/services/experimentGroups";
+import { layoutGroupBands } from "~/services/groupBandLayout";
 
 const props = defineProps<{
   experiments: PayuExperiment[];
@@ -23,13 +26,9 @@ const props = defineProps<{
 }>();
 
 const groups = computed(() => groupExperimentsByProgramme(props.experiments));
-const openGroups = ref<string[]>([]);
 
-/**
- * How a card presents itself: `open` is the expanded panel, `tile` a card sharing
- * its row with another closed group, `strip` a closed group alone on its row.
- */
-type GroupMode = "open" | "tile" | "strip";
+// The expanded/collapsed state of the group panels.
+const { isOpen, toggle: toggleOpenGroup } = useToggleList();
 
 /** Span classes are written out so Tailwind can see them in the source. */
 const SPAN_CLASS: Record<number, string> = {
@@ -38,45 +37,7 @@ const SPAN_CLASS: Record<number, string> = {
   6: "lg:col-span-6",
 };
 
-/**
- * Lays the groups out as bands over a six-column grid: each open group takes a full
- * row, and each run of consecutive closed groups splits a row evenly between them.
- * That keeps the vertical order intact — opening DECK expands it above Scenarios and
- * Other, which close ranks into a two-up row. A closed group left alone on its row
- * renders as a slim strip rather than a stretched, mostly-empty tile.
- */
-const layout = computed<
-  { group: ExperimentGroup; span: number; mode: GroupMode }[]
->(() => {
-  const bands: { group: ExperimentGroup; span: number; mode: GroupMode }[] = [];
-
-  for (let index = 0; index < groups.value.length;) {
-    const group = groups.value[index]!;
-
-    if (isOpen(group.id)) {
-      bands.push({ group, span: 6, mode: "open" });
-      index += 1;
-      continue;
-    }
-
-    // Take the whole run of closed groups: they share one row between them.
-    let end = index;
-    while (end < groups.value.length && !isOpen(groups.value[end]!.id))
-      end += 1;
-
-    const run = groups.value.slice(index, end);
-    for (const closed of run) {
-      bands.push({
-        group: closed,
-        span: 6 / run.length,
-        mode: run.length === 1 ? "strip" : "tile",
-      });
-    }
-    index = end;
-  }
-
-  return bands;
-});
+const layout = computed(() => layoutGroupBands(groups.value, isOpen));
 
 const { getTerm } = useGlossary();
 
@@ -98,11 +59,7 @@ function glossaryLongFor(group: { id: string; description: string }): string {
  * change applies synchronously and the layout snaps.
  */
 function toggleGroup(id: string) {
-  const apply = () => {
-    openGroups.value = openGroups.value.includes(id)
-      ? openGroups.value.filter((openId) => openId !== id)
-      : [...openGroups.value, id];
-  };
+  const apply = () => toggleOpenGroup(id);
 
   if (typeof document === "undefined" || !("startViewTransition" in document)) {
     apply();
@@ -117,10 +74,6 @@ function toggleGroup(id: string) {
   });
 }
 
-function isOpen(id: string): boolean {
-  return openGroups.value.includes(id);
-}
-
 function explainerFor(
   experiment: PayuExperiment,
 ): ContentCollectionItem | null {
@@ -131,48 +84,14 @@ function explainerFor(
 // Ensemble fan-out
 // ---------------------------------------------------------------------------
 
-/**
- * An experiment row stays a single line summarising the whole ensemble; the
- * members it is summed from are one click away, as nested rows on the same
- * column grid. Rows are keyed per group because an experiment can appear in
- * more than one group, and the copies expand independently.
- */
-const expandedRows = ref<string[]>([]);
-
-/** True when there is an ensemble to fan out to — planned, started, or both. */
-function hasEnsemble(experiment: PayuExperiment): boolean {
-  return experiment.expectedEnsembleCount > 1 || experiment.members.length > 1;
-}
+// An experiment row stays a single line summarising the whole ensemble; its
+// members are one click away, rendered by ExperimentGroupRow. Expansion is keyed
+// per group because an experiment can appear in more than one group, and the
+// copies expand independently.
+const { isOpen: isRowExpanded, toggle: toggleRow } = useToggleList();
 
 function rowKey(groupId: string, experiment: PayuExperiment): string {
   return `${groupId}-${experiment.uuid || experiment.name}`;
-}
-
-function isRowExpanded(key: string): boolean {
-  return expandedRows.value.includes(key);
-}
-
-function toggleRow(key: string) {
-  expandedRows.value = isRowExpanded(key)
-    ? expandedRows.value.filter((openKey) => openKey !== key)
-    : [...expandedRows.value, key];
-}
-
-/** Members with telemetry showing time on the clock. */
-function startedMembers(experiment: PayuExperiment): number {
-  return experiment.members.filter((member) => member.yearsRun > 0).length;
-}
-
-/**
- * Members that are planned but have no run recorded yet. Counted against the
- * planned ensemble size rather than the member list, so an experiment whose
- * members have not been created still shows what is outstanding.
- */
-function pendingMembers(experiment: PayuExperiment): number {
-  return Math.max(
-    0,
-    experiment.expectedEnsembleCount - startedMembers(experiment),
-  );
 }
 </script>
 
@@ -288,66 +207,7 @@ function pendingMembers(experiment: PayuExperiment): number {
         :data-test="`experiment-group-panel-${group.id}`"
       >
         <div class="grid gap-0 xl:grid-cols-[16rem_1fr]">
-          <aside
-            class="space-y-4 border-b border-gray-100 p-5 dark:border-gray-800 xl:border-r xl:border-b-0"
-          >
-            <dl class="grid grid-cols-2 gap-3 text-sm xl:grid-cols-1">
-              <div>
-                <dt class="text-gray-500 dark:text-gray-400">Simulations</dt>
-                <dd
-                  class="mt-1 text-lg font-semibold text-gray-800 dark:text-gray-100"
-                >
-                  {{ group.summary.total }}
-                </dd>
-              </div>
-              <div>
-                <dt class="text-gray-500 dark:text-gray-400">Running</dt>
-                <dd
-                  class="mt-1 text-lg font-semibold text-blue-600 dark:text-blue-400"
-                >
-                  {{ group.summary.running }}
-                </dd>
-              </div>
-              <div>
-                <dt class="text-gray-500 dark:text-gray-400">Completed</dt>
-                <dd
-                  class="mt-1 text-lg font-semibold text-green-600 dark:text-green-400"
-                >
-                  {{ group.summary.completed }}
-                </dd>
-              </div>
-              <div>
-                <dt class="text-gray-500 dark:text-gray-400">Not started</dt>
-                <dd
-                  class="mt-1 text-lg font-semibold text-gray-600 dark:text-gray-300"
-                >
-                  {{ group.summary.notStarted }}
-                </dd>
-              </div>
-              <div>
-                <dt class="text-gray-500 dark:text-gray-400">Published</dt>
-                <dd
-                  class="mt-1 text-lg font-semibold text-gray-800 dark:text-gray-100"
-                >
-                  {{ group.summary.published }}
-                </dd>
-              </div>
-            </dl>
-
-            <div class="border-t border-gray-100 pt-4 dark:border-gray-800">
-              <p
-                class="text-2xl font-semibold text-gray-800 dark:text-gray-100"
-              >
-                {{ formatNumber(group.summary.yearsRun) }}
-              </p>
-              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                simulated years
-                <template v-if="group.summary.plannedYears">
-                  of {{ formatNumber(group.summary.plannedYears) }} planned
-                </template>
-              </p>
-            </div>
-          </aside>
+          <ExperimentGroupStats :summary="group.summary" />
 
           <div class="min-w-0">
             <div
@@ -360,151 +220,15 @@ function pendingMembers(experiment: PayuExperiment): number {
             </div>
 
             <ul class="divide-y divide-gray-100 dark:divide-gray-800">
-              <li
+              <ExperimentGroupRow
                 v-for="experiment in group.experiments"
                 :key="rowKey(group.id, experiment)"
-                :data-test="`experiment-group-row-${group.id}`"
-              >
-                <div
-                  class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] md:items-center md:gap-4"
-                >
-                  <div class="flex min-w-0 items-center gap-1.5 text-sm">
-                    <!-- The chevron sits in a fixed gutter that non-ensemble
-                         rows keep as blank space, so every name lines up. -->
-                    <button
-                      v-if="hasEnsemble(experiment)"
-                      type="button"
-                      class="-m-1 shrink-0 rounded p-1 text-gray-400 transition hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-                      :aria-expanded="
-                        isRowExpanded(rowKey(group.id, experiment))
-                      "
-                      :aria-controls="`ensemble-panel-${rowKey(group.id, experiment)}`"
-                      :aria-label="`${isRowExpanded(rowKey(group.id, experiment)) ? 'Hide' : 'Show'} ${experiment.name} ensemble members`"
-                      :data-test="`ensemble-toggle-${experiment.name}`"
-                      @click="toggleRow(rowKey(group.id, experiment))"
-                    >
-                      <UIcon
-                        name="i-lucide-chevron-right"
-                        class="size-4 transition-transform"
-                        :class="{
-                          'rotate-90': isRowExpanded(
-                            rowKey(group.id, experiment),
-                          ),
-                        }"
-                      />
-                    </button>
-                    <span
-                      v-else
-                      class="size-4 shrink-0"
-                      aria-hidden="true"
-                    ></span>
-
-                    <ExperimentExplainer
-                      v-if="explainerFor(experiment)"
-                      :post="explainerFor(experiment)!"
-                      :label="experiment.name"
-                    />
-                    <p
-                      v-else
-                      class="truncate text-sm font-medium text-gray-800 dark:text-gray-100"
-                    >
-                      {{ experiment.name }}
-                    </p>
-
-                    <!-- The bar sums the whole ensemble, so say how many runs
-                         that is; otherwise 172 / 1,720 years reads as a stall. -->
-                    <span
-                      v-if="hasEnsemble(experiment)"
-                      class="shrink-0 whitespace-nowrap text-xs text-gray-400 dark:text-gray-500"
-                      :data-test="`ensemble-count-${experiment.name}`"
-                    >
-                      {{ startedMembers(experiment) }}/{{
-                        experiment.expectedEnsembleCount
-                      }}
-                      members
-                    </span>
-                  </div>
-
-                  <div>
-                    <ExperimentClassBadge
-                      :experiment-class="experiment.experimentClass"
-                      size="sm"
-                    />
-                  </div>
-
-                  <RunProgressBar
-                    class="min-w-0"
-                    :years-run="experiment.yearsRun"
-                    :expected-years-run="experiment.expectedYearsRun"
-                    test-id="group-progress"
-                  />
-
-                  <!-- self-center rather than relying on the row's items-center:
-                       the name cell can wrap to two lines and the count should
-                       stay on the middle of the row, not ride its top. -->
-                  <div class="flex h-full items-center">
-                    <EsgfStatus
-                      :published-count="experiment.esgfPublishedCount"
-                      :total="experiment.expectedEnsembleCount"
-                    >
-                      <!-- The column header labels this on md+; on stacked
-                           mobile rows there is no header, so caption inline. -->
-                      <span
-                        class="text-xs text-gray-500 md:hidden dark:text-gray-400"
-                      >
-                        <Jargon term="ESGF">ESGF</Jargon> published
-                      </span>
-                    </EsgfStatus>
-                  </div>
-                </div>
-
-                <!-- Fanned-out ensemble members: the same four columns, indented
-                     into the name column so every bar stays on the parent's
-                     scale. Long ensembles (30 members) scroll in place rather
-                     than pushing the rest of the group off screen. -->
-                <ul
-                  v-show="isRowExpanded(rowKey(group.id, experiment))"
-                  :id="`ensemble-panel-${rowKey(group.id, experiment)}`"
-                  class="max-h-[22rem] overflow-y-auto border-t border-gray-100 bg-gray-50/70 dark:border-gray-800 dark:bg-gray-800/30"
-                  :data-test="`ensemble-panel-${experiment.name}`"
-                >
-                  <li
-                    v-for="member in experiment.members"
-                    :key="member.uuid"
-                    class="grid gap-1 py-1.5 pl-10 pr-5 md:grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] md:items-center md:gap-4"
-                    :data-test="`ensemble-member-${experiment.name}`"
-                  >
-                    <p
-                      class="truncate font-mono text-xs text-gray-600 dark:text-gray-400"
-                    >
-                      {{ member.name }}
-                    </p>
-                    <span aria-hidden="true"></span>
-                    <RunProgressBar
-                      class="min-w-0"
-                      :years-run="member.yearsRun"
-                      :expected-years-run="member.expectedYearsRun"
-                      compact
-                      test-id="member-progress"
-                    />
-                    <span aria-hidden="true"></span>
-                  </li>
-
-                  <!-- Planned members with nothing to show yet. Named as a
-                       count so the row still adds up to the planned ensemble. -->
-                  <li
-                    v-if="pendingMembers(experiment) > 0"
-                    class="py-2 pl-10 pr-5 text-xs italic text-gray-400 dark:text-gray-500"
-                    :data-test="`ensemble-pending-${experiment.name}`"
-                  >
-                    {{ pendingMembers(experiment) }} further
-                    {{
-                      pendingMembers(experiment) === 1 ? "member" : "members"
-                    }}
-                    not started yet
-                  </li>
-                </ul>
-              </li>
+                :group-id="group.id"
+                :experiment="experiment"
+                :post="explainerFor(experiment)"
+                :expanded="isRowExpanded(rowKey(group.id, experiment))"
+                @toggle="toggleRow(rowKey(group.id, experiment))"
+              />
             </ul>
           </div>
         </div>
