@@ -1,3 +1,12 @@
+<!--
+  ExperimentClassLegend — a key to the taxonomy classes on the dashboard.
+
+  Lists only the classes actually present in the current experiment set (resolved
+  by experimentClassesPresent), each with its badge and plain-language framing.
+  Stateless: the class ids in view are passed in as a prop.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 import { experimentClassesPresent } from "~/services/experimentClass";

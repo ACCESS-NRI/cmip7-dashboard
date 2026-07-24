@@ -1,3 +1,12 @@
+<!--
+  EvaluationStatus — placeholder readout for the Rapid Evaluation Framework.
+
+  REF is not wired to a data source yet, so this renders a "not yet available"
+  state until an evaluation status is supplied. Stateless: the optional status is
+  passed in as a prop.
+
+  Used by: app/components/ExperimentCard.vue
+-->
 <script setup lang="ts">
 withDefaults(
   defineProps<{

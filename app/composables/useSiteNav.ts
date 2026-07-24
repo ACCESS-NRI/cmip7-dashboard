@@ -1,7 +1,14 @@
 import type { NavigationMenuItem } from "@nuxt/ui";
 
-// Site-wide primary navigation, rendered in the AppSidebar footer. Kept in a
-// composable so the nav definition has a single home (and is easy to unit-test).
+/**
+ * useSiteNav — the site-wide primary navigation items.
+ *
+ * Site-wide primary navigation, rendered in the AppSidebar footer. Kept in a
+ * composable so the nav definition has a single home (and is easy to unit-test);
+ * marks the active tab from the current route.
+ *
+ * Used by: app/components/AppSidebar.vue
+ */
 export function useSiteNav() {
   const route = useRoute();
 

@@ -12,7 +12,7 @@
   serving a different layout (the accordion and card grid). They are kept
   separate on purpose — see ExperimentProgress.vue.
 
-  Used by: app/components/ExperimentProgrammeGroups.vue
+  Used by: app/components/ExperimentGroupRow.vue
 -->
 <script setup lang="ts">
 import { computed } from "vue";

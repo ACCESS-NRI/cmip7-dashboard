@@ -1,5 +1,7 @@
 /**
- * Experiment taxonomy (issue #14).
+ * experimentClass — the experiment scientific taxonomy (issue #14).
+ *
+ * Pure data and helpers, no Vue imports.
  *
  * The dashboard is broadening beyond scientist users, so it must never let a
  * non-specialist mistake an idealised/diagnostic run (e.g. `abrupt-4xCO2`) for a
@@ -14,6 +16,9 @@
  * *assignment* is data. A missing or unknown class resolves to the conservative
  * default (`idealised`, i.e. explicitly NOT a projection), so a new experiment
  * can never *silently* be presented as one.
+ *
+ * Used by: app/services/experimentConfig.ts, app/services/payuExperiments.ts,
+ * app/components/ExperimentClassBadge.vue, app/components/ExperimentClassLegend.vue
  */
 
 export type ExperimentClassId =

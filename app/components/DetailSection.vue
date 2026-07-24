@@ -1,3 +1,13 @@
+<!--
+  DetailSection — a collapsible "detailed view" section.
+
+  Reuses the ExperimentProgrammeGroups card/header/panel language, but the muted
+  icon chip and "Detailed view" eyebrow mark it as a secondary, deeper look —
+  subordinate to the always-open Big picture above it. Open state is owned by the
+  page (v-model:open) so the sidebar nav can open a section on navigate.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 defineProps<{
   /** Anchor id — also the scroll-spy / SectionNav target. */
@@ -12,12 +22,6 @@ defineProps<{
 const open = defineModel<boolean>("open", { default: false });
 </script>
 
-<!--
-  A collapsible "detailed view" section. Reuses the ExperimentProgrammeGroups
-  card/header/panel language, but the muted icon chip and "Detailed view"
-  eyebrow mark it as a secondary, deeper look — subordinate to the always-open
-  Big picture above it.
--->
 <template>
   <section :id="id" class="scroll-mt-6" :data-test="`detail-section-${id}`">
     <article

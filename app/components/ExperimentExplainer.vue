@@ -1,13 +1,18 @@
+<!--
+  ExperimentExplainer — clickable experiment name that opens its explainer post.
+
+  A deliberate sibling of the Jargon component (components/content/Jargon.vue):
+  it borrows the same "highlighted, obviously-explained term" chip vocabulary but
+  is recoloured blue (vs Jargon's green primary) and, being a click-to-open modal
+  rather than a hover popover, uses a pointer cursor and a ghost fill that only
+  appears on hover. Owns its own UModal so the parent stays state-free.
+
+  Used by: app/components/ExperimentGroupRow.vue
+-->
 <script setup lang="ts">
 import { ref } from "vue";
 import type { ContentCollectionItem } from "@nuxt/content";
 
-// Clickable experiment name that opens the full explainer post in a modal.
-// A deliberate sibling of the Jargon component (components/content/Jargon.vue):
-// it borrows the same "highlighted, obviously-explained term" chip vocabulary
-// but is recoloured blue (vs Jargon's green primary) and, being a click-to-open
-// modal rather than a hover popover, uses a pointer cursor and a ghost fill that
-// only appears on hover. Owns its own UModal so the parent stays state-free.
 const props = defineProps<{
   /** The explainer post to render inside the modal. */
   post: ContentCollectionItem;

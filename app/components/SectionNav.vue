@@ -1,9 +1,17 @@
+<!--
+  SectionNav — the "On this page" section list in the sidebar.
+
+  A navigation *indicator*, not a selector: it reflects which section is in view
+  (activeId, driven by the page's scroll-spy) and lets you jump to one. The
+  section list comes from composables/sections.ts; active state and navigation
+  are owned by the page.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import { SECTIONS } from "~/composables/sections";
 import type { SectionId } from "~/composables/sections";
 
-// A navigation *indicator*, not a selector: it reflects which section is in
-// view (activeId, driven by the page's scroll-spy) and lets you jump to one.
 defineProps<{ activeId: string }>();
 const emit = defineEmits<{ navigate: [id: SectionId] }>();
 </script>

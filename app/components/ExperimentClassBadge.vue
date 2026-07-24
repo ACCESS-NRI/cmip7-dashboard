@@ -1,3 +1,13 @@
+<!--
+  ExperimentClassBadge — a coloured badge labelling an experiment's taxonomy class.
+
+  Renders the resolved scientific class (e.g. projection, idealised) with its
+  framing colour, at one of two sizes. Stateless: the class is passed in as a
+  prop. The taxonomy itself lives in services/experimentClass.ts.
+
+  Used by: app/components/ExperimentGroupRow.vue, app/components/ExperimentCard.vue,
+  app/components/PayuExperimentAccordion.vue
+-->
 <script setup lang="ts">
 import type { ExperimentClass } from "~/services/experimentClass";
 

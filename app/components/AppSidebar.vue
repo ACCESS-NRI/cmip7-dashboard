@@ -1,8 +1,15 @@
+<!--
+  AppSidebar — the site's only navigation chrome.
+
+  Shared dashboard sidebar chrome used by every page in the default layout: the
+  site title (header), an optional page-specific middle (default slot, e.g. the
+  dashboard's SectionNav), and the primary nav + build version pinned to the
+  bottom. There is no top bar — this sidebar is the site's only navigation.
+
+  Used by: app/pages/index.vue, app/pages/glossary.vue,
+  app/pages/blog/index.vue, app/pages/blog/[...slug].vue
+-->
 <script setup lang="ts">
-// Shared dashboard sidebar chrome used by every page in the default layout:
-// the site title (header), an optional page-specific middle (default slot, e.g.
-// the dashboard's SectionNav), and the primary nav + build version pinned to the
-// bottom. There is no top bar — this sidebar is the site's only navigation.
 const { items } = useSiteNav();
 </script>
 

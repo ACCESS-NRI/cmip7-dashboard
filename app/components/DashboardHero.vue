@@ -1,9 +1,15 @@
+<!--
+  DashboardHero — the masthead at the top of the dashboard.
+
+  Purely presentational: the page owns the fetch, this renders whichever of the
+  loading / error / empty / totals states applies, alongside the ACCESS branding.
+
+  Used by: app/pages/index.vue
+-->
 <script setup lang="ts">
 import type { PayuExperiment } from "~/services/payuExperiments";
 import accessLogo from "~/assets/ACCESS-logo.svg";
 
-// Purely presentational: the page owns the fetch, this renders whichever of
-// loading / error / empty / totals applies.
 defineProps<{
   experiments: PayuExperiment[];
   loading: boolean;

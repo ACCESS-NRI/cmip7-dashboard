@@ -1,13 +1,17 @@
 import { computed } from "vue";
 
 /**
- * Glossary (issue #12). A single source of truth — the `glossary` Content
- * collection (content/glossary/*.yml) — feeds both the /glossary page and the
- * inline <Jargon> component through this composable.
+ * useGlossary — single source of truth for the CMIP7 glossary (issue #12).
+ *
+ * The `glossary` Content collection (content/glossary/*.yml) feeds both the
+ * /glossary page and the inline <Jargon> component through this composable.
  *
  * The whole (small) glossary is fetched once per page via `useAsyncData`, whose
  * shared "glossary" key dedupes the request no matter how many <Jargon> tags a
  * page renders, and resolves during SSR so tooltips work without hydration.
+ *
+ * Used by: app/components/content/Jargon.vue,
+ * app/components/ExperimentProgrammeGroups.vue, app/pages/glossary.vue
  */
 export interface GlossaryEntry {
   /** Anchor slug (the file stem), used for /glossary#<slug> deep links. */

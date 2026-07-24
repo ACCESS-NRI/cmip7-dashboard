@@ -1,3 +1,13 @@
+<!--
+  EsgfStatus — the ESGF publication readout for one experiment.
+
+  Shows how many ensemble members are published to ESGF out of the total, as a
+  count that turns complete when all members are published. Stateless: the counts
+  are passed in as props, and an optional slot supplies an inline caption.
+
+  Used by: app/components/ExperimentGroupRow.vue,
+  app/components/PayuExperimentAccordion.vue, app/components/ExperimentCard.vue
+-->
 <script setup lang="ts">
 import { computed } from "vue";
 
