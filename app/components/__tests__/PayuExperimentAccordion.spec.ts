@@ -15,7 +15,10 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     serviceUnits: 1,
     yearsRun: 174,
     expectedYearsRun: 500,
-    esgfPublished: false,
+    memberExpectedYearsRun: 500,
+    expectedEnsembleCount: 1,
+    members: [],
+    esgfPublishedCount: 0,
     experimentClass: EXPERIMENT_CLASSES.idealised,
     tiers: [],
     details: {
@@ -35,7 +38,10 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     serviceUnits: 0,
     yearsRun: 49,
     expectedYearsRun: 500,
-    esgfPublished: true,
+    memberExpectedYearsRun: 500,
+    expectedEnsembleCount: 1,
+    members: [],
+    esgfPublishedCount: 1,
     experimentClass: EXPERIMENT_CLASSES.baseline,
     tiers: [],
     details: {
@@ -79,7 +85,7 @@ describe("PayuExperimentAccordion", () => {
     expect(wrapper.find('[data-test="progress-bar"]').exists()).toBe(false);
   });
 
-  it("renders the ESGF checkbox in the header", async () => {
+  it("renders the ESGF count in the header", async () => {
     const wrapper = await mountSuspended(PayuExperimentAccordion, {
       props: { experiments: [MOCK_EXPERIMENTS[0]!] },
     });
@@ -87,37 +93,35 @@ describe("PayuExperimentAccordion", () => {
     expect(wrapper.find('[data-test="esgf-status"]').exists()).toBe(true);
   });
 
-  it("shows a checked ESGF checkbox when esgfPublished is true", async () => {
+  it("counts every member as published when the experiment is", async () => {
     const wrapper = await mountSuspended(PayuExperimentAccordion, {
       props: {
-        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: true }],
+        experiments: [
+          {
+            ...MOCK_EXPERIMENTS[0]!,
+            expectedEnsembleCount: 10,
+            esgfPublishedCount: 10,
+          },
+        ],
       },
     });
 
-    const checkbox = wrapper.find('[data-test="esgf-status"] input');
-    expect((checkbox.element as HTMLInputElement).checked).toBe(true);
+    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("10/10");
   });
 
-  it("shows an unchecked ESGF checkbox when esgfPublished is false", async () => {
+  it("shows none published when nothing has been published", async () => {
     const wrapper = await mountSuspended(PayuExperimentAccordion, {
       props: {
-        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: false }],
+        experiments: [
+          {
+            ...MOCK_EXPERIMENTS[0]!,
+            esgfPublishedCount: 0,
+          },
+        ],
       },
     });
 
-    const checkbox = wrapper.find('[data-test="esgf-status"] input');
-    expect((checkbox.element as HTMLInputElement).checked).toBe(false);
-  });
-
-  it("shows an unchecked ESGF checkbox when esgfPublished is null", async () => {
-    const wrapper = await mountSuspended(PayuExperimentAccordion, {
-      props: {
-        experiments: [{ ...MOCK_EXPERIMENTS[0]!, esgfPublished: null }],
-      },
-    });
-
-    const checkbox = wrapper.find('[data-test="esgf-status"] input');
-    expect((checkbox.element as HTMLInputElement).checked).toBe(false);
+    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0/1");
   });
 
   it("renders all detail fields in the panel", async () => {
@@ -129,6 +133,58 @@ describe("PayuExperimentAccordion", () => {
     expect(content.text()).toContain("experiment name");
     expect(content.text()).toContain("Ndep2-PI-CNP-concentrations");
     expect(content.text()).toContain("experiment service units used");
+  });
+
+  it("lists the members in the panel for an ensemble experiment", async () => {
+    // An ensemble has no single run's details to tabulate — the members it is
+    // summed from are shown instead.
+    const wrapper = await mountSuspended(PayuExperimentAccordion, {
+      props: {
+        experiments: [
+          {
+            ...MOCK_EXPERIMENTS[0]!,
+            name: "historical",
+            yearsRun: 130,
+            expectedYearsRun: 344,
+            memberExpectedYearsRun: 172,
+            expectedEnsembleCount: 2,
+            details: {},
+            members: [
+              {
+                name: "r1i1p1f1",
+                uuid: "uuid-1",
+                modelStartTime: "1850-01-01T00:00:00",
+                modelCurrentTime: "1936-01-01T00:00:00",
+                serviceUnitsDisplay: "10",
+                serviceUnits: 10,
+                yearsRun: 86,
+                expectedYearsRun: 172,
+                hasTelemetry: true,
+                details: {},
+              },
+              {
+                name: "r2i1p1f1",
+                uuid: "uuid-2",
+                modelStartTime: "1850-01-01T00:00:00",
+                modelCurrentTime: "1894-01-01T00:00:00",
+                serviceUnitsDisplay: "5",
+                serviceUnits: 5,
+                yearsRun: 44,
+                expectedYearsRun: 172,
+                hasTelemetry: true,
+                details: {},
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    expect(wrapper.findAll('[data-test="accordion-member"]')).toHaveLength(2);
+    const content = wrapper.find('[data-test="accordion-content"]');
+    expect(content.text()).toContain("r1i1p1f1");
+    expect(content.text()).toContain("86 / 172 years");
+    expect(content.text()).not.toContain("No model runs found");
   });
 
   it("shows the loading state while data is being fetched", async () => {
