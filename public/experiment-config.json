@@ -309,7 +309,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 30,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -318,7 +317,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 10,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -327,7 +325,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 10,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -336,7 +333,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 10,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -345,7 +341,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 10,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -354,7 +349,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 10,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -363,7 +357,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "expected_n_ensembles": 30,
     "esgf_published": 0,
     "class": "projection"
   },
