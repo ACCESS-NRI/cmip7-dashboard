@@ -2,7 +2,10 @@
 import { describe, expect, it } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import ExperimentTotals from "../ExperimentTotals.vue";
-import type { PayuExperiment } from "~/services/payuExperiments";
+import type {
+  PayuExperiment,
+  PayuExperimentMember,
+} from "~/services/payuExperiments";
 import { EXPERIMENT_CLASSES } from "~/services/experimentClass";
 
 function makeExperiment(
@@ -25,6 +28,21 @@ function makeExperiment(
     tiers: [],
     details: {},
     ...overrides,
+  };
+}
+
+function makeMember(name: string, yearsRun: number): PayuExperimentMember {
+  return {
+    name,
+    uuid: `uuid-${name}`,
+    modelStartTime: "1850-01-01",
+    modelCurrentTime: "1900-01-01",
+    serviceUnitsDisplay: "10",
+    serviceUnits: 10,
+    yearsRun,
+    expectedYearsRun: 100,
+    hasTelemetry: yearsRun > 0,
+    details: {},
   };
 }
 
@@ -79,6 +97,36 @@ describe("ExperimentTotals", () => {
     // 1 of 2 experiments completed
     expect(extra.text()).toContain("1");
     expect(extra.text()).toContain("2");
+  });
+
+  it("counts each ensemble member as its own simulation", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedEnsembleCount: 4,
+            expectedYearsRun: 400,
+            yearsRun: 344,
+            members: [
+              makeMember("r1i1p1f1", 100),
+              makeMember("r2i1p1f1", 100),
+              makeMember("r3i1p1f1", 100),
+              makeMember("r4i1p1f1", 44),
+            ],
+          }),
+          makeExperiment({ name: "abrupt-4xCO2", yearsRun: 0 }),
+        ],
+      },
+    });
+
+    // 3 of the ensemble's 4 members are done, alongside one single run that is
+    // not — 3 of 5 simulations, not 0 of 2 experiments.
+    expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
+      "69% complete across 5 simulations",
+    );
+    const extra = wrapper.find('[data-test="totals-extra"]');
+    expect(extra.text().replace(/\s+/g, " ")).toContain("3 / 5");
   });
 
   // Asserts the placeholder on purpose: this should fail loudly, as a prompt to
