@@ -469,7 +469,7 @@
   {
     "name": "abrupt-127k",
     "description": "-",
-    "expected_years_run": 300,
+    "expected_years_run": 100,
     "esgf_published": 0,
     "class": "idealised",
     "aft": true
