@@ -34,8 +34,8 @@ If only one simulation is being run (not multiple ensembles), when the simulatio
 ```json
  { 
    "name": "esm-piControl", 
-   "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b", 
-//...
+   "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b"
+ }
 ```
 
 When ensembles have started running, each ensemble name (e.g. `r10i1p1f1`) and `uuid` can be added to an ensembles array field:
@@ -49,7 +49,8 @@ When ensembles have started running, each ensemble name (e.g. `r10i1p1f1`) and `
    { 
      "name": "r2i1p1f1", 
      "uuid": "faef2965-5944-4ffc-b85c-d998285b7960" 
-   }, 
+   }
+ ]
 ```
 
 For `piControl`, as the same experiment was run over two different Payu experiments, these were added to a related_experiments array field:
@@ -64,6 +65,7 @@ For `piControl`, as the same experiment was run over two different Payu experime
      "name": "Ndep2-PI-CNP-concentrations", 
      "uuid": "e523e199-80f6-4ca6-b84a-e513a16f2029" 
    } 
+ ]
 ```
 
 So there should at maximum one top-level field of `uuid`, `ensembles`, or `related_experiments`.
