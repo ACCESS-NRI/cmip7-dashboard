@@ -1,0 +1,24 @@
+name: Validate experiment-config.json
+
+on:
+  pull_request:
+    paths:
+      - "public/experiment-config.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - run: pip install check-jsonschema
+
+      - name: Validate schema
+        run: |
+          check-jsonschema \
+            --schemafile public/experiment-config.schema.json \
+            public/experiment-config.json
