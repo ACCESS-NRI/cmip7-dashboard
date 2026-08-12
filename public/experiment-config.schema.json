@@ -1,114 +1,89 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "type": "array",
-    "items": {
-        "type": "object",
-        "required": [
-            "name",
-            "class",
-            "expected_years_run",
-            "esgf_published"
-        ],
-        "additionalProperties": false,
-        "not": {
-            "anyOf": [
-                {
-                    "required": [
-                        "uuid",
-                        "related_experiments"
-                    ]
-                },
-                {
-                    "required": [
-                        "uuid",
-                        "ensembles"
-                    ]
-                },
-                {
-                    "required": [
-                        "related_experiments",
-                        "ensembles"
-                    ]
-                }
-            ]
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["name", "class", "expected_years_run", "esgf_published"],
+    "additionalProperties": false,
+    "not": {
+      "anyOf": [
+        {
+          "required": ["uuid", "related_experiments"]
         },
-        "properties": {
-            "uuid": {
-                "type": "string",
-                "format": "uuid"
-            },
-            "name": {
-                "type": "string"
-            },
-            "description": {
-                "type": "string"
-            },
-            "class": {
-                "enum": [
-                    "baseline",
-                    "historical",
-                    "idealised",
-                    "projection"
-                ]
-            },
-            "deck": {
-                "type": "boolean"
-            },
-            "aft": {
-                "type": "boolean"
-            },
-            "expected_years_run": {
-                "type": "integer",
-                "minimum": 1
-            },
-            "esgf_published": {
-                "type": "integer",
-                "minimum": 0
-            },
-            "expected_n_ensembles": {
-                "type": "integer",
-                "minimum": 1
-            },
-            "related_experiments": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "required": [
-                        "name",
-                        "uuid"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "uuid": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                }
-            },
-            "ensembles": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "required": [
-                        "name",
-                        "uuid"
-                    ],
-                    "additionalProperties": false,
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "uuid": {
-                            "type": "string",
-                            "format": "uuid"
-                        }
-                    }
-                }
-            }
+        {
+          "required": ["uuid", "ensembles"]
+        },
+        {
+          "required": ["related_experiments", "ensembles"]
         }
+      ]
+    },
+    "properties": {
+      "uuid": {
+        "type": "string",
+        "format": "uuid"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "class": {
+        "enum": ["baseline", "historical", "idealised", "projection"]
+      },
+      "deck": {
+        "type": "boolean"
+      },
+      "aft": {
+        "type": "boolean"
+      },
+      "expected_years_run": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "esgf_published": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "expected_n_ensembles": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "related_experiments": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "uuid"],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "uuid": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "ensembles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "uuid"],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "uuid": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      }
     }
+  }
 }
