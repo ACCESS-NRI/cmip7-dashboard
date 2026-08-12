@@ -10,6 +10,28 @@
             "esgf_published"
         ],
         "additionalProperties": false,
+        "not": {
+            "anyOf": [
+                {
+                    "required": [
+                        "uuid",
+                        "related_experiments"
+                    ]
+                },
+                {
+                    "required": [
+                        "uuid",
+                        "ensembles"
+                    ]
+                },
+                {
+                    "required": [
+                        "related_experiments",
+                        "ensembles"
+                    ]
+                }
+            ]
+        },
         "properties": {
             "uuid": {
                 "type": "string",

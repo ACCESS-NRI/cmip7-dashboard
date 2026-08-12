@@ -7,6 +7,9 @@ experiment has run, alongside a blog and glossary driven by
 [@nuxt/content](https://content.nuxt.com/). It is deployed as a static site on
 GitHub Pages under `/cmip7-dashboard/`.
 
+## Updates 
+To update the experiment tracker, please go to the [update guide](./public/update_guide.md).
+
 ## Stack
 
 - **Nuxt 4** (Vue 3 + TypeScript, static generation)
