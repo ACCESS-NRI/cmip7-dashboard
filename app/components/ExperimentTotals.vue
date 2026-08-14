@@ -27,6 +27,11 @@ const props = defineProps<{
 // then the tile honestly reads 0 GB.
 const PUBLISHED_GB = 0;
 
+// Rough campaign-wide estimate (issue #62): a typical simulation year's data
+// volume times the planned years. We reuse the planned-years roll-up below
+// rather than hardcoding it, so the estimate tracks the experiment config.
+const GB_PER_SIMULATION_YEAR = 15.4;
+
 // Roll every experiment's years up into one planned-vs-done figure — the
 // gentlest, big-picture read on how far the whole campaign has progressed.
 // Purely presentational: the page owns loading/error states.
@@ -57,6 +62,7 @@ const totals = computed(() => {
     serviceUnits,
     completed,
     publishedGb: PUBLISHED_GB,
+    expectedGb: Math.round(planned * GB_PER_SIMULATION_YEAR),
     count,
   };
 });
@@ -140,7 +146,7 @@ const totals = computed(() => {
         >
           {{ formatNumber(totals.publishedGb) }}
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
-            GB
+            / {{ formatNumber(totals.expectedGb) }} GB
           </span>
         </p>
       </div>
