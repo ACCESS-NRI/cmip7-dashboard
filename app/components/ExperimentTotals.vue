@@ -139,7 +139,7 @@ const totals = computed(() => {
         <p
           class="mt-1 text-xl font-semibold text-gray-800 sm:text-2xl dark:text-gray-100"
         >
-          {{ formatNumber(totals.publishedGb) }} 
+          {{ formatNumber(totals.publishedGb) }}
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
             / {{ EXPECTED_GB }} GB
           </span>
