@@ -26,6 +26,7 @@ const props = defineProps<{
 // PayuExperiment in ~/services/payuExperiments) once the API exposes it. Until
 // then the tile honestly reads 0 GB.
 const PUBLISHED_GB = 0;
+const EXPECTED_GB = "349,072";
 
 // Roll every experiment's years up into one planned-vs-done figure — the
 // gentlest, big-picture read on how far the whole campaign has progressed.
@@ -138,9 +139,9 @@ const totals = computed(() => {
         <p
           class="mt-1 text-xl font-semibold text-gray-800 sm:text-2xl dark:text-gray-100"
         >
-          {{ formatNumber(totals.publishedGb) }}
+          {{ formatNumber(totals.publishedGb) }} 
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
-            GB
+            / {{ EXPECTED_GB }} GB
           </span>
         </p>
       </div>
