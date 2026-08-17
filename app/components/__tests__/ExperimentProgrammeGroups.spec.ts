@@ -63,7 +63,7 @@ describe("ExperimentProgrammeGroups", () => {
           makeExperiment({
             name: "piClim-Control",
             tiers: [],
-            experimentClass: EXPERIMENT_CLASSES.idealised,
+            experimentClass: EXPERIMENT_CLASSES.sensitivity,
           }),
         ],
       },
@@ -190,7 +190,7 @@ describe("ExperimentProgrammeGroups", () => {
         experiments: [
           makeExperiment({
             name: "abrupt-4xCO2",
-            experimentClass: EXPERIMENT_CLASSES.idealised,
+            experimentClass: EXPERIMENT_CLASSES.sensitivity,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
         ],
@@ -199,7 +199,7 @@ describe("ExperimentProgrammeGroups", () => {
 
     const badge = wrapper.find('[data-test="experiment-class-badge"]');
     expect(badge.exists()).toBe(true);
-    expect(badge.attributes("data-class")).toBe("idealised");
+    expect(badge.attributes("data-class")).toBe("sensitivity");
   });
 
   it("opens a matching explainer post from the experiment name", async () => {
@@ -260,7 +260,7 @@ describe("ExperimentProgrammeGroups", () => {
             makeExperiment({
               name: "piClim-Control",
               tiers: [],
-              experimentClass: EXPERIMENT_CLASSES.idealised,
+              experimentClass: EXPERIMENT_CLASSES.sensitivity,
             }),
           ],
         },

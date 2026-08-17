@@ -19,7 +19,7 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     expectedEnsembleCount: 1,
     members: [],
     esgfPublishedCount: 0,
-    experimentClass: EXPERIMENT_CLASSES.idealised,
+    experimentClass: EXPERIMENT_CLASSES.sensitivity,
     tiers: [],
     details: {
       experiment_name: "Ndep2-PI-CNP-concentrations",

@@ -180,7 +180,7 @@ function hasTier(experiment: PayuExperiment, id: ExperimentTierId): boolean {
  * other two split everything else by whether it is a future scenario, which is
  * already declared per experiment as `class: "projection"` in
  * experiment-config.json — the Fast Track is spread across both, since a
- * fast-tracked scenario and a fast-tracked idealised run answer very different
+ * fast-tracked scenario and a fast-tracked sensitivity run answer very different
  * questions for a reader.
  *
  * DECK and scenario membership are independent, so a DECK experiment classed as
@@ -216,7 +216,7 @@ export function groupExperimentsByProgramme(
       id: "other" as const,
       label: "Other simulations",
       description:
-        "Simulations that are neither DECK baselines nor future scenarios — idealised and single-forcing runs that probe how the model itself behaves.",
+        "Simulations that are neither DECK baselines nor future scenarios — sensitivity and single-forcing runs that probe how the model itself behaves.",
       color: "neutral" as const,
       icon: "i-lucide-circle-ellipsis",
       experiments: experiments.filter(

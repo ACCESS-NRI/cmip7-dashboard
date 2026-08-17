@@ -152,10 +152,10 @@ describe("normalizePayuExperiment", () => {
     expect(result.experimentClass.id).toBe("historical");
   });
 
-  it("falls back to the idealised class when config declares no class", () => {
+  it("falls back to the sensitivity class when config declares no class", () => {
     // BASE_CONFIG has no class field.
     const result = normalizePayuExperiment(BASE_CONFIG, [BASE_PAYU]);
-    expect(result.experimentClass.id).toBe("idealised");
+    expect(result.experimentClass.id).toBe("sensitivity");
     expect(result.experimentClass.isProjection).toBe(false);
   });
 

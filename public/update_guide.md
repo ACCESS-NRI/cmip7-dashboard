@@ -12,7 +12,7 @@ To show a planned experiment to the dashboard, we need to add a section to the c
    "description": "-", 
    "expected_years_run": 100, 
    "esgf_published": 0, 
-   "class": "idealised", 
+   "class": "sensitivity", 
    "aft": true 
  } 
 ```
@@ -20,7 +20,7 @@ To show a planned experiment to the dashboard, we need to add a section to the c
 Where fields are:
 - `name` (str): Name of the CMIP7 experiment/s.
 - `description` (str): Unused placeholder for one sentence description the experiment.
-- `class` (str): Experiment classification. One of "baseline", "idealised", "historical", or "projection".
+- `class` (str): Experiment classification. One of "baseline", "sensitivity", "historical", or "projection".
 - `deck` (bool): If true, the experiment is part of DECK. Optional as default is false.
 - `aft` (bool): If true, the experiment is part of Assessment Fast Track. Optional as default is false.
 - `esgf_published` (int): Number of simulations published to ESGF.

@@ -4,7 +4,7 @@
  * Pure data and helpers, no Vue imports.
  *
  * The dashboard is broadening beyond scientist users, so it must never let a
- * non-specialist mistake an idealised/diagnostic run (e.g. `abrupt-4xCO2`) for a
+ * non-specialist mistake an sensitivity/diagnostic run (e.g. `abrupt-4xCO2`) for a
  * policy-facing climate projection. Every experiment is sorted into one class
  * with plain-language framing and — critically — an explicit `isProjection`
  * flag so the UI can mark non-projection runs as such.
@@ -14,7 +14,7 @@
  * the name — the experiments are a known, finite enumeration, so hard-coding is
  * safer than name-matching. This module holds the class *definitions*; the
  * *assignment* is data. A missing or unknown class resolves to the conservative
- * default (`idealised`, i.e. explicitly NOT a projection), so a new experiment
+ * default (`sensitivity`, i.e. explicitly NOT a projection), so a new experiment
  * can never *silently* be presented as one.
  *
  * Used by: app/services/experimentConfig.ts, app/services/payuExperiments.ts,
@@ -22,13 +22,13 @@
  */
 
 export type ExperimentClassId =
-  "projection" | "historical" | "baseline" | "idealised";
+  "projection" | "historical" | "baseline" | "sensitivity";
 
 export interface ExperimentClass {
   id: ExperimentClassId;
-  /** Full label for badges and legends, e.g. "Idealised experiment". */
+  /** Full label for badges and legends, e.g. "sensitivity experiment". */
   label: string;
-  /** Compact label for tight spaces, e.g. "Idealised". */
+  /** Compact label for tight spaces, e.g. "sensitivity". */
   shortLabel: string;
   /** Plain-language, no-CMIP-knowledge-required description. */
   description: string;
@@ -76,10 +76,10 @@ export const EXPERIMENT_CLASSES: Record<ExperimentClassId, ExperimentClass> = {
     color: "neutral",
     icon: "i-lucide-anchor",
   },
-  idealised: {
-    id: "idealised",
-    label: "Idealised experiment",
-    shortLabel: "Idealised",
+  sensitivity: {
+    id: "sensitivity",
+    label: "Sensitivity experiment",
+    shortLabel: "Sensitivity",
     description:
       "A deliberately artificial “what-if” that probes how the model responds — for example, abruptly quadrupling CO₂. It is a laboratory test of the model, not a forecast of the real world.",
     isProjection: false,
@@ -90,14 +90,14 @@ export const EXPERIMENT_CLASSES: Record<ExperimentClassId, ExperimentClass> = {
 
 /**
  * Resolve an experiment's declared class id (from experiment-config.json) to its
- * full definition. A missing or unrecognised id falls back to `idealised`, the
+ * full definition. A missing or unrecognised id falls back to `sensitivity`, the
  * safe default: it is visibly marked as *not* a projection, so nothing is ever
  * silently presented as a forecast.
  */
 export function resolveExperimentClass(
   id: ExperimentClassId | undefined,
 ): ExperimentClass {
-  return (id && EXPERIMENT_CLASSES[id]) || EXPERIMENT_CLASSES.idealised;
+  return (id && EXPERIMENT_CLASSES[id]) || EXPERIMENT_CLASSES.sensitivity;
 }
 
 /** The classes present in a set of experiments, in display order. */
@@ -105,7 +105,7 @@ const CLASS_ORDER: ExperimentClassId[] = [
   "projection",
   "historical",
   "baseline",
-  "idealised",
+  "sensitivity",
 ];
 
 /** The distinct classes present among the given class ids, in display order. */
