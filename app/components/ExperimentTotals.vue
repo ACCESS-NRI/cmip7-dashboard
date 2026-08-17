@@ -146,7 +146,7 @@ const totals = computed(() => {
         >
           {{ formatNumber(totals.publishedGb) }}
           <span class="text-lg font-normal text-gray-400 dark:text-gray-500">
-            / {{ formatNumber(totals.expectedGb) }} GB
+            / <StorageAnalogue :gb="totals.expectedGb" />
           </span>
         </p>
       </div>
