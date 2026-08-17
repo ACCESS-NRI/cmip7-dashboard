@@ -67,5 +67,4 @@ describe("ExperimentCard", () => {
     expect(wrapper.find('[data-test="progress-bar"]').exists()).toBe(true);
     expect(wrapper.find('[data-test="esgf-status"]').exists()).toBe(true);
   });
-
 });

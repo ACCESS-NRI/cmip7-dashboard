@@ -26,7 +26,6 @@ const furtherReading = computed(() => props.post?.furtherReading ?? []);
 // Experiment taxonomy (issue #14): sensitivity runs (e.g. abrupt-4xCO2) are the
 // ones most easily misread as projections, so flag them explicitly.
 const experimentClass = computed(() => props.experiment.experimentClass);
-
 </script>
 
 <!-- Per-experiment card. The "status" variant (default) powers the Progress
