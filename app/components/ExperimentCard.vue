@@ -19,11 +19,6 @@ const props = defineProps<{
   experiment: PayuExperiment;
   /** Explainer post tagged with this experiment's name, if one exists. */
   post?: ContentCollectionItem | null;
-  /**
-   * Which face to show: the plain-language explainer ("overview") or the
-   * run-status readout ("status", the default used by the Progress section).
-   */
-  variant?: "overview" | "status";
 }>();
 
 const furtherReading = computed(() => props.post?.furtherReading ?? []);
@@ -31,9 +26,7 @@ const furtherReading = computed(() => props.post?.furtherReading ?? []);
 // Experiment taxonomy (issue #14): sensitivity runs (e.g. abrupt-4xCO2) are the
 // ones most easily misread as projections, so flag them explicitly.
 const experimentClass = computed(() => props.experiment.experimentClass);
-const isSensitivity = computed(
-  () => experimentClass.value.id === "sensitivity",
-);
+
 </script>
 
 <!-- Per-experiment card. The "status" variant (default) powers the Progress
@@ -63,59 +56,8 @@ const isSensitivity = computed(
       </div>
     </header>
 
-    <!-- Overview: the explainer's one-liner, expandable to the full article. -->
-    <div v-if="variant === 'overview'" data-test="card-overview">
-      <!-- Sensitivity runs are laboratory tests, not forecasts — say so plainly. -->
-      <p
-        v-if="isSensitivity"
-        class="mb-2 flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-500"
-        data-test="not-a-projection-note"
-      >
-        <UIcon name="i-lucide-flask-conical" class="size-3.5 shrink-0" />
-        Controlled experiment — not a real-world climate projection.
-      </p>
-      <template v-if="post">
-        <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-          {{ post.description }}
-        </p>
-        <UCollapsible class="mt-3">
-          <template #default="{ open }">
-            <UButton
-              variant="link"
-              color="primary"
-              :label="open ? 'Show less' : 'Read more'"
-              :trailing-icon="
-                open ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'
-              "
-              class="px-0"
-              data-test="overview-toggle"
-            />
-          </template>
-          <template #content>
-            <ContentRenderer
-              :value="post"
-              class="prose prose-sm dark:prose-invert mt-2 max-w-none"
-              data-test="overview-article"
-            />
-            <FurtherReading
-              v-if="furtherReading.length"
-              :links="furtherReading"
-              class="mt-4"
-            />
-          </template>
-        </UCollapsible>
-      </template>
-      <p
-        v-else
-        class="text-sm italic text-gray-400 dark:text-gray-500"
-        data-test="overview-placeholder"
-      >
-        Explainer coming soon.
-      </p>
-    </div>
-
     <!-- Status: progress and publication state at a glance. -->
-    <div v-else class="space-y-3" data-test="card-status">
+    <div class="space-y-3" data-test="card-status">
       <ExperimentProgress
         :years-run="experiment.yearsRun"
         :expected-years-run="experiment.expectedYearsRun"
