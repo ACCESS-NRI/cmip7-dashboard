@@ -30,7 +30,7 @@
         "type": "string"
       },
       "class": {
-        "enum": ["baseline", "historical", "idealised", "projection"]
+        "enum": ["baseline", "historical", "sensitivity", "projection"]
       },
       "deck": {
         "type": "boolean"

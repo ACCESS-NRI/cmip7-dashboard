@@ -58,7 +58,7 @@ at runtime. Each entry's fields (fully typed and documented on the
 - `esgf_published` — how many ensemble members are published to ESGF (a boolean
   from older configs still loads).
 - `class` — scientific taxonomy class (issue #14); missing resolves to the
-  conservative `idealised` default.
+  conservative `sensitivity` default.
 - `deck` / `aft` — participation-tier flags (issue #21); independent booleans.
 - `expected_n_ensembles` — planned ensemble size; absent means a single run.
 - `ensembles` — the ensemble members that exist, each with its own UUID.

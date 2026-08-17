@@ -102,24 +102,24 @@ describe("ExperimentCard", () => {
     );
   });
 
-  it("labels the experiment class and warns that idealised runs are not projections", async () => {
+  it("labels the experiment class and warns that sensitivity runs are not projections", async () => {
     const wrapper = await mountCard({
       experiment: makeExperiment({
         name: "abrupt-4xCO2",
-        experimentClass: EXPERIMENT_CLASSES.idealised,
+        experimentClass: EXPERIMENT_CLASSES.sensitivity,
       }),
       post: null,
       variant: "overview",
     });
 
     const badge = wrapper.find('[data-test="experiment-class-badge"]');
-    expect(badge.attributes("data-class")).toBe("idealised");
+    expect(badge.attributes("data-class")).toBe("sensitivity");
     expect(
       wrapper.find('[data-test="not-a-projection-note"]').text(),
     ).toContain("not a real-world climate projection");
   });
 
-  it("does not warn for a historical run, which is not idealised", async () => {
+  it("does not warn for a historical run, which is not sensitivity", async () => {
     const wrapper = await mountCard({
       experiment: makeExperiment({ name: "historical" }),
       post: makePost(),

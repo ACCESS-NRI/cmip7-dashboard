@@ -28,10 +28,12 @@ const props = defineProps<{
 
 const furtherReading = computed(() => props.post?.furtherReading ?? []);
 
-// Experiment taxonomy (issue #14): idealised runs (e.g. abrupt-4xCO2) are the
+// Experiment taxonomy (issue #14): sensitivity runs (e.g. abrupt-4xCO2) are the
 // ones most easily misread as projections, so flag them explicitly.
 const experimentClass = computed(() => props.experiment.experimentClass);
-const isIdealised = computed(() => experimentClass.value.id === "idealised");
+const isSensitivity = computed(
+  () => experimentClass.value.id === "sensitivity",
+);
 </script>
 
 <!-- Per-experiment card. The "status" variant (default) powers the Progress
@@ -63,9 +65,9 @@ const isIdealised = computed(() => experimentClass.value.id === "idealised");
 
     <!-- Overview: the explainer's one-liner, expandable to the full article. -->
     <div v-if="variant === 'overview'" data-test="card-overview">
-      <!-- Idealised runs are laboratory tests, not forecasts — say so plainly. -->
+      <!-- Sensitivity runs are laboratory tests, not forecasts — say so plainly. -->
       <p
-        v-if="isIdealised"
+        v-if="isSensitivity"
         class="mb-2 flex items-center gap-1.5 text-xs font-medium text-amber-700 dark:text-amber-500"
         data-test="not-a-projection-note"
       >

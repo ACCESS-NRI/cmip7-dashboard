@@ -222,7 +222,7 @@ describe("groupExperimentsByProgramme", () => {
       makeExperiment({
         name: "piClim-Control",
         tiers: [],
-        experimentClass: EXPERIMENT_CLASSES.idealised,
+        experimentClass: EXPERIMENT_CLASSES.sensitivity,
       }),
     ]);
 
@@ -244,19 +244,19 @@ describe("groupExperimentsByProgramme", () => {
       tiers: [EXPERIMENT_TIERS.aft],
       experimentClass: EXPERIMENT_CLASSES.projection,
     });
-    const idealised = makeExperiment({
+    const sensitivity = makeExperiment({
       name: "esm-flat10",
       tiers: [EXPERIMENT_TIERS.aft],
-      experimentClass: EXPERIMENT_CLASSES.idealised,
+      experimentClass: EXPERIMENT_CLASSES.sensitivity,
     });
 
-    const groups = groupExperimentsByProgramme([scenario, idealised]);
+    const groups = groupExperimentsByProgramme([scenario, sensitivity]);
 
     expect(
       groups.find((group) => group.id === "scenario")?.experiments,
     ).toEqual([scenario]);
     expect(groups.find((group) => group.id === "other")?.experiments).toEqual([
-      idealised,
+      sensitivity,
     ]);
   });
 
@@ -283,7 +283,7 @@ describe("groupExperimentsByProgramme", () => {
       makeExperiment({
         name: "piClim-Control",
         tiers: [],
-        experimentClass: EXPERIMENT_CLASSES.idealised,
+        experimentClass: EXPERIMENT_CLASSES.sensitivity,
       }),
     ]);
 

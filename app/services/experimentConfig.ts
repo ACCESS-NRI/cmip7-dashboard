@@ -34,7 +34,7 @@ export interface ExperimentConfig {
   /**
    * Scientific taxonomy class (issue #14), declared explicitly per experiment
    * rather than inferred from the name. Optional so older/partial configs still
-   * load; a missing value resolves to the conservative `idealised` default.
+   * load; a missing value resolves to the conservative `sensitivity` default.
    */
   class?: ExperimentClassId;
   /**
