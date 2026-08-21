@@ -70,13 +70,8 @@ import accessLogo from "~/assets/ACCESS-logo.svg";
       </div>
       <p
         data-test="need-help"
-        class="flex items-start gap-2 text-xs text-gray-500 sm:max-w-md sm:justify-end sm:text-right dark:text-gray-400"
+        class="flex items-start gap-2 text-s text-gray-500 sm:max-w-lg sm:justify-end sm:text-right dark:text-gray-400"
       >
-        <UIcon
-          name="i-lucide-life-buoy"
-          class="mt-0.5 size-4 shrink-0 text-primary opacity-80 sm:order-last"
-          aria-hidden="true"
-        />
         <span>
           <span class="font-semibold text-gray-700 dark:text-gray-200"
             >Need help?</span
