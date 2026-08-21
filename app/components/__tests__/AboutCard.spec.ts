@@ -27,10 +27,12 @@ describe("AboutCard", () => {
   it("links to the blog and glossary routes", async () => {
     const wrapper = await mount();
 
-    const hrefs = wrapper.findAll("a").map((a) => a.attributes("href"));
-    // NuxtLink renders to <a> with the resolved route.
-    expect(hrefs).toContain("/blog");
-    expect(hrefs).toContain("/glossary");
+    const hrefs = wrapper.findAll("a").map((a) => a.attributes("href") ?? "");
+    // NuxtLink resolves against the app base URL, which is "/" locally but
+    // "/cmip7-dashboard" in the deployed/CI build — so match on the route
+    // suffix rather than an exact href.
+    expect(hrefs.some((h) => h.endsWith("/blog"))).toBe(true);
+    expect(hrefs.some((h) => h.endsWith("/glossary"))).toBe(true);
   });
 
   it("credits ACCESS-NRI with a logo linking to the website", async () => {
