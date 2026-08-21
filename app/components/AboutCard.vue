@@ -3,10 +3,13 @@
 
   A short explainer of what the dashboard is (a browser view over CMIP7 model runs
   and derived indicators), how scientists publish updates (a markdown file under
-  content/blog/), and where to learn the terminology (the glossary). It closes with
-  an ACCESS-NRI attribution and logo. Rendered unconditionally by index.vue — it
+  content/blog/), and where to learn the terminology (the glossary). The footer row
+  carries the ACCESS-NRI attribution/logo and, across from it, a "Need help?"
+  support prompt (issue #61) linking to the ACCESS-Hive Forum help post — see the
+  discussion on that issue for why we point at the Forum post rather than the ANU
+  contact block or the Hive Docs page. Rendered unconditionally by index.vue — it
   stays visible even while payu telemetry is loading or has errored, so there is
-  always some orientation on the page.
+  always some orientation and a way to get help on the page.
 
   Used by: app/pages/index.vue
 -->
@@ -43,23 +46,52 @@ import accessLogo from "~/assets/ACCESS-logo.svg";
       >
       explains the CMIP7 jargon used across this dashboard.
     </p>
+    <!-- Footer row: attribution on the left, the "Need help?" support prompt
+         across from it on the right. On mobile the row stacks (flex-col-reverse)
+         so support sits above the attribution but still below the divider. -->
     <div
-      class="flex flex-wrap items-center gap-3 border-t border-gray-200 pt-3 dark:border-gray-700"
+      class="flex flex-col-reverse gap-4 border-t border-gray-200 pt-3 dark:border-gray-700 sm:flex-row sm:items-center sm:justify-between"
     >
-      <span class="text-xs text-gray-400 dark:text-gray-500"
-        >Built with ACCESS-NRI tooling</span
+      <div class="flex items-center gap-3">
+        <span class="text-xs text-gray-400 dark:text-gray-500"
+          >Built with ACCESS-NRI tooling</span
+        >
+        <a
+          href="https://www.access-nri.org.au"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            :src="accessLogo"
+            alt="ACCESS-NRI"
+            class="h-9 object-contain opacity-80"
+          />
+        </a>
+      </div>
+      <p
+        data-test="need-help"
+        class="flex items-start gap-2 text-xs text-gray-500 sm:max-w-md sm:justify-end sm:text-right dark:text-gray-400"
       >
-      <a
-        href="https://www.access-nri.org.au"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          :src="accessLogo"
-          alt="ACCESS-NRI"
-          class="h-9 object-contain opacity-80"
+        <UIcon
+          name="i-lucide-life-buoy"
+          class="mt-0.5 size-4 shrink-0 text-primary opacity-80 sm:order-last"
+          aria-hidden="true"
         />
-      </a>
+        <span>
+          <span class="font-semibold text-gray-700 dark:text-gray-200"
+            >Need help?</span
+          >
+          Questions about this dashboard or something not working as expected?
+          See
+          <a
+            href="https://forum.access-hive.org.au/t/access-help-and-support/908"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-medium text-blue-700 hover:underline dark:text-blue-400"
+            >how to get help and support on the ACCESS-Hive Forum</a
+          >.
+        </span>
+      </p>
     </div>
   </section>
 </template>

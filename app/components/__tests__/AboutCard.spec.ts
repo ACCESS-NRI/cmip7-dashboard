@@ -35,6 +35,22 @@ describe("AboutCard", () => {
     expect(hrefs.some((h) => h.endsWith("/glossary"))).toBe(true);
   });
 
+  it("offers a 'Need help?' prompt linking to the ACCESS-Hive Forum help post", async () => {
+    const wrapper = await mount();
+
+    const needHelp = wrapper.find('[data-test="need-help"]');
+    expect(needHelp.exists()).toBe(true);
+    expect(needHelp.text()).toContain("Need help?");
+
+    const link = needHelp.find(
+      'a[href="https://forum.access-hive.org.au/t/access-help-and-support/908"]',
+    );
+    expect(link.exists()).toBe(true);
+    expect(link.text()).toContain("ACCESS-Hive Forum");
+    expect(link.attributes("target")).toBe("_blank");
+    expect(link.attributes("rel")).toBe("noopener noreferrer");
+  });
+
   it("credits ACCESS-NRI with a logo linking to the website", async () => {
     const wrapper = await mount();
 
