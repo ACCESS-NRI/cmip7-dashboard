@@ -8,7 +8,17 @@
 -->
 <script setup lang="ts">
 import type { PayuExperiment } from "~/services/payuExperiments";
-import accessLogo from "~/assets/ACCESS-logo.svg";
+// The hero leads with the full ACCESS "National Research Infrastructure" lockup
+// (not the globe-only mark the AboutCard uses) to give ACCESS-NRI top billing —
+// this dashboard is built by ACCESS-NRI.
+import accessLogo from "~/assets/access-nri-logo.png";
+// Partner logos (issue #60): mixed formats — nci-logo is a transparent PNG with
+// a black wordmark, nesp-logo a white-background JPG. All three logos sit on
+// white chips (see template): the ACCESS lockup carries dark navy text that
+// would fade on the dark card, and the chips keep every mark legible and
+// consistent in both light and dark themes.
+import nciLogo from "~/assets/nci-logo.png";
+import nespLogo from "~/assets/nesp-logo.jpg";
 
 defineProps<{
   experiments: PayuExperiment[];
@@ -23,8 +33,13 @@ defineProps<{
     class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   >
     <!-- Full-width banner across the top of the hero: the campaign headline and
-         a one-line status subtitle on the left, the ACCESS-NRI logo on the
-         right, spanning above the stats. -->
+         a one-line status subtitle on the left; on the right the ACCESS-NRI logo
+         leading, with the NCI (compute) and NESP Climate Systems Hub (funding)
+         partner logos beside it (issue #60). ACCESS leads with its full
+         "National Research Infrastructure" lockup — widest of the three since it
+         builds the dashboard — while all three chips share one height. The white
+         chips keep the mixed artwork legible against both the light and dark
+         card. -->
     <div
       class="mb-6 flex items-start justify-between gap-4 border-b border-gray-200 pb-6 dark:border-gray-700"
     >
@@ -38,15 +53,39 @@ defineProps<{
           Live status of CMIP7 model simulations and data publication
         </p>
       </div>
-      <a
-        href="https://www.access-nri.org.au"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="ACCESS-NRI"
-        class="flex shrink-0 items-center"
-      >
-        <img :src="accessLogo" alt="ACCESS-NRI" class="h-16 object-contain" />
-      </a>
+      <div class="flex shrink-0 flex-wrap items-center justify-end gap-3">
+        <a
+          href="https://www.access-nri.org.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="ACCESS-NRI"
+          class="inline-flex items-center rounded-md bg-white px-3 py-1 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+        >
+          <img :src="accessLogo" alt="ACCESS-NRI" class="h-14 object-contain" />
+        </a>
+        <a
+          href="https://nci.org.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="NCI Australia"
+          class="inline-flex items-center rounded-md bg-white px-3 py-1 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+        >
+          <img :src="nciLogo" alt="NCI Australia" class="h-14 object-contain" />
+        </a>
+        <a
+          href="https://nesp2climate.com.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="NESP Climate Systems Hub"
+          class="inline-flex items-center rounded-md bg-white px-3 py-1 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+        >
+          <img
+            :src="nespLogo"
+            alt="NESP Climate Systems Hub"
+            class="h-14 object-contain"
+          />
+        </a>
+      </div>
     </div>
 
     <!-- Stat zone: hosts the loading/error/empty states and totals. -->

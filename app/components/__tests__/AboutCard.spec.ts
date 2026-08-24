@@ -62,4 +62,25 @@ describe("AboutCard", () => {
     expect(link.attributes("rel")).toBe("noopener noreferrer");
     expect(link.attributes("target")).toBe("_blank");
   });
+
+  it("credits the NCI and NESP partners with logos linking to their sites", async () => {
+    const wrapper = await mount();
+
+    const partners = wrapper.find('[data-test="partners"]');
+    expect(partners.exists()).toBe(true);
+
+    const nci = partners.find('a[href="https://nci.org.au"]');
+    expect(nci.exists()).toBe(true);
+    expect(nci.find('img[alt="NCI Australia"]').exists()).toBe(true);
+    expect(nci.attributes("target")).toBe("_blank");
+    expect(nci.attributes("rel")).toBe("noopener noreferrer");
+
+    const nesp = partners.find('a[href="https://nesp2climate.com.au"]');
+    expect(nesp.exists()).toBe(true);
+    expect(nesp.find('img[alt="NESP Climate Systems Hub"]').exists()).toBe(
+      true,
+    );
+    expect(nesp.attributes("target")).toBe("_blank");
+    expect(nesp.attributes("rel")).toBe("noopener noreferrer");
+  });
 });
