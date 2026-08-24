@@ -7,14 +7,21 @@
   carries the ACCESS-NRI attribution/logo and, across from it, a "Need help?"
   support prompt (issue #61) linking to the ACCESS-Hive Forum help post — see the
   discussion on that issue for why we point at the Forum post rather than the ANU
-  contact block or the Hive Docs page. Rendered unconditionally by index.vue — it
-  stays visible even while payu telemetry is loading or has errored, so there is
-  always some orientation and a way to get help on the page.
+  contact block or the Hive Docs page. The attribution row also carries the NCI
+  (compute) and NESP Climate Systems Hub (funding) partner logos inline beside
+  the ACCESS-NRI credit, per issue #60. Rendered unconditionally by index.vue —
+  it stays visible even while payu telemetry is loading or has errored, so there
+  is always some orientation and a way to get help on the page.
 
   Used by: app/pages/index.vue
 -->
 <script setup lang="ts">
 import accessLogo from "~/assets/ACCESS-logo.svg";
+// Partner logos come in mixed formats — nci-logo is a transparent PNG with a
+// black wordmark, nesp-logo a white-background JPG. They are shown on white
+// chips (see template) so both read consistently in light and dark themes.
+import nciLogo from "~/assets/nci-logo.png";
+import nespLogo from "~/assets/nesp-logo.jpg";
 </script>
 
 <template>
@@ -52,7 +59,12 @@ import accessLogo from "~/assets/ACCESS-logo.svg";
     <div
       class="flex flex-col-reverse gap-4 border-t border-gray-200 pt-3 dark:border-gray-700 sm:flex-row sm:items-center sm:justify-between"
     >
-      <div class="flex items-center gap-3">
+      <!-- Attribution + partner logos: the ACCESS-NRI tooling credit, then the
+           NCI (compute) and NESP Climate Systems Hub (funding) partners inline
+           beside it (issue #60). The partners sit on white chips so their
+           mixed-format artwork (a transparent PNG, a white-background JPG) reads
+           consistently against both the light and dark card. -->
+      <div data-test="partners" class="flex flex-wrap items-center gap-3">
         <span class="text-xs text-gray-400 dark:text-gray-500"
           >Built with ACCESS-NRI tooling</span
         >
@@ -65,6 +77,28 @@ import accessLogo from "~/assets/ACCESS-logo.svg";
             :src="accessLogo"
             alt="ACCESS-NRI"
             class="h-9 object-contain opacity-80"
+          />
+        </a>
+        <a
+          href="https://nci.org.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="NCI Australia"
+          class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+        >
+          <img :src="nciLogo" alt="NCI Australia" class="h-6 object-contain" />
+        </a>
+        <a
+          href="https://nesp2climate.com.au"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="NESP Climate Systems Hub"
+          class="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 shadow-sm ring-1 ring-gray-200 dark:ring-gray-700"
+        >
+          <img
+            :src="nespLogo"
+            alt="NESP Climate Systems Hub"
+            class="h-6 object-contain"
           />
         </a>
       </div>

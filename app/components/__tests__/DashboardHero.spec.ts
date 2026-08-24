@@ -70,4 +70,22 @@ describe("DashboardHero", () => {
       false,
     );
   });
+
+  it("shows the ACCESS-NRI, NCI and NESP branding regardless of load state", async () => {
+    const wrapper = await mountSuspended(DashboardHero, {
+      props: { experiments: [], loading: true, error: null },
+    });
+
+    expect(wrapper.find('img[alt="ACCESS-NRI"]').exists()).toBe(true);
+
+    const nci = wrapper.find('a[href="https://nci.org.au"]');
+    expect(nci.exists()).toBe(true);
+    expect(nci.find('img[alt="NCI Australia"]').exists()).toBe(true);
+
+    const nesp = wrapper.find('a[href="https://nesp2climate.com.au"]');
+    expect(nesp.exists()).toBe(true);
+    expect(nesp.find('img[alt="NESP Climate Systems Hub"]').exists()).toBe(
+      true,
+    );
+  });
 });
