@@ -33,15 +33,17 @@ defineProps<{
     class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900"
   >
     <!-- Full-width banner across the top of the hero: the campaign headline and
-         a one-line status subtitle on the left; on the right the ACCESS-NRI logo
-         leading, with the NCI (compute) and NESP Climate Systems Hub (funding)
-         partner logos beside it (issue #60). ACCESS leads with its full
-         "National Research Infrastructure" lockup — widest of the three since it
-         builds the dashboard — while all three chips share one height. The white
-         chips keep the mixed artwork legible against both the light and dark
-         card. -->
+         a one-line status subtitle, then the ACCESS-NRI logo leading, with the
+         NCI (compute) and NESP Climate Systems Hub (funding) partner logos
+         beside it (issue #60). At lg and up the logos sit to the right of the
+         headline; on narrower displays the row stacks (flex-col) so the logos
+         drop below the title and wrap rather than squeezing the headline or
+         overflowing the card. ACCESS leads with its full "National Research
+         Infrastructure" lockup — widest of the three since it builds the
+         dashboard — while all three chips share one height. The white chips
+         keep the mixed artwork legible against both the light and dark card. -->
     <div
-      class="mb-6 flex items-start justify-between gap-4 border-b border-gray-200 pb-6 dark:border-gray-700"
+      class="mb-6 flex flex-col gap-4 border-b border-gray-200 pb-6 dark:border-gray-700 lg:flex-row lg:items-start lg:justify-between"
     >
       <div>
         <h2
@@ -53,7 +55,9 @@ defineProps<{
           Live status of CMIP7 model simulations and data publication
         </p>
       </div>
-      <div class="flex shrink-0 flex-wrap items-center justify-end gap-3">
+      <div
+        class="flex flex-wrap items-center justify-start gap-3 lg:shrink-0 lg:justify-end"
+      >
         <a
           href="https://www.access-nri.org.au"
           target="_blank"
