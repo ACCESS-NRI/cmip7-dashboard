@@ -8,7 +8,12 @@
   Used by: app/components/AppSidebar.vue
 -->
 <script setup lang="ts">
+import { useHoverCapablePopoverMode } from "~/composables/useHoverCapablePopoverMode";
+
 const config = useRuntimeConfig();
+
+// Fall back to click/tap mode on touch devices — see the composable for why.
+const mode = useHoverCapablePopoverMode();
 
 const commitSha = config.public.gitCommitSha;
 const appVersion = config.public.appVersion;
@@ -33,7 +38,7 @@ const badgeUrl = hasTag
 
 <template>
   <UPopover
-    mode="hover"
+    :mode="mode"
     :open-delay="200"
     :close-delay="150"
     :content="{

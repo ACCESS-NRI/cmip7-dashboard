@@ -4,8 +4,10 @@
   A single hover popover (reka's HoverCard under the hood) surfaces the
   definition on hover *and* keyboard focus, and its panel is itself hoverable so
   the further-reading and glossary links stay clickable. The trigger is visibly
-  highlighted so it's obvious the term is explained. On touch, tapping focuses
-  the trigger and opens the card. Lives in components/content/ so it also works
+  highlighted so it's obvious the term is explained. Where the primary input
+  can't hover (touch devices), it falls back to click/tap mode, because reka's
+  HoverCard is pointer-only and never opens on a real iPhone tap. Lives in
+  components/content/ so it also works
   inside markdown via MDC (`:jargon[DECK]{term="DECK"}`). Unknown terms degrade
   to plain text, so a typo'd `term` never breaks the surrounding page.
 
@@ -19,6 +21,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useGlossary } from "~/composables/useGlossary";
+import { useHoverCapablePopoverMode } from "~/composables/useHoverCapablePopoverMode";
 
 const props = defineProps<{
   /** The glossary key to look up (term, slug or alias). */
@@ -27,6 +30,9 @@ const props = defineProps<{
 
 const { getTerm } = useGlossary();
 const entry = computed(() => getTerm(props.term));
+
+// Fall back to click/tap mode on touch devices — see the composable for why.
+const mode = useHoverCapablePopoverMode();
 
 // Screen-reader label: term, its expansion, and the one-line gloss.
 const ariaLabel = computed(() => {
@@ -45,7 +51,7 @@ const ariaLabel = computed(() => {
 
   <UPopover
     v-else
-    mode="hover"
+    :mode="mode"
     :open-delay="120"
     :close-delay="120"
     :data-test="'jargon-popover'"

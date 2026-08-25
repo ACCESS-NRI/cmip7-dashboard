@@ -15,11 +15,15 @@
 -->
 <script setup lang="ts">
 import { computed } from "vue";
+import { useHoverCapablePopoverMode } from "~/composables/useHoverCapablePopoverMode";
 
 const props = defineProps<{
   /** The size to translate into everyday comparisons, in gigabytes. */
   gb: number;
 }>();
+
+// Fall back to click/tap mode on touch devices — see the composable for why.
+const mode = useHoverCapablePopoverMode();
 
 // Reference sizes for the comparisons. `gbPer` is how many GB one of the thing is
 // (Shakespeare's complete works ≈ 5 MB of plain text → 5/1024 GB; a Netflix HD
@@ -66,7 +70,7 @@ const ariaLabel = computed(() =>
 
 <template>
   <UPopover
-    mode="hover"
+    :mode="mode"
     :open-delay="120"
     :close-delay="120"
     :data-test="'storage-analogue-popover'"
