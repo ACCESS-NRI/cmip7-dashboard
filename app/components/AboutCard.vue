@@ -53,6 +53,17 @@ import nespLogo from "~/assets/nesp-logo.jpg";
       >
       explains the CMIP7 jargon used across this dashboard.
     </p>
+    <!-- Terse analytics/privacy line — full notice lives off-site. -->
+    <p class="text-xs text-gray-400 dark:text-gray-500">
+      We may collect anonymous usage statistics. See our
+      <a
+        href="https://reporting.access-nri-store.cloud.edu.au/privacy"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline decoration-dashed"
+        >privacy notice</a
+      >.
+    </p>
     <!-- Footer row: attribution on the left, the "Need help?" support prompt
          across from it on the right. On mobile the row stacks (flex-col-reverse)
          so support sits above the attribution but still below the divider. -->
