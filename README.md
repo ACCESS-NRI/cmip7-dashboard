@@ -45,6 +45,44 @@ To update the experiment tracker, please go to the [update guide](./public/updat
 Every component, composable, and service opens with a header comment saying what
 it does and who uses it — read that before diving into the implementation.
 
+## Embedding
+
+The `pages/embed/*` routes render a single view with no site chrome so it can be
+dropped into another site via an `<iframe>`:
+
+- `/embed/hero` — the dashboard hero (campaign headline, partner logos, totals).
+- `/embed/experiments` — the full experiment list accordion.
+- `/embed/experiments-summary` — the rolled-up summary cards.
+- `/embed/blog/<slug>` — a single update post.
+
+Drop one in with:
+
+```html
+<iframe
+  src="https://<domain>/embed/hero"
+  title="CMIP7 Dashboard"
+  style="width: 100%; border: 0"
+></iframe>
+```
+
+Each embed page posts its content height to the parent frame via
+`postMessage({ height })` (see `useIframeEmbedHeight`) whenever it resizes. A
+plain `<iframe>` ignores that, so to make the frame grow to the content — no
+inner scrollbar, no gap — the embedding page listens for the message and applies
+the height:
+
+```html
+<script>
+  window.addEventListener("message", (event) => {
+    const height = event.data?.height;
+    const frame = document.querySelector("iframe"); // or a specific ref
+    if (typeof height === "number" && frame) {
+      frame.style.height = `${height}px`;
+    }
+  });
+</script>
+```
+
 ## Data sources
 
 **`public/experiment-config.json`** is the source of truth for which experiments
