@@ -20,17 +20,32 @@ import accessLogo from "~/assets/access-nri-logo.png";
 import nciLogo from "~/assets/nci-logo.png";
 import nespLogo from "~/assets/nesp-logo.jpg";
 
-defineProps<{
-  experiments: PayuExperiment[];
-  loading: boolean;
-  error: string | null;
-}>();
+// `class` overrides the card's radius/shadow rather than merely adding to them:
+// appending (e.g.) `rounded-lg` alongside the base `rounded-2xl` wouldn't win,
+// since Tailwind emits `rounded-2xl` later in the stylesheet regardless of class
+// order. So the overridable utilities live in this prop's default (giving the
+// standalone dashboard its usual raised, rounded card), and callers that want a
+// different look — like the flush embed — pass their own.
+const props = withDefaults(
+  defineProps<{
+    experiments: PayuExperiment[];
+    loading: boolean;
+    error: string | null;
+    class?: string;
+  }>(),
+  {
+    class: "rounded-2xl shadow-sm",
+  },
+);
 </script>
 
 <template>
   <section
     id="hero"
-    class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+    :class="[
+      'border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900',
+      props.class,
+    ]"
   >
     <!-- Full-width banner across the top of the hero: the campaign headline and
          a one-line status subtitle, then the ACCESS-NRI logo leading, with the

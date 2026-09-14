@@ -28,10 +28,14 @@ watch(payuLoading, (loading) => {
 
 <template>
   <main ref="mainRef">
+    <!-- Flush embed: no shadow, and a smaller radius to match the host page's
+         chips (the standalone dashboard's raised rounded-2xl card is the default
+         inside DashboardHero). -->
     <DashboardHero
       :experiments="payuExperiments"
       :loading="payuLoading"
       :error="payuError"
+      class="rounded-lg"
     />
   </main>
 </template>
