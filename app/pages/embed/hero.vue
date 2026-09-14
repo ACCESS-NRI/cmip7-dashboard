@@ -35,7 +35,7 @@ watch(payuLoading, (loading) => {
       :experiments="payuExperiments"
       :loading="payuLoading"
       :error="payuError"
-      class="rounded-lg"
+      class="rounded-lg pb-[2px] pr[1-px]"
     />
   </main>
 </template>
