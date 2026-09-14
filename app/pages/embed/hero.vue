@@ -28,6 +28,10 @@ watch(payuLoading, (loading) => {
 
 <template>
   <main ref="mainRef">
-    <DashboardHero :experiments="payuExperiments" :loading="payuLoading" :error="payuError" />
+    <DashboardHero
+      :experiments="payuExperiments"
+      :loading="payuLoading"
+      :error="payuError"
+    />
   </main>
 </template>
