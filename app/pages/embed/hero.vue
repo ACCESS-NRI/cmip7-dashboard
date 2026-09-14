@@ -27,11 +27,7 @@ watch(payuLoading, (loading) => {
 </script>
 
 <template>
-  <main ref="mainRef" class="px-4 py-8">
-    <DashboardHero
-      :experiments="payuExperiments"
-      :loading="payuLoading"
-      :error="payuError"
-    />
+  <main ref="mainRef">
+    <DashboardHero :experiments="payuExperiments" :loading="payuLoading" :error="payuError" />
   </main>
 </template>
