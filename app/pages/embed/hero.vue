@@ -27,7 +27,13 @@ watch(payuLoading, (loading) => {
 </script>
 
 <template>
-  <main ref="mainRef">
+  <!-- pb-1 pr-1: a small cushion on the measured wrapper (not margin on the
+       card — a card margin would collapse out of <main> and escape the
+       getBoundingClientRect().bottom we report, and a right margin would only
+       inset a full-width card). Padding sits inside the measured box, so the
+       bottom gutter is captured in the reported height and the right gutter
+       gives breathing room without overflow; the card stays flush top-left. -->
+  <main ref="mainRef" class="pb-1 pr-1">
     <!-- Flush embed: no shadow, and a smaller radius to match the host page's
          chips (the standalone dashboard's raised rounded-2xl card is the default
          inside DashboardHero). -->
