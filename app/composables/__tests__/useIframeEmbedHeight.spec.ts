@@ -1,13 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useIframeEmbedHeight } from "../useIframeEmbedHeight";
 
-// Give an element a fixed scrollHeight; happy-dom reports 0 for detached nodes.
-function elementWithScrollHeight(height: number): HTMLElement {
+// Give an element a fixed document-space bottom edge; happy-dom returns an
+// all-zero rect for detached nodes, so stub the one field notifyHeight reads.
+function elementWithBottom(bottom: number): HTMLElement {
   const el = document.createElement("div");
-  Object.defineProperty(el, "scrollHeight", {
-    value: height,
-    configurable: true,
-  });
+  el.getBoundingClientRect = () =>
+    ({ bottom, top: 0, left: 0, right: 0, width: 0, height: bottom }) as DOMRect;
   return el;
 }
 
@@ -16,13 +15,13 @@ describe("useIframeEmbedHeight", () => {
     vi.restoreAllMocks();
   });
 
-  it("posts the bound element's scrollHeight to the parent frame after start()", async () => {
+  it("posts the bound element's document-space height to the parent frame after start()", async () => {
     const postMessage = vi
       .spyOn(window.parent, "postMessage")
       .mockImplementation(() => {});
 
     const { elementRef, start } = useIframeEmbedHeight();
-    elementRef.value = elementWithScrollHeight(321);
+    elementRef.value = elementWithBottom(321);
 
     await start();
 
