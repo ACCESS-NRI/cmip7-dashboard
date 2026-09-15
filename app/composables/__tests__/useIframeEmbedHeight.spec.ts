@@ -6,7 +6,14 @@ import { useIframeEmbedHeight } from "../useIframeEmbedHeight";
 function elementWithBottom(bottom: number): HTMLElement {
   const el = document.createElement("div");
   el.getBoundingClientRect = () =>
-    ({ bottom, top: 0, left: 0, right: 0, width: 0, height: bottom }) as DOMRect;
+    ({
+      bottom,
+      top: 0,
+      left: 0,
+      right: 0,
+      width: 0,
+      height: bottom,
+    }) as DOMRect;
   return el;
 }
 
