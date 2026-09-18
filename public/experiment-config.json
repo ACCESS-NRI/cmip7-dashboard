@@ -229,7 +229,7 @@
   {
     "name": "scen7-h",
     "description": "-",
-    "class": "scenario",
+    "class": "projection",
     "deck": true,
     "expected_years_run": 129,
     "esgf_published": 0,
@@ -280,7 +280,7 @@
   {
     "name": "scen7-vl",
     "description": "-",
-    "class": "scenario",
+    "class": "projection",
     "deck": true,
     "expected_years_run": 129,
     "esgf_published": 0,
@@ -331,7 +331,7 @@
   {
     "name": "esm-scen7-h",
     "description": "-",
-    "class": "scenario",
+    "class": "projection",
     "deck": true,
     "expected_years_run": 129,
     "esgf_published": 0,
@@ -462,7 +462,7 @@
   {
     "name": "esm-scen7-vl",
     "description": "-",
-    "class": "scenario",
+    "class": "projection",
     "deck": true,
     "expected_years_run": 129,
     "esgf_published": 0,
