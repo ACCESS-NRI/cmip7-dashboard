@@ -227,6 +227,370 @@
     ]
   },
   {
+    "name": "scen7-h",
+    "description": "-",
+    "class": "scenario",
+    "deck": true,
+    "expected_years_run": 129,
+    "esgf_published": 0,
+    "expected_n_ensembles": 10,
+    "ensembles": [
+      {
+        "name": "r1i1p1f1",
+        "uuid": "add25d31-5697-45f8-883f-243e94e870ca"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "e4b3b0e7-1282-4433-8c85-fc3188cd351f"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "716cf888-8f48-4a50-b429-accb018285f2"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "5e3d781b-6951-427b-a12d-6f7b2863b85a"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "7008d92d-19eb-49f3-bca9-57a33309e680"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "3c092d74-4dfa-461d-8aa1-2c46249453c8"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "27ff0bf7-09f9-49b1-9cc9-9bcfa67d38fa"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "0fbe286f-797b-460f-81e0-56265338d864"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "d7474288-9888-43ad-a48e-3f3c8d2721cb"
+      },
+      {
+        "name": "r10i1p1f1",
+        "uuid": "2be944d0-ab65-4db7-b3e1-b28ef29c6f8e"
+      }
+    ]
+  },
+  {
+    "name": "scen7-vl",
+    "description": "-",
+    "class": "scenario",
+    "deck": true,
+    "expected_years_run": 129,
+    "esgf_published": 0,
+    "expected_n_ensembles": 10,
+    "ensembles": [
+     {
+        "name": "r1i1p1f1",
+        "uuid": "3f5224b3-1de0-40a1-b161-78d69b9334fe"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "2c165c55-b671-402f-a67d-620af4582d24"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "9de62712-5256-4004-9a16-1f389414a100"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "1c06a562-456b-4d44-9484-2f6bc6b58073"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "8363807f-4770-4e87-a0a6-f7c8245b0b81"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "7e8b1ad7-4676-4556-9246-df644afedec0"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "8ff72a7c-523a-4d3b-9d84-405212101d54"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "0640a8ad-6caa-4850-a8ce-e9032f83ad1e"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "0fdecd5a-47d0-4ac9-98e4-72e7a6d4fd2c"
+      },
+      {
+        "name": "r10i1p1f1",
+        "uuid": "c1b6f146-829a-407d-8e50-66761aa97269"
+      }
+    ]
+  },
+  {
+    "name": "esm-scen7-h",
+    "description": "-",
+    "class": "scenario",
+    "deck": true,
+    "expected_years_run": 129,
+    "esgf_published": 0,
+    "expected_n_ensembles": 30,
+    "ensembles": [
+      {
+        "name": "r1i1p1f1",
+        "uuid": "cd833601-a7fd-461c-9b8d-a1eeb2800147"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "67e34141-ad71-4139-9502-6e968cad9184"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "820ff533-45f8-4338-b916-baca2c206ed1"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "300c34d6-a85e-4af6-aa72-2708a1c6ed6b"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "8c1163f7-87c6-48ac-8893-49a65ac99eaf"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "5a755342-fb73-4271-97e9-f6ab3b9494ef"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "51e8f79c-799d-498c-af3f-b0226d654d71"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "9aa5b4a1-2e9e-4c83-ae64-103db0b4bc5a"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "dcd039aa-196d-46d6-804f-2442df166031"
+      },
+      {
+        "name": "r10i1p1f1",
+        "uuid": "7c3dac29-f71a-49e4-8440-cf2d85fb61da"
+      },
+      {
+        "name": "r11i1p1f1",
+        "uuid": "1acc331a-0d11-4b80-a47f-c65c351ce17a"
+      },
+      {
+        "name": "r12i1p1f1",
+        "uuid": "fb1b51ec-7ca1-491a-a52c-74085dfff43b"
+      },
+      {
+        "name": "r13i1p1f1",
+        "uuid": "fa1c3dfd-03f7-453c-95cd-de727cc81fc2"
+      },
+      {
+        "name": "r14i1p1f1",
+        "uuid": "ac162c16-5fa5-4d85-bff2-853b4d2655d4"
+      },
+      {
+        "name": "r15i1p1f1",
+        "uuid": "f15fb920-ce30-4c00-ab4d-09191a7f9d2c"
+      },
+      {
+        "name": "r16i1p1f1",
+        "uuid": "b87a0551-e1f3-4a25-8279-954420e29b56"
+      },
+      {
+        "name": "r17i1p1f1",
+        "uuid": "13482ad4-5246-445e-92c5-d79ebf5500fa"
+      },
+      {
+        "name": "r18i1p1f1",
+        "uuid": "b485e456-b971-4100-907b-ef91e8e3a923"
+      },
+      {
+        "name": "r19i1p1f1",
+        "uuid": "8f7b4846-8278-4831-886c-d983f544d8e3"
+      },
+      {
+        "name": "r20i1p1f1",
+        "uuid": "bb0f6983-7a6a-4dcb-a559-e5b368b25003"
+      },
+      {
+        "name": "r21i1p1f1",
+        "uuid": "e8329845-6d2a-4cd2-a6e3-9a74ab19cc2b"
+      },
+      {
+        "name": "r22i1p1f1",
+        "uuid": "d0573c40-b6d0-4da5-8a04-ba868ee2abf4"
+      },
+      {
+        "name": "r23i1p1f1",
+        "uuid": "1652e85f-fd4e-4d95-8175-2ec5a3e2dd37"
+      },
+      {
+        "name": "r24i1p1f1",
+        "uuid": "aa521e88-788e-4ef2-a98e-c8e066ca6607"
+      },
+      {
+        "name": "r25i1p1f1",
+        "uuid": "6c1079b4-51d6-4320-9bab-49d3da723fac"
+      },
+      {
+        "name": "r26i1p1f1",
+        "uuid": "5b55e194-6dac-480f-b6f0-50d62df4c9b8"
+      },
+      {
+        "name": "r27i1p1f1",
+        "uuid": "198625f0-336e-4268-9a17-fac30683a3ac"
+      },
+      {
+        "name": "r28i1p1f1",
+        "uuid": "30113388-fb52-465f-aa6e-840224a6d962"
+      },
+      {
+        "name": "r29i1p1f1",
+        "uuid": "ae6dffcc-a0d4-4333-86f6-4d5531edcde9"
+      },
+      {
+        "name": "r30i1p1f1",
+        "uuid": "d1938193-0ced-4a20-9dde-f91cc70bb8a3"
+      }
+    ]
+  },
+  {
+    "name": "esm-scen7-vl",
+    "description": "-",
+    "class": "scenario",
+    "deck": true,
+    "expected_years_run": 129,
+    "esgf_published": 0,
+    "expected_n_ensembles": 30,
+    "ensembles": [
+      {
+        "name": "r1i1p1f1",
+        "uuid": "19a06267-f010-43f4-a59e-28a5a2484d57"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "adbc5e19-57db-4e54-bb17-36a9d8947a2e"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "20d9883f-5e09-4cf3-b7c3-4ff66a07dd83"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "2579d009-62b0-4c7d-ae1f-2b072a5de572"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "1f3ae1d6-18e2-4166-ae8e-ff3a73f12f86"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "55d6a111-9f63-467a-bba6-6872563b9f1f"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "a3a82558-c825-4987-8140-85aea75fb2d1"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "c3531e7d-89be-41a4-bcf1-5562a6dab440"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "8b9d1834-5641-4037-9994-0f28f43ed380"
+      },
+      {
+        "name": "r10i1p1f1",
+        "uuid": "8377fbd1-38e8-4915-a13a-077c9b96b12f"
+      },
+      {
+        "name": "r11i1p1f1",
+        "uuid": "989cc743-1134-4178-a310-645c7e2f1d24"
+      },
+      {
+        "name": "r12i1p1f1",
+        "uuid": "658125af-d33d-4bdc-bfc0-eea4216906e4"
+      },
+      {
+        "name": "r13i1p1f1",
+        "uuid": "a2fa9996-8873-41b9-b7a2-0098566d1390"
+      },
+      {
+        "name": "r14i1p1f1",
+        "uuid": "e4b9a313-a911-4fbd-a026-356bc547fc39"
+      },
+      {
+        "name": "r15i1p1f1",
+        "uuid": "be097d05-2891-4dfe-b7da-d47a004c1dd3"
+      },
+      {
+        "name": "r16i1p1f1",
+        "uuid": "9821c3e4-0cde-4d3c-838c-56084391e8d2"
+      },
+      {
+        "name": "r17i1p1f1",
+        "uuid": "d3e90cdd-fe9e-4221-9bf1-30625717dc4a"
+      },
+      {
+        "name": "r18i1p1f1",
+        "uuid": "f1d64fa3-ed01-4dc8-8331-8fab8c21c1ea"
+      },
+      {
+        "name": "r19i1p1f1",
+        "uuid": "f4f868f7-bfe4-44cc-9e75-a76fca6179f8"
+      },
+      {
+        "name": "r20i1p1f1",
+        "uuid": "556d469e-0475-415c-abe1-ded3c4f8319d"
+      },
+      {
+        "name": "r21i1p1f1",
+        "uuid": "26acc88b-ef4d-4ac3-ba31-0e13bf4ec32a"
+      },
+      {
+        "name": "r22i1p1f1",
+        "uuid": "7b043140-f2af-453e-9796-fa989519d3dc"
+      },
+      {
+        "name": "r23i1p1f1",
+        "uuid": "43dc74e0-13e5-46b2-b8c4-1eb1ca190ebc"
+      },
+      {
+        "name": "r24i1p1f1",
+        "uuid": "0f9faf3d-c00c-42df-b558-45c2a848983b"
+      },
+      {
+        "name": "r25i1p1f1",
+        "uuid": "2e42e291-d94a-4981-86a5-b9409bd74c9b"
+      },
+      {
+        "name": "r26i1p1f1",
+        "uuid": "d83a4aaf-c96c-4bdc-9bfc-b0afa019bf48"
+      },
+      {
+        "name": "r27i1p1f1",
+        "uuid": "2e4e3cae-5785-497b-b253-afc154233cd1"
+      },
+      {
+        "name": "r28i1p1f1",
+        "uuid": "362fc717-c12f-48df-9a64-4878d04554fc"
+      },
+      {
+        "name": "r29i1p1f1",
+        "uuid": "40bb7b2a-fc96-412f-ae42-1dade412291a"
+      },
+      {
+        "name": "r30i1p1f1",
+        "uuid": "90770248-037f-4544-9ab9-db82f796680a"
+      }
+    ]
+  },
+  {
     "name": "piClim-Control",
     "description": "-",
     "class": "sensitivity",
