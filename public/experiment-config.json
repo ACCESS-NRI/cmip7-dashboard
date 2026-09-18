@@ -669,14 +669,6 @@
     "esgf_published": 0
   },
   {
-    "name": "scen7-h",
-    "description": "-",
-    "aft": true,
-    "expected_years_run": 79,
-    "esgf_published": 0,
-    "class": "projection"
-  },
-  {
     "name": "scen7-hl",
     "description": "-",
     "aft": true,
@@ -713,23 +705,6 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 79,
-    "esgf_published": 0,
-    "class": "projection"
-  },
-  {
-    "name": "scen7-vl",
-    "description": "-",
-    "aft": true,
-    "expected_years_run": 79,
-    "esgf_published": 0,
-    "class": "projection"
-  },
-  {
-    "name": "esm-scen7-h",
-    "description": "-",
-    "aft": true,
-    "expected_years_run": 79,
-    "expected_n_ensembles": 30,
     "esgf_published": 0,
     "class": "projection"
   },
@@ -775,15 +750,6 @@
     "aft": true,
     "expected_years_run": 79,
     "expected_n_ensembles": 10,
-    "esgf_published": 0,
-    "class": "projection"
-  },
-  {
-    "name": "esm-scen7-vl",
-    "description": "-",
-    "aft": true,
-    "expected_years_run": 79,
-    "expected_n_ensembles": 30,
     "esgf_published": 0,
     "class": "projection"
   },
