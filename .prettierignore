@@ -4,3 +4,4 @@ python/
 src/assets/
 *.md
 .claude/
+public/experiment-config.json
