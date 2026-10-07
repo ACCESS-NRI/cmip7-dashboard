@@ -68,6 +68,10 @@ export default defineNuxtConfig({
     host: process.env.NUXT_PUBLIC_POSTHOG_HOST,
     clientConfig: {
       persistence: "memory",
+      // vue-router navigations never reload the page, so PostHog's own
+      // page-load autocapture only ever sees the first visit. Pageviews are
+      // captured explicitly instead, see useRoutePageviews.ts.
+      capture_pageview: false,
     },
   },
   content: {
