@@ -42,7 +42,49 @@
     "deck": true,
     "expected_years_run": 43,
     "esgf_published": 0,
-    "expected_n_ensembles": 10
+    "expected_n_ensembles": 10,
+    "ensembles": [
+      {
+        "name": "r10i1p1f1",
+        "uuid": "b6a254d2-0690-4d5a-94e8-d448f961ac50"
+      },
+      {
+        "name": "r2i1p1f1",
+        "uuid": "3c0bb9bc-1d90-455e-a968-94ba7d789a2f"
+      },
+      {
+        "name": "r5i1p1f1",
+        "uuid": "0273aa7c-9213-43d0-99bd-ed49db6888c8"
+      },
+      {
+        "name": "r8i1p1f1",
+        "uuid": "e2a08104-239c-4e9d-ac85-121040e5880a"
+      },
+      {
+        "name": "r4i1p1f1",
+        "uuid": "13c6a9aa-de35-4a54-ac78-490f07a7fd2a"
+      },
+      {
+        "name": "r6i1p1f1",
+        "uuid": "3fdbb509-6736-4962-b4e4-2ff137eb1d1f"
+      },
+      {
+        "name": "r3i1p1f1",
+        "uuid": "02f9409e-05d6-4049-92f5-72d994067d08"
+      },
+      {
+        "name": "r9i1p1f1",
+        "uuid": "f454c80c-5dc3-4270-9c56-8a2326904eb6"
+      },
+      {
+        "name": "r7i1p1f1",
+        "uuid": "9d329ee4-0c76-4fdf-b780-2b044889418b"
+      },
+      {
+        "name": "r1i1p1f1",
+        "uuid": "30c41d28-c383-4c26-821c-23159e42c9b4"
+      }
+    ]
   },
   {
     "name": "historical",
