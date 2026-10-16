@@ -24,7 +24,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1000,
-    "esgf_published": 0
+    "esgf_published": 1
   },
   {
     "uuid": "bc4ae139-0c1d-4c05-aa75-7be4eb2e660f",
