@@ -849,6 +849,7 @@
     "expected_years_run": 100,
     "esgf_published": 0,
     "class": "sensitivity",
-    "aft": true
+    "aft": true,
+    "uuid": "eaf79f42-bc3d-446b-80d0-5732c52a5738"
   }
 ]
