@@ -24,7 +24,7 @@ const props = defineProps<{
 // experiment-config.json nor the payu telemetry API carries one. Replace this
 // with a real per-experiment sum (inside the loop below, off a new field on
 // PayuExperiment in ~/services/payuExperiments) once the API exposes it.
-const PUBLISHED_GB = 7323;
+const PUBLISHED_GB = 14232.52;
 
 // Rough campaign-wide estimate (issue #62): a typical simulation year's data
 // volume times the planned years. We reuse the planned-years roll-up below

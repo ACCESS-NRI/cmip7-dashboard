@@ -138,12 +138,12 @@
     ]
   },
   {
-    "name": "esm-historical",
+    "name": "esm-hist",
     "description": "-",
     "class": "historical",
     "deck": true,
     "expected_years_run": 172,
-    "esgf_published_dataset_count": 0,
+    "esgf_published_dataset_count": 3120,
     "expected_n_ensembles": 30,
     "ensembles": [
       {
@@ -633,7 +633,7 @@
     ]
   },
   {
-    "name": "piClim-Control",
+    "name": "piClim-control",
     "description": "-",
     "class": "sensitivity",
     "deck": true,
