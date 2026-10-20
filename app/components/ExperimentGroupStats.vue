@@ -2,7 +2,7 @@
   ExperimentGroupStats — the stats sidebar inside an open programme-group panel.
 
   Renders the five status counts (Simulations / Running / Completed / Not started
-  / Published) and the simulated-years figure for one group. Stateless: the parent
+  / Published Datasets) and the simulated-years figure for one group. Stateless: the parent
   passes the precomputed group summary in as a prop.
 
   Used by: app/components/ExperimentProgrammeGroups.vue
@@ -47,9 +47,9 @@ defineProps<{
         </dd>
       </div>
       <div>
-        <dt class="text-gray-500 dark:text-gray-400">Published</dt>
+        <dt class="text-gray-500 dark:text-gray-400">Published Datasets</dt>
         <dd class="mt-1 text-lg font-semibold text-gray-800 dark:text-gray-100">
-          {{ summary.published }}
+          {{ summary.publishedDatasets }}
         </dd>
       </div>
     </dl>

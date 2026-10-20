@@ -119,8 +119,9 @@
 
             <!-- ESGF column -->
             <EsgfStatus
-              :published-count="item.experiment.esgfPublishedCount"
-              :total="item.experiment.expectedEnsembleCount"
+              :published-dataset-count="
+                item.experiment.esgfPublishedDatasetCount
+              "
               class="justify-center"
             />
           </div>

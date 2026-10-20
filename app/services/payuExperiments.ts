@@ -89,7 +89,7 @@ export interface PayuExperiment {
    * single source of truth for publication: a derived "is it published"
    * boolean alongside it would only drift once a count can be partial.
    */
-  esgfPublishedCount: number;
+  esgfPublishedDatasetCount: number;
   /** Resolved scientific taxonomy class (issue #14), from the config `class`. */
   experimentClass: ExperimentClass;
   /**
@@ -212,22 +212,13 @@ export function normalizePayuMember(
 }
 
 /**
- * Members published to ESGF, from the config's `esgf_published` count. A
- * boolean is read as the whole ensemble or none of it, and a count beyond the
- * planned ensemble size is clamped so the column cannot read 12/10.
+ * Members datasets published to ESGF, from the config's `esgf_published_dataset_count` count.
  */
-export function esgfPublishedCount(
-  esgfPublished: number | boolean | undefined,
-  expectedEnsembleCount: number,
+export function esgfPublishedDatasetCount(
+  esgfPublishedDatasetCount: number | undefined,
 ): number {
-  if (esgfPublished === undefined) return 0;
-  if (typeof esgfPublished === "boolean") {
-    return esgfPublished ? expectedEnsembleCount : 0;
-  }
-  return Math.min(
-    Math.max(0, Math.round(esgfPublished)),
-    expectedEnsembleCount,
-  );
+  if (esgfPublishedDatasetCount === undefined) return 0;
+  return Math.max(0, Math.round(esgfPublishedDatasetCount));
 }
 
 /** Sum of the members that have a figure; null when none of them do. */
@@ -282,9 +273,8 @@ export function normalizePayuExperiment(
     memberExpectedYearsRun,
     expectedEnsembleCount,
     members,
-    esgfPublishedCount: esgfPublishedCount(
-      configEntry.esgf_published,
-      expectedEnsembleCount,
+    esgfPublishedDatasetCount: esgfPublishedDatasetCount(
+      configEntry.esgf_published_dataset_count,
     ),
     experimentClass: resolveExperimentClass(configEntry.class),
     tiers: experimentTiers({ deck: configEntry.deck, aft: configEntry.aft }),

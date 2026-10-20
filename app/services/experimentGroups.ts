@@ -26,7 +26,7 @@ export interface ExperimentGroupSummary {
   completed: number;
   running: number;
   notStarted: number;
-  published: number;
+  publishedDatasets: number;
   yearsRun: number;
   plannedYears: number;
   percent: number | null;
@@ -136,7 +136,7 @@ export function summarizeExperimentGroup(
   let completed = 0;
   let running = 0;
   let notStarted = 0;
-  let published = 0;
+  let publishedDatasets = 0;
   let yearsRun = 0;
   let plannedYears = 0;
 
@@ -145,9 +145,8 @@ export function summarizeExperimentGroup(
     if (experiment.expectedYearsRun !== null) {
       plannedYears += experiment.expectedYearsRun;
     }
-    // Counted in members, like the status buckets below, so a part-published
-    // ensemble is not rounded away to nothing.
-    published += experiment.esgfPublishedCount;
+    // Counted in published datasets
+    publishedDatasets += experiment.esgfPublishedDatasetCount;
 
     const counts = experimentRunCounts(experiment);
     total += counts.total;
@@ -161,7 +160,7 @@ export function summarizeExperimentGroup(
     completed,
     running,
     notStarted,
-    published,
+    publishedDatasets,
     yearsRun,
     plannedYears,
     percent:

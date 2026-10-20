@@ -211,12 +211,12 @@ function rowKey(groupId: string, experiment: PayuExperiment): string {
 
           <div class="min-w-0">
             <div
-              class="hidden grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
+              class="hidden grid-cols-[minmax(0,1fr)_7rem_12rem_4rem] gap-4 border-b border-gray-100 px-5 py-3 text-xs font-semibold uppercase text-gray-400 dark:border-gray-800 dark:text-gray-500 md:grid"
             >
               <span>Simulation status</span>
               <span>Type</span>
               <span>Progress</span>
-              <span><Jargon term="ESGF">ESGF Published</Jargon></span>
+              <span><Jargon term="ESGF">ESGF</Jargon></span>
             </div>
 
             <ul class="divide-y divide-gray-100 dark:divide-gray-800">

@@ -41,7 +41,7 @@ const rowKey = computed(
 <template>
   <li :data-test="`experiment-group-row-${groupId}`">
     <div
-      class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] md:items-center md:gap-4"
+      class="grid gap-3 px-5 py-3 md:grid-cols-[minmax(0,1fr)_7rem_12rem_4rem] md:items-center md:gap-4"
     >
       <div class="flex min-w-0 items-center gap-1.5 text-sm">
         <!-- The chevron sits in a fixed gutter that non-ensemble
@@ -111,13 +111,12 @@ const rowKey = computed(
            stay on the middle of the row, not ride its top. -->
       <div class="flex h-full items-center">
         <EsgfStatus
-          :published-count="experiment.esgfPublishedCount"
-          :total="experiment.expectedEnsembleCount"
+          :published-dataset-count="experiment.esgfPublishedDatasetCount"
         >
           <!-- The column header labels this on md+; on stacked
                mobile rows there is no header, so caption inline. -->
           <span class="text-xs text-gray-500 md:hidden dark:text-gray-400">
-            <Jargon term="ESGF">ESGF</Jargon> published
+            <Jargon term="ESGF">ESGF</Jargon> published datasets
           </span>
         </EsgfStatus>
       </div>
@@ -136,7 +135,7 @@ const rowKey = computed(
       <li
         v-for="member in experiment.members"
         :key="member.uuid"
-        class="grid gap-1 py-1.5 pl-10 pr-5 md:grid-cols-[minmax(0,1fr)_7rem_12rem_8rem] md:items-center md:gap-4"
+        class="grid gap-1 py-1.5 pl-10 pr-5 md:grid-cols-[minmax(0,1fr)_7rem_1] md:items-center md:gap-4"
         :data-test="`ensemble-member-${experiment.name}`"
       >
         <p class="truncate font-mono text-xs text-gray-600 dark:text-gray-400">

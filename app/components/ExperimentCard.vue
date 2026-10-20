@@ -63,11 +63,10 @@ const experimentClass = computed(() => props.experiment.experimentClass);
         :ensemble-count="experiment.expectedEnsembleCount"
       />
       <EsgfStatus
-        :published-count="experiment.esgfPublishedCount"
-        :total="experiment.expectedEnsembleCount"
+        :published-dataset-count="experiment.esgfPublishedDatasetCount"
         class="text-xs text-gray-500 dark:text-gray-400"
       >
-        <Jargon term="ESGF">ESGF</Jargon> published
+        <Jargon term="ESGF">ESGF</Jargon> published datasets
       </EsgfStatus>
       <!-- REF is a separate dimension from run progress (issue #21): shown
            detached, as a placeholder until the evaluation data source lands. -->
