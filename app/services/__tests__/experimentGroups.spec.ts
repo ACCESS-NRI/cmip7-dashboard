@@ -227,6 +227,30 @@ describe("summarizeExperimentGroup", () => {
       percent: 75,
     });
   });
+
+  // Expected years run should be defined for all experiments, so this
+  // case shouldn't happen
+  it("percentage counts years run when expected years run is undefined", () => {
+    const summary = summarizeExperimentGroup([
+      makeExperiment({
+        name: "esm-historical",
+        yearsRun: 150,
+        expectedYearsRun: null,
+      }),
+      makeExperiment({
+        name: "historical",
+        yearsRun: 100,
+        expectedYearsRun: 100,
+      }),
+    ]);
+
+    expect(summary).toMatchObject({
+      total: 2,
+      completed: 1,
+      running: 1,
+      percent: 100,
+    });
+  });
 });
 
 describe("groupExperimentsByProgramme", () => {

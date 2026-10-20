@@ -179,4 +179,28 @@ describe("ExperimentTotals", () => {
       "86% complete across 5 simulations",
     );
   });
+
+  // Expected years run should be defined for all experiments, so this
+  // case shouldn't happen
+  it("counts years run for percent when expected years is undefined", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedYearsRun: null,
+            yearsRun: 150,
+          }),
+          makeExperiment({
+            name: "historical",
+            yearsRun: 100,
+            expectedYearsRun: 100,
+          }),
+        ],
+      },
+    });
+    expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
+      "100% complete across 2 simulations",
+    );
+  });
 });
