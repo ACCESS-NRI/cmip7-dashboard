@@ -23,7 +23,7 @@ function makeExperiment(
     memberExpectedYearsRun: 100,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 0,
+    esgfPublishedDatasetCount: 0,
     experimentClass: EXPERIMENT_CLASSES.historical,
     tiers: [],
     details: {},

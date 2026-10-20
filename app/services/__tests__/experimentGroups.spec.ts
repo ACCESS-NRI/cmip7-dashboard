@@ -25,7 +25,7 @@ function makeExperiment(
     memberExpectedYearsRun: 100,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 0,
+    esgfPublishedDatasetCount: 0,
     experimentClass: EXPERIMENT_CLASSES.historical,
     tiers: [],
     details: {},
@@ -160,7 +160,7 @@ describe("summarizeExperimentGroup", () => {
       makeExperiment({
         yearsRun: 100,
         expectedYearsRun: 100,
-        esgfPublishedCount: 1,
+        esgfPublishedDatasetCount: 1,
       }),
       makeExperiment({ yearsRun: 25, expectedYearsRun: 100 }),
       makeExperiment({ yearsRun: 0, expectedYearsRun: 100 }),
@@ -171,7 +171,7 @@ describe("summarizeExperimentGroup", () => {
       completed: 1,
       running: 1,
       notStarted: 1,
-      published: 1,
+      publishedDatasets: 1,
       yearsRun: 125,
       plannedYears: 300,
       percent: 42,
@@ -185,7 +185,7 @@ describe("summarizeExperimentGroup", () => {
         expectedEnsembleCount: 3,
         expectedYearsRun: 300,
         yearsRun: 244,
-        esgfPublishedCount: 2,
+        esgfPublishedDatasetCount: 2,
         members: [
           makeMember("r1i1p1f1", 100),
           makeMember("r2i1p1f1", 100),
@@ -202,7 +202,7 @@ describe("summarizeExperimentGroup", () => {
       notStarted: 1,
       // A part-published ensemble counts its published members rather than
       // rounding down to nothing.
-      published: 2,
+      publishedDatasets: 2,
     });
   });
 });

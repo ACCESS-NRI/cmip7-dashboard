@@ -18,7 +18,7 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     memberExpectedYearsRun: 500,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 0,
+    esgfPublishedDatasetCount: 0,
     experimentClass: EXPERIMENT_CLASSES.sensitivity,
     tiers: [],
     details: {
@@ -41,7 +41,7 @@ const MOCK_EXPERIMENTS: PayuExperiment[] = [
     memberExpectedYearsRun: 500,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 1,
+    esgfPublishedDatasetCount: 1,
     experimentClass: EXPERIMENT_CLASSES.baseline,
     tiers: [],
     details: {
@@ -93,35 +93,19 @@ describe("PayuExperimentAccordion", () => {
     expect(wrapper.find('[data-test="esgf-status"]').exists()).toBe(true);
   });
 
-  it("counts every member as published when the experiment is", async () => {
-    const wrapper = await mountSuspended(PayuExperimentAccordion, {
-      props: {
-        experiments: [
-          {
-            ...MOCK_EXPERIMENTS[0]!,
-            expectedEnsembleCount: 10,
-            esgfPublishedCount: 10,
-          },
-        ],
-      },
-    });
-
-    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("10/10");
-  });
-
   it("shows none published when nothing has been published", async () => {
     const wrapper = await mountSuspended(PayuExperimentAccordion, {
       props: {
         experiments: [
           {
             ...MOCK_EXPERIMENTS[0]!,
-            esgfPublishedCount: 0,
+            esgfPublishedDatasetCount: 0,
           },
         ],
       },
     });
 
-    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0/1");
+    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0");
   });
 
   it("renders all detail fields in the panel", async () => {

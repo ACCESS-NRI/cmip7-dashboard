@@ -6,7 +6,7 @@ import {
   loadPayuExperiments,
   normalizePayuExperiment,
   calculateYearsRun,
-  esgfPublishedCount,
+  esgfPublishedDatasetCount,
 } from "../payuExperiments";
 import type { PayuExperimentRaw } from "../payuExperiments";
 import type { ExperimentConfig } from "../experimentConfig";
@@ -65,25 +65,14 @@ describe("calculateYearsRun", () => {
   });
 });
 
-describe("esgfPublishedCount", () => {
+describe("esgfPublishedDatasetCount", () => {
   it("reads a count straight through", () => {
-    expect(esgfPublishedCount(4, 10)).toBe(4);
-    expect(esgfPublishedCount(0, 10)).toBe(0);
-  });
-
-  it("reads legacy booleans as all or nothing", () => {
-    expect(esgfPublishedCount(true, 10)).toBe(10);
-    expect(esgfPublishedCount(false, 10)).toBe(0);
+    expect(esgfPublishedDatasetCount(4)).toBe(4);
+    expect(esgfPublishedDatasetCount(0)).toBe(0);
   });
 
   it("treats an absent field as nothing published", () => {
-    expect(esgfPublishedCount(undefined, 10)).toBe(0);
-  });
-
-  it("clamps a count that overshoots the planned ensemble", () => {
-    // Better a wrong-looking 10/10 than an impossible 12/10.
-    expect(esgfPublishedCount(12, 10)).toBe(10);
-    expect(esgfPublishedCount(-1, 10)).toBe(0);
+    expect(esgfPublishedDatasetCount(undefined)).toBe(0);
   });
 });
 
@@ -93,7 +82,7 @@ describe("normalizePayuExperiment", () => {
     name: "test-run",
     description: "Test experiment",
     expected_years_run: 300,
-    esgf_published: 0,
+    esgf_published_dataset_count: 0,
   };
 
   const BASE_PAYU: PayuExperimentRaw = {
@@ -132,15 +121,19 @@ describe("normalizePayuExperiment", () => {
   it("uses config for expectedYearsRun and the ESGF count", () => {
     const result = normalizePayuExperiment(BASE_CONFIG, [BASE_PAYU]);
     expect(result.expectedYearsRun).toBe(300);
-    expect(result.esgfPublishedCount).toBe(0);
+    expect(result.esgfPublishedDatasetCount).toBe(0);
   });
 
   it("takes a partial ESGF count from the config", () => {
     const result = normalizePayuExperiment(
-      { ...BASE_CONFIG, esgf_published: 4, expected_n_ensembles: 10 },
+      {
+        ...BASE_CONFIG,
+        esgf_published_dataset_count: 4,
+        expected_n_ensembles: 10,
+      },
       [BASE_PAYU],
     );
-    expect(result.esgfPublishedCount).toBe(4);
+    expect(result.esgfPublishedDatasetCount).toBe(4);
     expect(result.expectedEnsembleCount).toBe(10);
   });
 
@@ -191,7 +184,7 @@ describe("normalizePayuExperiment", () => {
     const RELATED_CONFIG: ExperimentConfig = {
       name: "piControl",
       expected_years_run: 1000,
-      esgf_published: 0,
+      esgf_published_dataset_count: 0,
       related_experiments: [
         { name: "PI-CNP-concentrations", uuid: "cnp-1" },
         { name: "Ndep2-PI-CNP-concentrations", uuid: "cnp-2" },
@@ -229,7 +222,7 @@ describe("normalizePayuExperiment", () => {
 
       // No fan-out: an ensemble of one, with no members exposed to expand.
       expect(result.members).toEqual([]);
-      expect(result.esgfPublishedCount).toBe(0);
+      expect(result.esgfPublishedDatasetCount).toBe(0);
     });
   });
 
@@ -319,7 +312,7 @@ describe("loadPayuExperiments", () => {
       uuid: "abc-123",
       name: "test-run",
       expected_years_run: 300,
-      esgf_published: false,
+      esgf_published_dataset_count: 0,
     },
   ];
   const PAYU_DATA: PayuExperimentRaw[] = [
