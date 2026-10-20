@@ -85,9 +85,7 @@ export interface PayuExperiment {
    */
   members: PayuExperimentMember[];
   /**
-   * Ensemble members published to ESGF, out of `expectedEnsembleCount`. The
-   * single source of truth for publication: a derived "is it published"
-   * boolean alongside it would only drift once a count can be partial.
+   * The number of datasets published to ESGF for each experiment.
    */
   esgfPublishedDatasetCount: number;
   /** Resolved scientific taxonomy class (issue #14), from the config `class`. */

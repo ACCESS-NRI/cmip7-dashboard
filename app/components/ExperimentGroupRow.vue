@@ -135,7 +135,7 @@ const rowKey = computed(
       <li
         v-for="member in experiment.members"
         :key="member.uuid"
-        class="grid gap-1 py-1.5 pl-10 pr-5 md:grid-cols-[minmax(0,1fr)_7rem_1] md:items-center md:gap-4"
+        class="grid gap-1 py-1.5 pl-10 pr-5 md:grid-cols-[minmax(0,1fr)_7rem_12rem_4rem] md:items-center md:gap-4"
         :data-test="`ensemble-member-${experiment.name}`"
       >
         <p class="truncate font-mono text-xs text-gray-600 dark:text-gray-400">
