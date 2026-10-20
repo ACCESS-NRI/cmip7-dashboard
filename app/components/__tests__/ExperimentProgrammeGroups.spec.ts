@@ -22,7 +22,7 @@ function makeExperiment(
     memberExpectedYearsRun: 100,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 0,
+    esgfPublishedDatasetCount: 0,
     experimentClass: EXPERIMENT_CLASSES.historical,
     tiers: [],
     details: {},
@@ -130,7 +130,7 @@ describe("ExperimentProgrammeGroups", () => {
     expect(deck.text()).toContain("Running");
     expect(deck.text()).toContain("Completed");
     expect(deck.text()).toContain("Not started");
-    expect(deck.text()).toContain("Published");
+    expect(deck.text()).toContain("Published Datasets");
     expect(deck.findAll('[data-test="group-progress-bar"]')).toHaveLength(3);
   });
 
@@ -140,12 +140,12 @@ describe("ExperimentProgrammeGroups", () => {
         experiments: [
           makeExperiment({
             name: "published",
-            esgfPublishedCount: 1,
+            esgfPublishedDatasetCount: 1,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
           makeExperiment({
             name: "unpublished",
-            esgfPublishedCount: 0,
+            esgfPublishedDatasetCount: 0,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
         ],
@@ -161,7 +161,7 @@ describe("ExperimentProgrammeGroups", () => {
     const counts = deck
       .findAll('[data-test="esgf-count"]')
       .map((count) => count.text());
-    expect(counts).toEqual(["1/1", "0/1"]);
+    expect(counts).toEqual(["1", "0"]);
 
     // One of the two DECK experiments is published.
     expect(deck.text()).toContain("Published");
@@ -174,14 +174,14 @@ describe("ExperimentProgrammeGroups", () => {
           makeExperiment({
             name: "esm-historical",
             expectedEnsembleCount: 30,
-            esgfPublishedCount: 0,
+            esgfPublishedDatasetCount: 0,
             tiers: [EXPERIMENT_TIERS.deck],
           }),
         ],
       },
     });
 
-    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0/30");
+    expect(wrapper.find('[data-test="esgf-count"]').text()).toBe("0");
   });
 
   it("renders experiment type badges in their own column", async () => {

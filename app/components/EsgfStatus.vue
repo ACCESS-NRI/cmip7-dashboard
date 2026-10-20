@@ -1,8 +1,7 @@
 <!--
   EsgfStatus — the ESGF publication readout for one experiment.
 
-  Shows how many ensemble members are published to ESGF out of the total, as a
-  count that turns complete when all members are published. Stateless: the counts
+  Shows how many datasets have been published to ESGF. Stateless: the counts
   are passed in as props, and an optional slot supplies an inline caption.
 
   Used by: app/components/ExperimentGroupRow.vue,
@@ -12,33 +11,30 @@
 import { computed } from "vue";
 
 const props = defineProps<{
-  /** Ensemble members published to ESGF. */
-  publishedCount: number;
-  /** Members expected in total; 1 for an experiment that is a single run. */
-  total: number;
+  /** Datasets published to ESGF. */
+  publishedDatasetCount: number;
 }>();
 
-const isComplete = computed(
-  () => props.total > 0 && props.publishedCount >= props.total,
-);
+const hasDatasetsPublished = computed(() => props.publishedDatasetCount > 0);
 </script>
 
-<!-- ESGF publication indicator: how many of an experiment's ensemble members
-     have been published. The default slot can add a caption beside the count;
+<!-- ESGF publication indicator: how many of datasets for an experiment's
+     ensemble members have been published.
+     The default slot can add a caption beside the count;
      shared by the accordion, the card grid and the grouped rows. -->
 <template>
   <div class="flex items-center gap-2" data-test="esgf-status">
     <span
       class="text-sm tabular-nums"
       :class="
-        isComplete
+        hasDatasetsPublished
           ? 'font-medium text-green-600 dark:text-green-400'
           : 'text-gray-600 dark:text-gray-400'
       "
-      :aria-label="`${publishedCount} of ${total} published to ESGF`"
+      :aria-label="`${publishedDatasetCount} datasets published to ESGF`"
       data-test="esgf-count"
     >
-      {{ publishedCount }}/{{ total }}
+      {{ publishedDatasetCount }}
     </span>
     <slot />
   </div>

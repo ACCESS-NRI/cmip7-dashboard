@@ -23,7 +23,7 @@ function makeExperiment(
     memberExpectedYearsRun: 100,
     expectedEnsembleCount: 1,
     members: [],
-    esgfPublishedCount: 0,
+    esgfPublishedDatasetCount: 0,
     experimentClass: EXPERIMENT_CLASSES.historical,
     tiers: [],
     details: {},
@@ -152,5 +152,55 @@ describe("ExperimentTotals", () => {
     // No planned total → no percentage, just the experiment count.
     expect(wrapper.find('[data-test="totals-progress"]').exists()).toBe(false);
     expect(wrapper.text()).toContain("Across 1 simulations");
+  });
+
+  it("only counts planned years run when computing percent", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedEnsembleCount: 4,
+            expectedYearsRun: 400,
+            yearsRun: 300,
+            members: [],
+          }),
+          makeExperiment({
+            name: "historical",
+            yearsRun: 400,
+            expectedYearsRun: 300,
+          }),
+        ],
+      },
+    });
+    // 700 done of 700 planned = 86% across 5 simulations
+    expect(wrapper.text()).toContain("700  / 700 years");
+    expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
+      "86% complete across 5 simulations",
+    );
+  });
+
+  // Expected years run should be defined for all experiments, so this
+  // case shouldn't happen
+  it("counts years run for percent when expected years is undefined", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedYearsRun: null,
+            yearsRun: 150,
+          }),
+          makeExperiment({
+            name: "historical",
+            yearsRun: 100,
+            expectedYearsRun: 100,
+          }),
+        ],
+      },
+    });
+    expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
+      "100% complete across 2 simulations",
+    );
   });
 });

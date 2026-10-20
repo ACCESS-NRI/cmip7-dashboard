@@ -93,8 +93,7 @@ at runtime. Each entry's fields (fully typed and documented on the
 - `uuid` — the run's payu UUID, for experiments that are a single run.
 - `name` — experiment name (e.g. `historical`).
 - `expected_years_run` — model years the experiment is expected to run.
-- `esgf_published` — how many ensemble members are published to ESGF (a boolean
-  from older configs still loads).
+- `esgf_published_dataset_count` — how many datasets are published to ESGF
 - `class` — scientific taxonomy class (issue #14); missing resolves to the
   conservative `sensitivity` default.
 - `deck` / `aft` — participation-tier flags (issue #21); independent booleans.

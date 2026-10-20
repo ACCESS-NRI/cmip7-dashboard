@@ -15,7 +15,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1000,
-    "esgf_published": 1
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b",
@@ -24,7 +24,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1000,
-    "esgf_published": 1
+    "esgf_published_dataset_count": 105
   },
   {
     "uuid": "bc4ae139-0c1d-4c05-aa75-7be4eb2e660f",
@@ -33,7 +33,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 300,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "name": "amip",
@@ -41,7 +41,7 @@
     "class": "historical",
     "deck": true,
     "expected_years_run": 43,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 710,
     "expected_n_ensembles": 10,
     "ensembles": [
       {
@@ -92,7 +92,7 @@
     "class": "historical",
     "deck": true,
     "expected_years_run": 172,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 1040,
     "expected_n_ensembles": 10,
     "ensembles": [
       {
@@ -143,7 +143,7 @@
     "class": "historical",
     "deck": true,
     "expected_years_run": 172,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "expected_n_ensembles": 30,
     "ensembles": [
       {
@@ -274,7 +274,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "expected_n_ensembles": 10,
     "ensembles": [
       {
@@ -325,7 +325,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "expected_n_ensembles": 10,
     "ensembles": [
      {
@@ -376,7 +376,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "expected_n_ensembles": 30,
     "ensembles": [
       {
@@ -507,7 +507,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "expected_n_ensembles": 30,
     "ensembles": [
       {
@@ -638,7 +638,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 30,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 0
   },
   {
     "name": "piClim-anthro",
@@ -646,7 +646,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 30,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 0
   },
   {
     "name": "piClim-4xCO2",
@@ -654,7 +654,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 30,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 0
   },
   {
     "uuid": "7be18101-ad62-45db-9be7-e3703753b103",
@@ -663,7 +663,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 150,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "f4cc0eee-412a-4f83-8495-819f4dd8dc5d",
@@ -672,7 +672,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 150,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "104718fd-8ebe-456a-8035-344d1c183d90",
@@ -681,7 +681,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 150,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "4d052f54-ddc0-4cb6-9fbb-c89054462d72",
@@ -690,7 +690,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
@@ -699,7 +699,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 104
   },
   {
     "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
@@ -708,7 +708,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published": 0
+    "esgf_published_dataset_count": 0
   },
   {
     "name": "scen7-hl",
@@ -716,7 +716,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -725,7 +725,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -734,7 +734,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -743,7 +743,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -752,7 +752,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -761,7 +761,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -770,7 +770,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -779,7 +779,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -788,7 +788,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -797,7 +797,7 @@
     "aft": true,
     "expected_years_run": 129,
     "expected_n_ensembles": 1,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "projection"
   },
   {
@@ -805,7 +805,7 @@
     "description": "-",
     "expected_years_run": 186,
     "expected_n_ensembles": 3,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "historical",
     "aft": true
   },
@@ -814,7 +814,7 @@
     "description": "-",
     "expected_years_run": 186,
     "expected_n_ensembles": 3,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "historical",
     "aft": true
   },
@@ -823,7 +823,7 @@
     "description": "-",
     "expected_years_run": 186,
     "expected_n_ensembles": 3,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "historical",
     "aft": true
   },
@@ -831,7 +831,7 @@
     "name": "abrupt-2xCO2",
     "description": "-",
     "expected_years_run": 300,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "sensitivity",
     "aft": true
   },
@@ -839,7 +839,7 @@
     "name": "abrupt-0p5xCO2",
     "description": "-",
     "expected_years_run": 300,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "sensitivity",
     "aft": true
   },
@@ -847,7 +847,7 @@
     "name": "abrupt-127k",
     "description": "-",
     "expected_years_run": 100,
-    "esgf_published": 0,
+    "esgf_published_dataset_count": 0,
     "class": "sensitivity",
     "aft": true,
     "uuid": "eaf79f42-bc3d-446b-80d0-5732c52a5738"

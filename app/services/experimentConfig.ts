@@ -26,11 +26,9 @@ export interface ExperimentConfig {
   description?: string;
   expected_years_run: number;
   /**
-   * How many ensemble members have been published to ESGF. Booleans from
-   * earlier configs still load, since the two representations line up at the
-   * ends: `false` is none published, `true` is the whole ensemble.
+   * How datasets published to ESGF for an experiment
    */
-  esgf_published?: number | boolean;
+  esgf_published_dataset_count?: number;
   /**
    * Scientific taxonomy class (issue #14), declared explicitly per experiment
    * rather than inferred from the name. Optional so older/partial configs still

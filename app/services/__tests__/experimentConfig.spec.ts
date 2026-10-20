@@ -14,7 +14,7 @@ const CONFIG: ExperimentConfig[] = [
     uuid: "abc-123",
     name: "test-run",
     expected_years_run: 300,
-    esgf_published: false,
+    esgf_published_dataset_count: 0,
   },
 ];
 

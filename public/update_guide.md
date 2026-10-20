@@ -11,7 +11,7 @@ To show a planned experiment to the dashboard, we need to add a section to the c
    "name": "abrupt-127k", 
    "description": "-", 
    "expected_years_run": 100, 
-   "esgf_published": 0, 
+   "esgf_published_dataset_count": 0, 
    "class": "sensitivity", 
    "aft": true 
  } 
@@ -23,7 +23,7 @@ Where fields are:
 - `class` (str): Experiment classification. One of "baseline", "sensitivity", "historical", or "projection".
 - `deck` (bool): If true, the experiment is part of DECK. Optional as default is false.
 - `aft` (bool): If true, the experiment is part of Assessment Fast Track. Optional as default is false.
-- `esgf_published` (int): Number of simulations published to ESGF.
+- `esgf_published_dataset_count` (int): Number of datasets published to ESGF.
 - `expected_years_run` (int): Number of model years expected run by each experiment/ensemble. This is used to calculate progress.
 - `expected_n_ensembles` (int): Optional. The target number of ensemble members. This is used to calculate progress.
 

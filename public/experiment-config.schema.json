@@ -3,7 +3,12 @@
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["name", "class", "expected_years_run", "esgf_published"],
+    "required": [
+      "name",
+      "class",
+      "expected_years_run",
+      "esgf_published_dataset_count"
+    ],
     "additionalProperties": false,
     "not": {
       "anyOf": [
@@ -42,7 +47,7 @@
         "type": "integer",
         "minimum": 1
       },
-      "esgf_published": {
+      "esgf_published_dataset_count": {
         "type": "integer",
         "minimum": 0
       },
