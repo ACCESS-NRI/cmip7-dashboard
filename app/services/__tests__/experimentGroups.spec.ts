@@ -205,6 +205,28 @@ describe("summarizeExperimentGroup", () => {
       publishedDatasets: 2,
     });
   });
+
+  it("counts only planned years run in percentage", () => {
+    const summary = summarizeExperimentGroup([
+      makeExperiment({
+        name: "esm-historical",
+        yearsRun: 150,
+        expectedYearsRun: 100,
+      }),
+      makeExperiment({
+        name: "abrupt-4xCO2",
+        yearsRun: 50,
+        expectedYearsRun: 100,
+      }),
+    ]);
+
+    expect(summary).toMatchObject({
+      total: 2,
+      completed: 1,
+      running: 1,
+      percent: 75,
+    });
+  });
 });
 
 describe("groupExperimentsByProgramme", () => {

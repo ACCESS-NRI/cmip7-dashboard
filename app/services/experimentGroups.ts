@@ -139,11 +139,16 @@ export function summarizeExperimentGroup(
   let publishedDatasets = 0;
   let yearsRun = 0;
   let plannedYears = 0;
+  // Total for number of planned years that have run (doesn't include additional years)
+  let minYearsRun = 0;
 
   for (const experiment of experiments) {
     yearsRun += experiment.yearsRun;
     if (experiment.expectedYearsRun !== null) {
       plannedYears += experiment.expectedYearsRun;
+      minYearsRun += Math.min(experiment.yearsRun, experiment.expectedYearsRun);
+    } else {
+      minYearsRun += experiment.yearsRun;
     }
     // Counted in published datasets
     publishedDatasets += experiment.esgfPublishedDatasetCount;
@@ -165,7 +170,7 @@ export function summarizeExperimentGroup(
     plannedYears,
     percent:
       plannedYears > 0
-        ? Math.min(100, Math.round((yearsRun / plannedYears) * 100))
+        ? Math.min(100, Math.round((minYearsRun / plannedYears) * 100))
         : null,
   };
 }

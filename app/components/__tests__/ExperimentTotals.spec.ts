@@ -153,4 +153,30 @@ describe("ExperimentTotals", () => {
     expect(wrapper.find('[data-test="totals-progress"]').exists()).toBe(false);
     expect(wrapper.text()).toContain("Across 1 simulations");
   });
+
+  it("only counts planned years run when computing percent", async () => {
+    const wrapper = await mountSuspended(ExperimentTotals, {
+      props: {
+        experiments: [
+          makeExperiment({
+            name: "esm-historical",
+            expectedEnsembleCount: 4,
+            expectedYearsRun: 400,
+            yearsRun: 300,
+            members: [],
+          }),
+          makeExperiment({
+            name: "historical",
+            yearsRun: 400,
+            expectedYearsRun: 300,
+          }),
+        ],
+      },
+    });
+    // 700 done of 700 planned = 86% across 5 simulations
+    expect(wrapper.text()).toContain("700  / 700 years");
+    expect(wrapper.find('[data-test="totals-progress"]').text()).toContain(
+      "86% complete across 5 simulations",
+    );
+  });
 });

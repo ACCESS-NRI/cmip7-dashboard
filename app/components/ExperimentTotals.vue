@@ -40,10 +40,15 @@ const totals = computed(() => {
   let serviceUnits = 0;
   let completed = 0;
   let count = 0;
+  // Total the minimum required years that have run
+  let minYearRun = 0;
   for (const experiment of props.experiments) {
     done += experiment.yearsRun;
     if (experiment.expectedYearsRun !== null) {
       planned += experiment.expectedYearsRun;
+      minYearRun += Math.min(experiment.expectedYearsRun, experiment.yearsRun);
+    } else {
+      minYearRun += experiment.yearsRun;
     }
     serviceUnits += experiment.serviceUnits ?? 0;
     // Per ensemble member, so the count is on the same footing as the years
@@ -53,7 +58,9 @@ const totals = computed(() => {
     count += counts.total;
   }
   const percent =
-    planned > 0 ? Math.min(100, Math.round((done / planned) * 100)) : null;
+    planned > 0
+      ? Math.min(100, Math.round((minYearRun / planned) * 100))
+      : null;
   return {
     done,
     planned,
