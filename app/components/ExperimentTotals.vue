@@ -23,9 +23,8 @@ const props = defineProps<{
 // HARDCODED PLACEHOLDER — nothing publishes a data-volume figure yet: neither
 // experiment-config.json nor the payu telemetry API carries one. Replace this
 // with a real per-experiment sum (inside the loop below, off a new field on
-// PayuExperiment in ~/services/payuExperiments) once the API exposes it. Until
-// then the tile honestly reads 0 GB.
-const PUBLISHED_GB = 2988.0;
+// PayuExperiment in ~/services/payuExperiments) once the API exposes it.
+const PUBLISHED_GB = 7323;
 
 // Rough campaign-wide estimate (issue #62): a typical simulation year's data
 // volume times the planned years. We reuse the planned-years roll-up below
