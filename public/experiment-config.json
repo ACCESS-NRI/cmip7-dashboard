@@ -663,7 +663,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 150,
-    "esgf_published_dataset_count": 104
+    "esgf_published_dataset_count": 135
   },
   {
     "uuid": "f4cc0eee-412a-4f83-8495-819f4dd8dc5d",
@@ -672,7 +672,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 150,
-    "esgf_published_dataset_count": 104
+    "esgf_published_dataset_count": 135
   },
   {
     "uuid": "104718fd-8ebe-456a-8035-344d1c183d90",
@@ -681,7 +681,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 150,
-    "esgf_published_dataset_count": 104
+    "esgf_published_dataset_count": 135
   },
   {
     "uuid": "4d052f54-ddc0-4cb6-9fbb-c89054462d72",
@@ -690,7 +690,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published_dataset_count": 104
+    "esgf_published_dataset_count": 135
   },
   {
     "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
@@ -699,7 +699,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 300,
-    "esgf_published_dataset_count": 104
+    "esgf_published_dataset_count": 135
   },
   {
     "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
