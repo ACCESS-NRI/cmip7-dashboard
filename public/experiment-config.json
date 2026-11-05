@@ -14,7 +14,7 @@
     "description": "-",
     "class": "baseline",
     "deck": true,
-    "expected_years_run": 1000,
+    "expected_years_run": 1028,
     "esgf_published_dataset_count": 135
   },
   {
@@ -23,7 +23,7 @@
     "description": "-",
     "class": "baseline",
     "deck": true,
-    "expected_years_run": 1000,
+    "expected_years_run": 1116,
     "esgf_published_dataset_count": 136
   },
   {
@@ -32,7 +32,7 @@
     "description": "-",
     "class": "sensitivity",
     "deck": true,
-    "expected_years_run": 300,
+    "expected_years_run": 326,
     "esgf_published_dataset_count": 135
   },
   {
@@ -662,7 +662,7 @@
     "description": "-",
     "class": "sensitivity",
     "deck": true,
-    "expected_years_run": 150,
+    "expected_years_run": 169,
     "esgf_published_dataset_count": 135
   },
   {
@@ -671,7 +671,7 @@
     "description": "-",
     "class": "sensitivity",
     "aft": true,
-    "expected_years_run": 150,
+    "expected_years_run": 167,
     "esgf_published_dataset_count": 135
   },
   {
@@ -680,7 +680,7 @@
     "description": "-",
     "class": "sensitivity",
     "aft": true,
-    "expected_years_run": 150,
+    "expected_years_run": 168,
     "esgf_published_dataset_count": 135
   },
   {
@@ -689,7 +689,7 @@
     "description": "-",
     "class": "sensitivity",
     "aft": true,
-    "expected_years_run": 300,
+    "expected_years_run": 305,
     "esgf_published_dataset_count": 135
   },
   {
@@ -698,7 +698,7 @@
     "description": "-",
     "class": "sensitivity",
     "aft": true,
-    "expected_years_run": 300,
+    "expected_years_run": 306,
     "esgf_published_dataset_count": 135
   },
   {
@@ -707,7 +707,7 @@
     "description": "-",
     "class": "sensitivity",
     "aft": true,
-    "expected_years_run": 300,
+    "expected_years_run": 306,
     "esgf_published_dataset_count": 0
   },
   {
