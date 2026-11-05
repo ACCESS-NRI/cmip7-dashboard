@@ -715,7 +715,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 10,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -724,7 +724,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 10,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -733,7 +733,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 10,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -742,7 +742,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 10,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -751,7 +751,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 10,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -760,7 +760,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 30,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -769,7 +769,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 30,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -778,7 +778,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 30,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -787,7 +787,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 30,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
@@ -796,7 +796,7 @@
     "description": "-",
     "aft": true,
     "expected_years_run": 129,
-    "expected_n_ensembles": 1,
+    "expected_n_ensembles": 30,
     "esgf_published_dataset_count": 0,
     "class": "projection"
   },
