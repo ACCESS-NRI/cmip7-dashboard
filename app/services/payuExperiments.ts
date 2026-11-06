@@ -144,14 +144,22 @@ export function formatServiceUnits(raw: PayuExperimentRaw): string {
   return "—";
 }
 
-/** Model years run, derived from the start/current model time years. */
-export function calculateYearsRun(raw: PayuExperimentRaw): number {
+/** Model years run, derived from the start/current model time years.
+ * This also caps the result at expected_years_run when it is provided
+ */
+export function calculateYearsRun(
+  raw: PayuExperimentRaw,
+  expected_years_run: number | null,
+): number {
   const startYear = parseInt(raw.experiment_model_start_time.slice(0, 4), 10);
   const currentYear = parseInt(
     raw.experiment_model_current_time.slice(0, 4),
     10,
   );
-  return currentYear - startYear;
+  const yearsRun = Math.max(0, currentYear - startYear);
+  return expected_years_run != null
+    ? Math.min(expected_years_run, yearsRun)
+    : yearsRun;
 }
 
 /**
@@ -202,7 +210,7 @@ export function normalizePayuMember(
     modelCurrentTime: payuData?.experiment_model_current_time ?? "—",
     serviceUnitsDisplay: payuData ? formatServiceUnits(payuData) : "—",
     serviceUnits: payuData?.experiment_service_units ?? null,
-    yearsRun: payuData ? calculateYearsRun(payuData) : 0,
+    yearsRun: payuData ? calculateYearsRun(payuData, expectedYearsRun) : 0,
     expectedYearsRun,
     hasTelemetry: payuData !== undefined,
     details: payuData ? { ...payuData } : {},
@@ -256,6 +264,15 @@ export function normalizePayuExperiment(
   // blank while the numeric totals below still sum across them.
   const soleMember = members.length === 1 ? members[0] : undefined;
 
+  const expectedYearsRun =
+    memberExpectedYearsRun === null
+      ? null
+      : memberExpectedYearsRun * expectedEnsembleCount;
+  const totalYearsRun = summedRuns.reduce(
+    (sum, member) => sum + member.yearsRun,
+    0,
+  );
+
   return {
     name: configEntry.name,
     uuid: configEntry.uuid ?? "",
@@ -263,11 +280,11 @@ export function normalizePayuExperiment(
     modelCurrentTime: soleMember?.modelCurrentTime ?? "—",
     serviceUnitsDisplay: soleMember?.serviceUnitsDisplay ?? "—",
     serviceUnits: sumServiceUnits(summedRuns),
-    yearsRun: summedRuns.reduce((sum, member) => sum + member.yearsRun, 0),
-    expectedYearsRun:
-      memberExpectedYearsRun === null
-        ? null
-        : memberExpectedYearsRun * expectedEnsembleCount,
+    yearsRun:
+      expectedYearsRun === null
+        ? totalYearsRun
+        : Math.min(totalYearsRun, expectedYearsRun),
+    expectedYearsRun,
     memberExpectedYearsRun,
     expectedEnsembleCount,
     members,
