@@ -52,16 +52,23 @@ describe("formatServiceUnits", () => {
 describe("calculateYearsRun", () => {
   it("returns the difference in years between start and current time", () => {
     // BASE_RAW: 0101 → 0275 = 174 years
-    expect(calculateYearsRun(BASE_RAW)).toBe(174);
+    expect(calculateYearsRun(BASE_RAW, null)).toBe(174);
   });
 
   it("returns 0 when start and current year are the same", () => {
     expect(
-      calculateYearsRun({
-        ...BASE_RAW,
-        experiment_model_current_time: "0101-06-01T00:00:00",
-      }),
+      calculateYearsRun(
+        {
+          ...BASE_RAW,
+          experiment_model_current_time: "0101-06-01T00:00:00",
+        },
+        null,
+      ),
     ).toBe(0);
+  });
+
+  it("caps years run at expected years run", () => {
+    expect(calculateYearsRun(BASE_RAW, 170)).toBe(170);
   });
 });
 
@@ -223,6 +230,17 @@ describe("normalizePayuExperiment", () => {
       // No fan-out: an ensemble of one, with no members exposed to expand.
       expect(result.members).toEqual([]);
       expect(result.esgfPublishedDatasetCount).toBe(0);
+    });
+
+    it("summed related sub-runs years run are capped", () => {
+      const result = normalizePayuExperiment(RELATED_CONFIG, [
+        relatedRaw("cnp-1", "0401"), // 400 years
+        relatedRaw("cnp-2", "0701"), // 700 years
+      ]);
+
+      expect(result.yearsRun).toBe(1000);
+      expect(result.expectedYearsRun).toBe(1000);
+      expect(result.expectedEnsembleCount).toBe(1);
     });
   });
 
