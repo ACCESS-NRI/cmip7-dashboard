@@ -15,7 +15,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1028,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 252
   },
   {
     "uuid": "cfcbc3a9-6f5a-4fa5-b963-24bd050e546b",
@@ -24,7 +24,7 @@
     "class": "baseline",
     "deck": true,
     "expected_years_run": 1116,
-    "esgf_published_dataset_count": 136
+    "esgf_published_dataset_count": 254
   },
   {
     "uuid": "bc4ae139-0c1d-4c05-aa75-7be4eb2e660f",
@@ -33,7 +33,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 326,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 239
   },
   {
     "name": "amip",
@@ -41,7 +41,7 @@
     "class": "historical",
     "deck": true,
     "expected_years_run": 43,
-    "esgf_published_dataset_count": 980,
+    "esgf_published_dataset_count": 1430,
     "expected_n_ensembles": 10,
     "ensembles": [
       {
@@ -325,7 +325,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published_dataset_count": 0,
+    "esgf_published_dataset_count": 1350,
     "expected_n_ensembles": 10,
     "ensembles": [
      {
@@ -507,7 +507,7 @@
     "class": "projection",
     "aft": true,
     "expected_years_run": 129,
-    "esgf_published_dataset_count": 0,
+    "esgf_published_dataset_count": 4050,
     "expected_n_ensembles": 30,
     "ensembles": [
       {
@@ -663,7 +663,7 @@
     "class": "sensitivity",
     "deck": true,
     "expected_years_run": 169,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 239
   },
   {
     "uuid": "f4cc0eee-412a-4f83-8495-819f4dd8dc5d",
@@ -672,7 +672,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 167,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 261
   },
   {
     "uuid": "104718fd-8ebe-456a-8035-344d1c183d90",
@@ -681,7 +681,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 168,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 261
   },
   {
     "uuid": "4d052f54-ddc0-4cb6-9fbb-c89054462d72",
@@ -690,7 +690,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 305,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 259
   },
   {
     "uuid": "05321bca-4ea1-46a4-b90d-55fce33d340a",
@@ -699,7 +699,7 @@
     "class": "sensitivity",
     "aft": true,
     "expected_years_run": 306,
-    "esgf_published_dataset_count": 135
+    "esgf_published_dataset_count": 259
   },
   {
     "uuid": "9f4782ca-6eed-48ea-8a55-4ba63d07151d",
